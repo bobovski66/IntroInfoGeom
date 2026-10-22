@@ -1,0 +1,22 @@
+
+/* Week 3: reading-specific styles; scope SVG sizing to genuine illustrations, not MathJax. */
+.w3-hero{margin-bottom:25px}.w3-hero p{max-width:78ch}.w3-content{max-width:865px}
+.w3-content section{margin:0 0 33px}.w3-content h2{font-family:Georgia,Cambria,serif;font-size:1.65rem;line-height:1.2;margin:28px 0 12px}
+.w3-content h3{font-size:1.15rem;margin:19px 0 8px}.w3-content p{margin:12px 0}
+.w3-content .math-box{border-left:4px solid var(--accent);background:var(--soft);padding:13px 18px;border-radius:0 12px 12px 0;margin:17px 0;overflow-x:auto}
+.w3-content figure{margin:20px 0;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;overflow:hidden}
+.w3-content figure>svg{display:block;width:100%;max-width:100%;height:auto;background:#fff;border-radius:8px}
+.w3-content figcaption{color:var(--muted);font-size:.88rem;line-height:1.55;margin-top:10px}
+.w3-content .worked{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:17px;margin:18px 0}
+.w3-content .worked h3{margin-top:0}.w3-content .keyterm{font-weight:700}
+.w3-content .two-col{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:15px 0}
+.w3-content .two-col>div{background:var(--soft);padding:14px;border-radius:11px}
+.w3-content .path-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0}
+.w3-content .path-cards>div{background:var(--soft);padding:13px;border-radius:11px}
+.w3-content .path-cards strong{display:block}.w3-content .path-cards span{color:var(--muted);font-size:.86rem}
+.w3-content details{background:var(--soft);padding:13px 16px;border-radius:11px;margin:15px 0}
+.w3-content summary{cursor:pointer;font-weight:700}.w3-content .prompt{border-left:3px solid var(--accent2);padding:10px 15px;background:var(--soft);margin:17px 0}
+.w3-content .demo-invite{border:1px solid var(--line);background:var(--soft);border-radius:14px;padding:16px;margin:22px 0}
+.w3-content .demo-invite h3{margin-top:0}.w3-content .demo-invite .btn{display:inline-block;text-decoration:none}
+@media(max-width:700px){.w3-content h2{font-size:1.45rem}.w3-content .two-col,.w3-content .path-cards{grid-template-columns:1fr}.w3-content figure{padding:7px}}
+@media print{.w3-content figure,.w3-content .worked{break-inside:avoid}.w3-content .demo-invite{display:none}}

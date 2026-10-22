@@ -1,1 +1,109 @@
-<!doctype html><html lang="en" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Week 6: Relative Entropy and Stability | reading</title><link rel="stylesheet" href="../assets/style.css"><script>window.MathJax={tex:{inlineMath:[['\\(','\\)'],['$','$']]},svg:{fontCache:'global'}};</script></head><body data-kind="reading" data-week="6" data-base="../"><div id="root"></div><script defer src="../assets/course-data.js"></script><script defer src="../assets/site.js"></script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script></body></html>
+<!doctype html><html lang="en" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Week 6: Relative Entropy, Stability, and the Geometry Ahead</title>
+<link rel="stylesheet" href="../assets/style.css"><link rel="stylesheet" href="../assets/week06.css">
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script></head><body><div class="layout"><aside class="sidebar"><div class="eyebrow">The Calculus of</div><h2>Probability Distributions</h2><p class="small">Introduction to Information Geometry</p><nav><a href="../index.html">Course home</a><a href="week05.html">Week 5 reading</a><a class="active" href="week06.html">Week 6 reading</a><a href="../demos/week06.html">Week 6 demo</a><a href="../labs/week06.html">Week 6 lab</a><a href="../quizzes/week06.html">Week 6 quiz</a><a href="week07.html">Week 7 reading</a></nav></aside><main class="main"><div class="main-inner">
+<header class="w6-hero"><div class="eyebrow">Week 6 · Reading</div><h1>Relative Entropy, Stability, and the Geometry Ahead</h1>
+<p class="lead">Shannon entropy measures uncertainty in one distribution. But how do we measure the information lost when we use the wrong distribution? Relative entropy answers that question—and supplies a remarkably precise Lyapunov function for the replicator equation we have studied since Week 1.</p>
+<div class="toolbar"><button id="theme">Toggle theme</button><a class="btn" href="../demos/week06.html">KL and dynamics explorer</a><a class="btn" href="../labs/week06.html">Guided lab</a><a class="btn" href="../quizzes/week06.html">Weekly quiz</a></div>
+<div class="panel"><strong>Learning goals</strong><p>Compute and interpret Kullback–Leibler divergence; recognize its directionality and behavior at zero probabilities; derive its nonnegativity; use it as a Lyapunov function for stable two-strategy replicator equations; interpret it as excess expected log loss; and find the local quadratic approximation that motivates the Fisher metric.</p></div></header>
+<article class="w6-content">
+<section><h2>1. Uncertainty is not the same as mismatch</h2>
+<p>Last week, we met Shannon entropy \(H(P)=-\sum_i p_i\ln p_i\), the expected surprisal when observations come from P. Entropy does not require a second distribution. It measures uncertainty about an outcome drawn from P.</p>
+<p>Suppose instead that observations really follow a distribution Q, but we predict them with another distribution P. If we assign probability \(p_i\) to outcome i, then the surprisal under our model is \(-\ln p_i\). The <em>expected log loss</em> when Q generates the outcomes is</p>
+<div class="math-box">\[\operatorname{CE}(Q,P)=-\sum_i q_i\ln p_i.\]</div>
+<p>CE stands for <em>cross-entropy</em>. If we knew the correct distribution Q and used it for prediction, our expected log loss would be \(H(Q)=-\sum_iq_i\ln q_i\). Subtract them:</p>
+<div class="math-box"><strong>Kullback–Leibler divergence</strong>\[\boxed{D(Q\|P)=\operatorname{CE}(Q,P)-H(Q)=\sum_iq_i\ln\frac{q_i}{p_i}.}\]</div>
+<p>The first argument Q is the reference or generating distribution; the second P is the model against which we compare it. Using P instead of Q incurs an excess expected logarithmic loss of exactly \(D(Q\|P)\) nats per observation.</p>
+<div class="worked"><h3>Worked example: two Bernoulli states</h3>
+<p>Let \(Q=(3/4,1/4)\) and \(P=(1/2,1/2)\). Then</p>
+\[\begin{aligned}D(Q\|P)&=\frac34\ln\frac{3/4}{1/2}+\frac14\ln\frac{1/4}{1/2}\\&=\frac34\ln\frac32+\frac14\ln\frac12\\&\approx0.130812\text{ nats}.\end{aligned}\]
+<p>Reverse the order and we obtain \(D(P\|Q)\approx0.143841\) nats. The difference is real, not rounding error.</p></div></section>
+<section><h2>2. Relative entropy is not an ordinary distance</h2>
+<p>We know that identical distributions should have no mismatch, and indeed \(D(P\|P)=0\). KL divergence is nonnegative, but unlike a metric it is generally not symmetric and does not satisfy the usual triangle inequality.</p>
+<figure><svg viewBox="0 0 800 319" role="img" aria-label="Comparative graph of D(q parallel x), D(x parallel q), and quadratic approximation for Bernoulli q equal 0.75, each minimized at x equal 0.75."><rect width="800" height="319" fill="#fff"/>
+<g stroke="#e3ebee"><path d="M77 58H754M77 104H754M77 150H754M77 196H754M77 242H754"/><path d="M77 58V242M246 58V242M415 58V242M585 58V242M754 58V242"/></g><path d="M77 36V242H769" fill="none" stroke="#6e8490" stroke-width="2"/>
+<path id="w6-forward" stroke="#0e8295" stroke-width="3.5" fill="none"/><path id="w6-reverse" stroke="#d17b43" stroke-width="3" fill="none"/>
+<path id="w6-quadratic" stroke="#865aa6" stroke-width="2.2" stroke-dasharray="7 5" fill="none"/>
+<path d="M599.4 58V242" stroke="#865aa6" stroke-width="1.2" stroke-dasharray="5 5" fill="none"/>
+<g font-family="system-ui" fill="#34505d" font-size="14"><text x="17" y="31">Divergence</text><text x="67" y="246" text-anchor="end">0</text><text x="67" y="200" text-anchor="end">0.5</text><text x="67" y="154" text-anchor="end">1</text><text x="67" y="108" text-anchor="end">1.5</text><text x="77" y="267" text-anchor="middle">0.04</text><text x="415" y="267" text-anchor="middle">0.50</text><text x="754" y="267" text-anchor="middle">0.96</text><text x="403" y="302">Current Bernoulli proportion x</text><text x="108" y="45" fill="#0e8295">D(q || x)</text><text x="262" y="45" fill="#d17b43">D(x || q)</text><text x="443" y="45" fill="#865aa6">Quadratic approximation</text></g></svg>
+<figcaption>The two directions of KL divergence generally give different values. Both curves have their minimum at the same reference \(q=3/4\). The dashed quadratic fits near equality but not far from it.</figcaption></figure>
+<p>In particular, \(D(Q\|P)\) and \(D(P\|Q)\) often have different sizes, and that matters when deciding which distribution is reference and which is approximation.</p>
+<p>There is also an important boundary issue. If \(q_i&gt;0\) but \(p_i=0\), then model P declares an outcome impossible even though Q assigns it positive probability. In that case \(D(Q\|P)=+\infty\). Terms with \(q_i=0\) contribute zero by continuity. In the interior of the probability simplex, all components are positive and both divergences are finite.</p>
+<div class="two-col"><div><strong>Shannon entropy \(H(P)\)</strong><p>One distribution; average surprisal under that same distribution.</p></div><div><strong>KL divergence \(D(Q\|P)\)</strong><p>Two distributions; extra expected log loss when using P to predict data generated by Q.</p></div></div></section>
+<section><h2>3. Why KL divergence is nonnegative</h2>
+<p>For positive probabilities, the elementary inequality \(\ln u\leq u-1\) holds for every \(u&gt;0\), with equality only at \(u=1\). Apply it to \(u=p_i/q_i\):</p>
+<div class="math-box">\[-\ln\frac{p_i}{q_i}\geq1-\frac{p_i}{q_i}.\]</div>
+<p>Multiply by \(q_i\), then sum over outcomes:</p>
+<div class="math-box">\[\begin{aligned}D(Q\|P)&=-\sum_iq_i\ln\frac{p_i}{q_i}\\&\geq\sum_i(q_i-p_i)=1-1=0.\end{aligned}\]</div>
+<p>Equality requires \(p_i=q_i\) for every i. Thus KL divergence has a strict minimum of zero when the two distributions agree. The proof extends to boundary distributions using the conventions just described.</p><div class="prompt"><strong>Geometric interpretation:</strong> On the simplex, fixing a reference distribution Q gives a scalar function \(P\mapsto D(Q\|P)\). Like a height function, it assigns a nonnegative value to each state, with its only minimum at Q. We can ask how that function changes along a dynamical trajectory.</div></section>
+<section><h2>4. Return to our stable coexistence equation</h2>
+<p>Our familiar replicator model is</p>
+<div class="math-box">\[x'=x(1-x)(3-4x),\qquad x^*=\frac34.\]</div>
+<p>We already know that all interior trajectories approach the stable equilibrium \(x^*=3/4\). But Shannon entropy need not decrease or increase monotonically as the solution approaches that equilibrium. Let's instead measure the divergence from the <em>equilibrium distribution</em> to the current distribution:</p>
+<div class="math-box">\[\boxed{V(x)=D(x^*\|x)=\frac34\ln\frac{3/4}{x}+\frac14\ln\frac{1/4}{1-x}.}\]</div>
+<p>Differentiate with respect to the current proportion x:</p>
+<div class="math-box">\[\begin{aligned}V'(x)&=-\frac{x^*}{x}+\frac{1-x^*}{1-x}\\&=\frac{x-x^*}{x(1-x)}.\end{aligned}\]</div>
+<p>Apply the chain rule along a solution, then substitute \(3-4x=-4(x-x^*)\):</p>
+<div class="math-box">\[\begin{aligned}\frac{dV}{dt}&=\frac{x-x^*}{x(1-x)}x'\\&=(x-x^*)(3-4x)\\&=\boxed{-4(x-x^*)^2.}\end{aligned}\]</div>
+<p>The result is strictly negative whenever the interior solution is away from the equilibrium, and zero at the equilibrium itself. This is stronger than simply noting that the arrows point toward \(x^*\): the function V gives us a quantitative, continuously decreasing measure of mismatch along the flow.</p>
+<figure><svg viewBox="0 0 800 329" role="img" aria-label="Time series for a replicator trajectory approaching equilibrium q=0.75, its Shannon entropy increasing then decreasing, and KL(q||x) decreasing steadily."><rect width="800" height="329" fill="#fff"/>
+<g stroke="#e2ebef"><path d="M83 52H748M83 99H748M83 146H748M83 193H748M83 240H748M83 287H748"/><path d="M83 52V287M249 52V287M416 52V287M582 52V287M748 52V287"/></g>
+<path d="M83 30V287H765" stroke="#6b8190" fill="none" stroke-width="2"/>
+<path id="w6-x-time" stroke="#0e8295" stroke-width="3.4" fill="none"/><path id="w6-h-time" stroke="#d17b43" stroke-width="2.9" fill="none"/>
+<path id="w6-d-time" stroke="#865aa6" stroke-width="3.5" fill="none"/>
+<g font-family="system-ui" fill="#35505d" font-size="14"><text x="18" y="25">Value</text><text x="73" y="291" text-anchor="end">0</text><text x="73" y="192" text-anchor="end">0.5</text><text x="73" y="91" text-anchor="end">1</text><text x="83" y="307">0</text><text x="748" y="307" text-anchor="end">15</text><text x="407" y="326">Time t</text><text x="103" y="45" fill="#0e8295">State x(t)</text><text x="255" y="45" fill="#d17b43">Shannon H(x(t))</text><text x="492" y="45" fill="#865aa6">KL(q || x(t))</text></g></svg>
+<figcaption>With \(x(0)=0.1\) and \(x'=x(1-x)(3-4x)\), Shannon entropy increases then decreases, while \(D(3/4\|x(t))\) decreases throughout. KL is specifically adapted to the attracting equilibrium.</figcaption></figure></section>
+<section><h2>5. Lyapunov functions and a family of stable systems</h2>
+<p>A <em>Lyapunov function</em> for an equilibrium is a scalar quantity minimized at that equilibrium and nonincreasing along trajectories nearby. A strictly decreasing function away from the equilibrium can establish asymptotic stability under appropriate regularity and compactness conditions.</p>
+<p>We can generalize the previous calculation. Consider</p>
+<div class="math-box">\[x'=x(1-x)(a-bx),\qquad b&gt;0,\qquad q=\frac ab\in(0,1).\]</div>
+<p>The interior equilibrium is q. Define \(V(x)=D(q\|x)\). Then</p>
+<div class="math-box">\[\boxed{\frac{d}{dt}D(q\|x(t))=(x-q)(a-bx)=-b(x-q)^2\leq0.}\]</div>
+<p>This proves local asymptotic stability of q, and the phase-line analysis shows that every interior initial condition approaches q. The divergence is nonnegative, vanishes only at q, and decreases along every nonstationary interior trajectory.</p>
+<p>Notice how the <em>order</em> of the KL arguments matters to this particularly simple derivative. The equilibrium distribution is the first argument and the evolving distribution is the second. The reverse divergence \(D(x\|q)\) is also decreasing in this particular scalar model, but its derivative has a different expression.</p>
+<details><summary>Optional: the multi-strategy KL derivative</summary><p>For a fixed positive reference distribution \(\mathbf q\) and an interior replicator trajectory \(\mathbf p(t)\), we find</p>
+\[\begin{aligned}\frac{d}{dt}D(\mathbf q\|\mathbf p)&=-\sum_iq_i\frac{p_i'}{p_i}\\&=-\sum_iq_i(f_i-\overline f)\\&=\overline f-\sum_iq_if_i.\end{aligned}\]
+<p>Unlike the two-strategy coexistence example, this expression is not automatically nonpositive for every payoff matrix. Its sign depends on the fitness structure and the chosen reference. This is why Lyapunov functions must be justified for the specific system.</p></details></section>
+<section><h2>6. Visualize KL on a probability triangle</h2>
+<p>Take a reference categorical distribution \(Q=(0.5,0.3,0.2)\) and an initial model \(P_0=(0.15,0.20,0.65)\). The simplex contains both points. We can form the straight path</p>
+<div class="math-box">\[P(t)=(1-t)P_0+tQ,\qquad0\leq t\leq1.\]</div>
+<figure><svg viewBox="0 0 800 337" role="img" aria-label="Triangle of categorical distributions showing reference Q, a model P, and a straight segment from P toward Q."><rect width="800" height="337" fill="#fff"/><path d="M350 35L115 304H585Z" fill="#edf6f7" stroke="#238698" stroke-width="2.5"/>
+<g stroke="#cbe1e5" stroke-width="1"><path d="M303 88.8H397M256 142.6H444M209 196.4H491M162 250.2H538"/><path d="M303 88.8L491 304M256 142.6L397 304M209 196.4L303 304M397 88.8L209 304M444 142.6L303 304M491 196.4L397 304"/></g>
+<path d="M455.75 263.65L326.5 169.5" stroke="#835da7" stroke-width="3.5" stroke-linecap="round"/><circle cx="455.75" cy="263.65" r="8" fill="#d17b43" stroke="#fff" stroke-width="2"/><circle cx="326.5" cy="169.5" r="8" fill="#0e8295" stroke="#fff" stroke-width="2"/>
+<g font-family="system-ui" fill="#344d5e" font-size="15"><text x="350" y="23" text-anchor="middle">A</text><text x="96" y="322">B</text><text x="596" y="322">C</text><text x="482" y="254" fill="#ba6a3c">P = (0.15, 0.20, 0.65)</text><text x="340" y="152" fill="#0e8295">Q = (0.50, 0.30, 0.20)</text><text x="612" y="87">Reference Q:</text><text x="612" y="107">the distribution</text><text x="612" y="127">being compared to</text><text x="612" y="160">Move P toward Q</text><text x="612" y="180">to reduce mismatch</text></g></svg>
+<figcaption>Both P and Q are points in the probability simplex. Their positions are normalized probability vectors, and the straight segment between them consists entirely of valid distributions. KL provides an information-theoretic comparison, not an ordinary Euclidean length.</figcaption></figure>
+<p>As P moves toward Q along this path, KL divergence \(D(Q\|P(t))\) decreases. In fact, \(P\mapsto D(Q\|P)\) is convex in P for positive components, and has its minimum at Q. This interpolation is a simple experiment in a <em>landscape of distributions</em>, not a claim that every probability curve follows a replicator equation.</p>
+<p>Using the expected log-score interpretation, the height \(D(Q\|P)\) tells us the extra average penalty for predicting using P rather than Q. The heatmap in the demo displays that penalty across the triangle and lets you compare its asymmetrical reverse \(D(P\|Q)\).</p>
+<div class="demo-invite"><h3>Investigate the KL landscape</h3><p>In the interactive explorer, drag the model P around the triangle while holding Q fixed. Inspect the divergence in both directions and the expected log loss; then interpolate toward Q and watch the mismatch disappear.</p><a class="btn primary" href="../demos/week06.html">Open the Week 6 KL explorer →</a></div></section>
+<section><h2>7. A quadratic approximation appears</h2>
+<p>KL divergence is not a metric, but consider two <em>nearby</em> Bernoulli distributions. Fix \(0&lt;q&lt;1\) and write the current state as \(x=q+h\), where h is small enough to stay inside the interval. We can Taylor-expand</p>
+<div class="math-box">\[D(q\|q+h)=q\ln\frac{q}{q+h}+(1-q)\ln\frac{1-q}{1-q-h}.\]</div>
+<p>At \(h=0\), the divergence is zero. Its first derivative is zero, and its second derivative is</p>
+<div class="math-box">\[\left.\frac{d^2}{dh^2}D(q\|q+h)\right|_{h=0}=\frac1q+\frac1{1-q}=\frac1{q(1-q)}.\]</div>
+<p>Therefore</p>
+<div class="math-box">\[\boxed{D(q\|q+h)=\frac{h^2}{2q(1-q)}+O(h^3).}\]</div>
+<figure><svg viewBox="0 0 800 261" role="img" aria-label="Two parabolas representing quadratic local approximation to KL around different Bernoulli reference probabilities 0.2 and 0.5, showing stronger curvature near boundary probabilities."><rect width="800" height="261" fill="#fff"/>
+<g stroke="#e3ecf0"><path d="M82 55H743M82 99H743M82 143H743M82 187H743M82 231H743"/></g>
+<path d="M82 34V231H754" stroke="#6d8491" stroke-width="2" fill="none"/>
+<g id="w6-local-parabolas"></g><g font-family="system-ui" fill="#35505d" font-size="14"><text x="23" y="28">Local KL</text><text x="82" y="249" text-anchor="middle">−0.15</text><text x="413" y="249" text-anchor="middle">0</text><text x="743" y="249" text-anchor="middle">0.15</text><text x="319" y="22">Probability change h</text><text x="480" y="61" fill="#0e8295">q=0.20</text><text x="588" y="61" fill="#d17b43">q=0.50</text></g></svg>
+<figcaption>Near \(P=Q\), the divergence is approximately \(h^2/[2q(1-q)]\). The quadratic coefficient is larger when q is closer to 0 or 1. The shape already suggests that equal numerical probability changes are not equally distinguishable everywhere.</figcaption></figure>
+<p>The coefficient depends on the location q. A small change near a boundary has a larger quadratic divergence than the same-sized change near \(q=1/2\). Probability space is therefore not measured uniformly by this local notion of distinguishability.</p>
+<p>More generally, for a positive categorical reference \(\mathbf q\) and small tangent displacement \(\mathbf h\) satisfying \(\sum_ih_i=0\),</p>
+<div class="math-box">\[D(\mathbf q\|\mathbf q+\mathbf h)=\frac12\sum_i\frac{h_i^2}{q_i}+O(\|\mathbf h\|^3).\]</div>
+<p>Here is the transition we've been working toward: the quadratic term supplies a positive-definite form on the tangent plane. In Week 7 we will recognize it as the <em>Fisher information metric</em> and begin studying lengths, angles, and geometry on statistical manifolds.</p></section>
+<section><h2>8. Four notions of a distribution's behavior</h2>
+<table><thead><tr><th>Mathematical quantity</th><th>What it measures</th></tr></thead><tbody>
+<tr><td>\(H(P)\)</td><td>Uncertainty about an outcome drawn from P</td></tr>
+<tr><td>\(D(Q\|P)\)</td><td>Information mismatch between Q and P</td></tr>
+<tr><td>\(\frac{d}{dt}D(Q\|P(t))\)</td><td>Change of mismatch along a chosen trajectory</td></tr>
+<tr><td>\(\frac12\sum_i h_i^2/q_i\)</td><td>Leading local quadratic cost of a displacement from Q</td></tr></tbody></table>
+<p>We began with phase lines and population fractions, and we've arrived at a local quadratic form on a space of probability distributions. Every step used tools from calculus, probability, and undergraduate differential equations. The next step is to make the resulting geometry explicit.</p></section>
+<div class="toolbar"><a class="btn primary" href="../demos/week06.html">Explore KL and stability →</a><a class="btn" href="../labs/week06.html">Complete the lab →</a><a class="btn" href="../quizzes/week06.html">Take the quiz →</a></div></article>
+<div class="nav-pager"><a href="week05.html">← Week 5 reading</a><a href="week07.html">Week 7: Fisher geometry →</a></div><footer class="site-footer">Introduction to Information Geometry · Week 6 reading</footer></div></main></div>
+<script>(function(){const key='intro-info-geom-v1:theme';let theme='light';try{theme=JSON.parse(localStorage.getItem(key))||'light'}catch{}document.documentElement.dataset.theme=theme;document.getElementById('theme').onclick=()=>{theme=theme==='dark'?'light':'dark';document.documentElement.dataset.theme=theme;try{localStorage.setItem(key,JSON.stringify(theme))}catch{}};const d=(q,p)=>q*Math.log(q/p)+(1-q)*Math.log((1-q)/(1-p));const h=p=>p>0&&p<1?-p*Math.log(p)-(1-p)*Math.log(1-p):0;function path(id,fn,domain,xmin,xmax,ymin,ymax,rect){const a=[];for(let j=0;j<=500;j++){const t=domain[0]+(domain[1]-domain[0])*j/500,y=fn(t);if(!Number.isFinite(y))continue;const xpx=rect[0]+(t-xmin)/(xmax-xmin)*rect[2],ypx=rect[1]+rect[3]-(y-ymin)/(ymax-ymin)*rect[3];a.push(xpx.toFixed(2)+','+ypx.toFixed(2))}document.getElementById(id).setAttribute('d','M'+a.join('L'))}
+path('w6-forward',x=>d(.75,x),[.04,.96],.04,.96,0,2,[77,58,677,184]);path('w6-reverse',x=>d(x,.75),[.04,.96],.04,.96,0,2,[77,58,677,184]);path('w6-quadratic',x=>(x-.75)**2/(2*.75*.25),[.04,.96],.04,.96,0,2,[77,58,677,184]);
+const x0=.1,dt=.02,trace=[x0],end=15;function f(x){return x*(1-x)*(3-4*x)}let x=x0;for(let i=0;i<end/dt;i++){const k1=f(x),k2=f(x+dt*k1/2),k3=f(x+dt*k2/2),k4=f(x+dt*k3);x=Math.max(1e-12,Math.min(1-1e-12,x+dt*(k1+2*k2+2*k3+k4)/6));trace.push(x)}const get=t=>trace[Math.min(trace.length-1,Math.round(t/dt))];
+for(const [id,fn] of [['w6-x-time',t=>get(t)],['w6-h-time',t=>h(get(t))],['w6-d-time',t=>d(.75,get(t))]])path(id,fn,[0,end],0,end,0,1.25,[83,52,665,235]);
+const g=document.getElementById('w6-local-parabolas');for(const [q,color] of [[.2,'#0e8295'],[.5,'#d17b43']]){let pts=[];for(let j=0;j<=200;j++){const v=-.15+.3*j/200,y=v*v/(2*q*(1-q));pts.push((82+(.15+v)/.3*661).toFixed(2)+','+(231-y/.09*176).toFixed(2))}const p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('d','M'+pts.join('L'));p.setAttribute('fill','none');p.setAttribute('stroke',color);p.setAttribute('stroke-width','3');g.appendChild(p)}
+})();</script></body></html>

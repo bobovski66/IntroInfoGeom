@@ -1,0 +1,28 @@
+
+/* Reading and visualization components used by Week 1. */
+.w1-hero{margin-bottom:25px}.w1-hero p{max-width:76ch}.w1-content{max-width:850px}
+.w1-content section{margin:0 0 33px}.w1-content h2{font-family:Georgia,Cambria,serif;font-size:1.65rem;line-height:1.2;margin:28px 0 12px}
+.w1-content h3{margin:19px 0 8px;font-size:1.14rem}.w1-content p{margin:12px 0}
+.w1-content .math-box{border-left:4px solid var(--accent);background:var(--soft);padding:12px 18px;border-radius:0 12px 12px 0;margin:15px 0;overflow-x:auto}
+.w1-content .math-box p{margin:4px 0}
+.w1-content figure{margin:20px 0;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;overflow:hidden}
+.w1-content figure svg{display:block;width:100%;height:auto;max-width:100%;background:#fff;border-radius:8px}
+.w1-content figcaption{color:var(--muted);font-size:.88rem;line-height:1.5;margin-top:10px}
+.w1-content .worked{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:18px;margin:18px 0}
+.w1-content .worked h3{margin-top:0}
+.w1-content .question{margin:15px 0}
+.w1-content details{background:var(--soft);padding:13px 15px;border-radius:11px;margin-top:12px}
+.w1-content summary{font-weight:700;cursor:pointer}
+.w1-content .two-notions{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:13px 0}
+.w1-content .two-notions>div{border:1px solid var(--line);background:var(--panel);padding:14px;border-radius:12px}
+.w1-content .two-notions p{margin:6px 0}
+.w1-content .flow-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
+.w1-content .flow-cards>div{padding:12px;border-radius:12px;background:var(--soft)}
+.w1-content .flow-cards strong{display:block}
+.w1-content .flow-cards span{font-size:.89rem;color:var(--muted)}
+.w1-content .demo-invite{background:var(--soft);padding:18px;border-radius:15px;border:1px solid var(--line);margin:25px 0}
+.w1-content .demo-invite h3{margin-top:0}
+.w1-content .demo-invite .btn{display:inline-block;text-decoration:none}
+.w1-content .svg-font{font-family:system-ui,Segoe UI,sans-serif}
+@media(max-width:700px){.w1-content .two-notions,.w1-content .flow-cards{grid-template-columns:1fr}.w1-content figure{padding:8px}.w1-content h2{font-size:1.4rem}}
+@media print{.w1-content figure{break-inside:avoid}.demo-invite{display:none}}

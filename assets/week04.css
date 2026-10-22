@@ -1,0 +1,22 @@
+
+/* Week 4 reading: mathematical images remain separate from MathJax's inline SVG. */
+.w4-hero{margin-bottom:25px}.w4-hero p{max-width:77ch}.w4-content{max-width:870px}
+.w4-content section{margin-bottom:32px}.w4-content h2{font:700 1.67rem/1.2 Georgia,Cambria,serif;margin:29px 0 12px}
+.w4-content h3{font-size:1.15rem;margin:18px 0 9px}.w4-content p{margin:12px 0}
+.w4-content .math-box{background:var(--soft);border-left:4px solid var(--accent);padding:12px 18px;border-radius:0 12px 12px 0;margin:18px 0;overflow-x:auto}
+.w4-content figure{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:20px 0;overflow:hidden}
+.w4-content figure > svg{width:100%;height:auto;max-width:100%;display:block;background:#fff;border-radius:8px}
+.w4-content figcaption{margin-top:10px;color:var(--muted);font-size:.88rem;line-height:1.5}
+.w4-content .worked{background:var(--panel);padding:18px;border:1px solid var(--line);border-radius:13px;margin:18px 0}
+.w4-content .worked h3{margin-top:0}.w4-content table{width:100%;border-collapse:collapse;margin:15px 0}
+.w4-content td,.w4-content th{border:1px solid var(--line);padding:10px;text-align:center}
+.w4-content th{background:var(--soft)}
+.w4-content .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:17px 0}
+.w4-content .two-col > div{background:var(--soft);border-radius:11px;padding:13px}
+.w4-content .prompt{background:var(--soft);padding:13px 17px;border-left:3px solid var(--accent2);margin:18px 0}
+.w4-content .demo-invite{padding:18px;background:var(--soft);border-radius:13px;border:1px solid var(--line);margin:24px 0}
+.w4-content .demo-invite h3{margin-top:0}.w4-content .demo-invite .btn{display:inline-block;text-decoration:none}
+.w4-content details{padding:13px 16px;background:var(--soft);border-radius:12px;margin:15px 0}
+.w4-content summary{cursor:pointer;font-weight:700}
+@media(max-width:700px){.w4-content h2{font-size:1.43rem}.w4-content figure{padding:8px}.w4-content .two-col{grid-template-columns:1fr}}
+@media print{.w4-content figure,.w4-content .worked{break-inside:avoid}.w4-content .demo-invite{display:none}}

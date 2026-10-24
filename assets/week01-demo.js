@@ -40,23 +40,25 @@ function solution(c,s){const q=canvas(c),b=chartspec(c),X=t=>b.l+t/T*(b.r-b.l),Y
  if(s.t>.35&&s.t<T-.35)segment(q,X(s.t-.35),Y(x-.35*f),X(s.t+.35),Y(x+.35*f),C.orange,2.5);
  write(q,'Solution: x(t)',b.l,24,C.ink,17);write(q,'time t',b.r,b.bottom+40,C.muted,12,'right');
 }
-window.mountInfoDemo=function(week,host){if(week!==1)return;
-host.innerHTML=[
-'<div class="panel"><h2>One equation, three synchronized views</h2><p>Change the initial proportion and advance time. The orange marker represents the same state in each visualization. The equation is <strong>x′ = x(1−x)(a − bx)</strong>.</p>',
-'<div class="toolbar"><label for="w1-preset">Example:</label><select id="w1-preset"><option value="custom" disabled>Custom parameters</option><option value="coexist">Stable coexistence</option><option value="bistable">Bistability</option><option value="dominantA">A dominates</option><option value="dominantB">B dominates</option></select><button id="w1-play" class="primary">Play</button><button id="w1-reset">Restart time</button></div>',
-'<div class="demo-controls"><div class="control"><label for="w1-a">a = <strong id="w1-av">3.00</strong></label><input type="range" id="w1-a" min="-4" max="4" step=".1" value="3"></div>',
+window.mountInfoDemo=function(week,host,controlsHost){if(week!==1)return;
+controlsHost.innerHTML=[
+'<div class="w1-control-rail"><h2>Explore the model</h2>',
+'<div class="w1-rail-group"><label for="w1-preset">Example</label><select id="w1-preset"><option value="custom" disabled>Custom parameters</option><option value="coexist">Stable coexistence</option><option value="bistable">Bistability</option><option value="dominantA">A dominates</option><option value="dominantB">B dominates</option></select></div>',
+'<div class="w1-rail-group"><h3>Parameters</h3><div class="control"><label for="w1-a">a = <strong id="w1-av">3.00</strong></label><input type="range" id="w1-a" min="-4" max="4" step=".1" value="3"></div>',
 '<div class="control"><label for="w1-b">b = <strong id="w1-bv">4.00</strong></label><input type="range" id="w1-b" min="-5" max="6" step=".1" value="4"></div>',
 '<div class="control"><label for="w1-x0">Initial x(0) = <strong id="w1-x0v">0.20</strong></label><input type="range" id="w1-x0" min="0" max="1" step=".01" value=".2"></div></div>',
-'<div class="toolbar" style="margin-top:16px"><label for="w1-time">Time t = <strong id="w1-tv">0.00</strong></label><input type="range" id="w1-time" min="0" max="12" step=".025" value="0" style="flex:1;min-width:160px"><label><input type="checkbox" id="w1-compare"> Compare other initial states</label></div>',
-'<p class="small muted">Click the phase line to choose an initial state; click the solution graph to choose a time.</p></div>',
-'<div class="panel"><h3>Composition of the population</h3><div style="height:39px;display:flex;width:100%;border-radius:9px;overflow:hidden"><div id="w1-shareA" style="background:#0e8295;color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px"></div><div id="w1-shareB" style="background:#d47746;color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px"></div></div><p id="w1-readout" aria-live="polite" class="small"></p></div>',
-'<div class="panel" style="padding:13px"><canvas id="w1-phase" width="900" height="143" role="img" aria-label="Phase line with moving state marker" style="width:100%;height:auto"></canvas></div>',
-'<div class="w1-chart-pair" style="display:grid;grid-template-columns:1fr 1fr;gap:14px"><div class="panel" style="min-width:0;padding:12px"><canvas id="w1-field" width="540" height="325" role="img" aria-label="Graph of instantaneous velocity with moving state marker" style="width:100%;height:auto"></canvas><p class="small muted">Orange height is x′: the instantaneous rate of change at the current state.</p></div>',
-'<div class="panel" style="min-width:0;padding:12px"><canvas id="w1-solution" width="540" height="325" role="img" aria-label="Graph of the solution versus time with marked current time and tangent" style="width:100%;height:auto"></canvas><p class="small muted">Orange dot gives x(t); the short orange segment is tangent to the curve, with slope x′.</p></div></div>',
-'<div class="panel"><h3>Interpreting your experiment</h3><p id="w1-analysis" aria-live="polite"></p><p class="small muted">Green equilibria attract nearby trajectories, outlined orange equilibria repel, and purple indicates a nonhyperbolic equilibrium whose stability requires a sign chart. Endpoint stability is relative to [0,1].</p></div>',
-'<style>@media(max-width:850px){.w1-chart-pair{grid-template-columns:1fr!important}}</style>'
+'<div class="w1-rail-group"><h3>Time</h3><label for="w1-time">t = <strong id="w1-tv">0.00</strong></label><input type="range" id="w1-time" min="0" max="12" step=".025" value="0"><div class="w1-button-row"><button id="w1-play" class="primary">Play</button><button id="w1-reset">Restart</button></div></div>',
+'<div class="w1-rail-group"><label class="w1-check"><input type="checkbox" id="w1-compare"> Compare other initial states</label></div>',
+'<p class="w1-rail-tip">You can also click the phase line to choose an initial state or the solution graph to choose a time.</p></div>'
 ].join('');
-const el=id=>host.querySelector('#w1-'+id);
+host.innerHTML=[
+'<div class="panel w1-phase-panel"><canvas id="w1-phase" width="900" height="143" role="img" aria-label="Phase line with moving state marker"></canvas></div>',
+'<div class="w1-chart-pair"><div class="panel w1-plot-panel"><canvas id="w1-field" width="540" height="325" role="img" aria-label="Graph of instantaneous velocity with moving state marker"></canvas><p class="small muted">Orange height is x′: the instantaneous rate of change at the current state.</p></div>',
+'<div class="panel w1-plot-panel"><canvas id="w1-solution" width="540" height="325" role="img" aria-label="Graph of the solution versus time with marked current time and tangent"></canvas><p class="small muted">Orange dot gives x(t); the short orange segment is tangent to the curve, with slope x′.</p></div></div>',
+'<div class="panel"><h3>Composition of the population</h3><div style="height:39px;display:flex;width:100%;border-radius:9px;overflow:hidden"><div id="w1-shareA" style="background:#0e8295;color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px"></div><div id="w1-shareB" style="background:#d47746;color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px"></div></div><p id="w1-readout" aria-live="polite" class="small"></p></div>',
+'<div class="panel"><h3>Interpreting your experiment</h3><p id="w1-analysis" aria-live="polite"></p><p class="small muted">Green equilibria attract nearby trajectories, outlined orange equilibria repel, and purple indicates a nonhyperbolic equilibrium whose stability requires a sign chart. Endpoint stability is relative to [0,1].</p></div>'
+].join('');
+const el=id=>document.getElementById('w1-'+id);
 const s={a:3,b:4,x0:.2,t:0,playing:false,compare:false,trace:[],last:0};
 const presets={coexist:[3,4,.2],bistable:[-1,-2,.3],dominantA:[2,0,.2],dominantB:[-2,0,.8]};
 const play=el('play'),time=el('time');

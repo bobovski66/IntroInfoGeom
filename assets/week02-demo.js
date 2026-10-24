@@ -76,7 +76,7 @@ host.innerHTML=[
 '<div class="panel"><canvas id="w2-solution" width="900" height="345" role="img" aria-label="Solution x against time with highlighted current state and tangent" style="width:100%;height:auto"></canvas><p class="small muted">Click the solution graph to scrub time. The tangent slope here equals the height of the vector-field graph at the same state.</p></div>',
 '<style>.w2-payoff{border-collapse:collapse;width:100%;max-width:560px;margin:10px 0 22px}.w2-payoff th,.w2-payoff td{text-align:center;border:1px solid var(--line);padding:8px}.w2-payoff th{background:var(--soft)}.w2-payoff label{margin-right:8px}.w2-payoff input{width:95px;max-width:80%;padding:5px 7px;border:1px solid var(--line);border-radius:7px;background:var(--panel);color:var(--ink)}.w2-chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.w2-chart-grid .panel{min-width:0;padding:12px}.w2-shares{display:flex;border-radius:10px;overflow:hidden;height:36px}.w2-shares div{display:flex;align-items:center;justify-content:center;white-space:nowrap;font-weight:700;color:white;font-size:13px}.w2-shares #w2-shareA{background:#0e8295}.w2-shares #w2-shareB{background:#d47846}@media(max-width:870px){.w2-chart-grid{grid-template-columns:1fr}}@media(max-width:500px){.w2-payoff input{width:64px}}</style>'
 ].join('');
-const el=id=>host.querySelector('#w2-'+id);
+const el=id=>document.getElementById('w2-'+id);
 const presets={coexist:[2,4,3,1,.2],coordination:[4,1,2,3,.35],Adom:[4,3,2,1,.3],Bdom:[1,0,3,2,.7],neutral:[2,2,2,2,.35]};
 const s={a:2,b:4,c:3,d:1,x0:.2,t:0,compare:false,playing:false,path:[],last:0};
 function pause(){s.playing=false;el('play').textContent='Play'}

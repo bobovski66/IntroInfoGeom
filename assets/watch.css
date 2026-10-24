@@ -1,0 +1,7 @@
+.watch-page h1{max-width:25ch;margin:10px 0 9px;}
+.watch-page .lead{margin:0 0 24px;}
+.lecture-player{background:#101820;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);}
+.lecture-player video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#101820;}
+.watch-hint{font-size:.87rem;color:var(--muted);margin:12px 0 20px;}
+.watch-actions .btn{text-decoration:none;font-weight:650;}
+@media(max-width:660px){.watch-page .lead{margin-bottom:16px;}.lecture-player{border-radius:8px;}}

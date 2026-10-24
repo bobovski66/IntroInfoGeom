@@ -1,0 +1,197 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+\def\courseweek{7}
+\input{course_beamer_style.tex}
+\title{Fisher Information and Scores}
+\subtitle{Week 7 \(\cdot\) Lecture 1}
+\date{}
+\begin{document}
+\begin{frame}[plain]\titlepage\end{frame}
+
+\begin{frame}{A metric from the KL expansion}
+For positive \(P=(p_i)\) and a small tangent displacement \(u\),
+\[
+D(P\|P+u)=\frac12\sum_i\frac{u_i^2}{p_i}+O(\|u\|^3).
+\]
+\vspace{.49cm}
+The resulting Fisher inner product is
+\[
+\highlightmath{g_P(u,v)=\sum_i\frac{u_iv_i}{p_i}},
+\qquad\sum_i u_i=\sum_i v_i=0.
+\]
+\end{frame}
+
+\begin{frame}{Length depends on the base distribution}
+For the Bernoulli family, a probability displacement \(dp\)
+has squared length
+\[
+\highlightmath{ds^2=\frac{dp^2}{p(1-p)}}.
+\]
+\vspace{.47cm}
+The same change in \(p\) carries more Fisher length near a boundary
+than near \(p=\frac12\).
+\end{frame}
+
+\begin{frame}{The Bernoulli metric coefficient}
+\vspace{-.23cm}
+\begin{center}\begin{tikzpicture}
+\begin{axis}[courseplot,xmin=.1,xmax=.9,ymin=0,ymax=12.6,
+ xlabel={$p$},ylabel={$I(p)$},xtick={.1,.25,.5,.75,.9},
+ ytick={0,4,8,12}]
+\addplot[courseteal,very thick,domain=.1:.9,samples=140]{1/(x*(1-x))};
+\addplot[only marks,coursecopper,mark=*,mark size=2.4pt]coordinates{(.5,4)};
+\end{axis}\end{tikzpicture}\end{center}
+\vspace{-.12cm}
+Here \(I(p)=1/[p(1-p)]\); it is smallest at \(p=1/2\).
+\end{frame}
+
+\coursepair{A Fisher norm on the triangle}{
+At \(P=(\frac12,\frac14,\frac14)\), consider
+\(v=(0,.1,-.1)\).
+\vspace{.4cm}
+Find the squared Fisher norm
+\[
+g_P(v,v)=\sum_i\frac{v_i^2}{p_i}=\;?.
+\]
+}{
+At \(P=(\frac12,\frac14,\frac14)\), consider
+\(v=(0,.1,-.1)\).
+\vspace{.4cm}
+The squared norm is
+\[
+\highlightmath{g_P(v,v)=\frac{.01}{.25}+\frac{.01}{.25}=.08}.
+\]
+}
+
+\begin{frame}{Scores describe parameter sensitivity}
+Let \(P_\theta=(p_i(\theta))\) be a statistical family.
+For observed outcome \(i\), the score is
+\[
+\highlightmath{S_\theta(i)=\frac{\partial}{\partial\theta}\ln p_i(\theta)}.
+\]
+\vspace{.44cm}
+Its mean is zero:
+\[
+E_\theta[S_\theta]=\sum_i p_i\frac{p_i'}{p_i}=0.
+\]
+\end{frame}
+
+\begin{frame}{Fisher information is score variance}
+For a one-parameter family,
+\[
+\highlightmath{I(\theta)=E_\theta[S_\theta^2]
+=\sum_i\frac{(p_i'(\theta))^2}{p_i(\theta)}}.
+\]
+\vspace{.46cm}
+This is precisely the squared Fisher speed of the parameter curve.
+\vspace{.4cm}
+For several parameters, the expected score products form
+the matrix \(G_{ab}=E[S_aS_b]\).
+\end{frame}
+
+\coursepair{Information in one Bernoulli observation}{
+For outcomes \(0,1\), let \(P_p=(1-p,p)\).
+\vspace{.35cm}
+Find the two scores and then compute
+\[
+I(p)=E_p[S_p^2].
+\]
+\vspace{.35cm}
+\[
+S_p(1)=\;?,\quad S_p(0)=\;?,\quad I(p)=\;?.
+\]
+}{
+For outcomes \(0,1\), let \(P_p=(1-p,p)\).
+\vspace{.35cm}
+The scores are \(\frac1p\) for outcome 1 and
+\(-\frac1{1-p}\) for outcome 0.
+\vspace{.35cm}
+\[
+\highlightmath{I(p)=p\left(\frac1p\right)^2
++(1-p)\left(\frac1{1-p}\right)^2=\frac1{p(1-p)}}.
+\]
+}
+
+\begin{frame}{Information under a coordinate change}
+Suppose \(\theta=\theta(\eta)\). The score obeys the chain rule.
+\vspace{.46cm}
+For a one-dimensional family,
+\[
+\highlightmath{I_\eta=I_\theta\left(\frac{d\theta}{d\eta}\right)^2}.
+\]
+\vspace{.45cm}
+In several dimensions, with Jacobian \(J\),
+\[
+\highlightmath{G_\eta=J^T G_\theta J}.
+\]
+\end{frame}
+
+\coursepair{Information in log-odds coordinates}{
+Let \(L=\ln[p/(1-p)]\).
+\vspace{.36cm}
+Using \(dp/dL=p(1-p)\) and \(I_p=1/[p(1-p)]\),
+find \(I_L\).
+\vspace{.4cm}
+\[
+I_L=\;?.
+\]
+}{
+Let \(L=\ln[p/(1-p)]\).
+\vspace{.36cm}
+The transformation law gives
+\[
+I_L=\frac1{p(1-p)}[p(1-p)]^2
+=\highlightmath{p(1-p)}.
+\]
+\vspace{.4cm}
+The metric coefficient changes with the coordinate.
+}
+
+\begin{frame}{Information accumulates in a sample}
+For \(N\) independent observations, log likelihoods add.
+Their score contributions have mean zero, so cross terms vanish:
+\vspace{.48cm}
+\[
+\highlightmath{I_N(\theta)=N I(\theta)}.
+\]
+\vspace{.5cm}
+The associated local statistical lengths scale by \(\sqrt N\).
+\end{frame}
+
+\begin{frame}{Cram\'{e}r--Rao and statistical precision}
+Under the usual unbiasedness and differentiability hypotheses,
+an estimator \(T\) of \(\theta\) satisfies
+\[
+\highlightmath{\operatorname{Var}_\theta(T)\geq\frac1{NI(\theta)}}.
+\]
+\vspace{.50cm}
+For Bernoulli sampling, the empirical proportion has variance
+\(p(1-p)/N\) and attains this bound.
+\end{frame}
+
+\coursepair{A lower bound for an estimator}{
+Take \(N=100\) independent Bernoulli observations at \(p=0.2\).
+\vspace{.4cm}
+Compute \(I(p)\) and the Cram\'{e}r--Rao lower bound on variance:
+\[
+I(p)=\;?,\qquad\operatorname{Var}(T)\geq\;?.
+\]
+}{
+Take \(N=100\) independent Bernoulli observations at \(p=0.2\).
+\vspace{.4cm}
+\[
+\highlightmath{I(p)=\frac1{.2(.8)}=6.25}.
+\]
+\vspace{.28cm}
+\[
+\highlightmath{\operatorname{Var}(T)\geq\frac1{625}=.0016}.
+\]
+}
+
+\begin{frame}{The same object in three languages}
+\begin{itemize}\setlength{\itemsep}{.57cm}
+\item The Hessian of local KL divergence defines a quadratic form.
+\item Tangent vectors have lengths measured by that form.
+\item A statistical score has expected square equal to the same length.
+\end{itemize}
+\end{frame}
+\end{document}

@@ -1,0 +1,169 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+\def\courseweek{7}
+\input{course_beamer_style.tex}
+\title{Fisher Length and Replicator Speed}
+\subtitle{Week 7 \(\cdot\) Lecture 2}
+\date{}
+\begin{document}
+\begin{frame}[plain]\titlepage\end{frame}
+
+\begin{frame}{Length of a curve of distributions}
+For a differentiable path \(P(t)=(p_i(t))\), its Fisher speed is
+\[
+\|P'(t)\|_F=\sqrt{\sum_i\frac{(p_i'(t))^2}{p_i(t)}}.
+\]
+\vspace{.46cm}
+Integrating gives its length:
+\[
+\highlightmath{L_F(P)=\int_a^b\|P'(t)\|_F\,dt}.
+\]
+\end{frame}
+
+\begin{frame}{The Bernoulli line element}
+For \(P_p=(p,1-p)\),
+\[
+\highlightmath{ds^2=\frac{dp^2}{p(1-p)}}.
+\]
+\vspace{.43cm}
+The distance between \(p=a\) and \(p=b\) is
+\[
+d_F(a,b)=\left|\int_a^b\frac{dp}{\sqrt{p(1-p)}}\right|.
+\]
+\vspace{.39cm}
+The metric's varying coefficient controls the accumulated length.
+\end{frame}
+
+\begin{frame}{An arc coordinate makes length constant}
+Set \(p=\sin^2(\theta/2)\). Then
+\[
+dp=\frac12\sin\theta\,d\theta,
+\qquad \sqrt{p(1-p)}=\frac12\sin\theta.
+\]
+\vspace{.48cm}
+Thus \(ds^2=d\theta^2\), and
+\[
+\highlightmath{\theta(p)=2\arcsin\sqrt p}.
+\]
+\end{frame}
+
+\coursepair{A Bernoulli Fisher distance}{
+Use
+\[
+d_F(a,b)=2\left|\arcsin\sqrt b-\arcsin\sqrt a\right|.
+\]
+\vspace{.43cm}
+Find the distance from \(a=\frac14\) to \(b=\frac34\).
+}{
+Use
+\[
+d_F(a,b)=2\left|\arcsin\sqrt b-\arcsin\sqrt a\right|.
+\]
+\vspace{.43cm}
+The arc coordinates are \(\theta_a=\frac\pi3\) and
+\(\theta_b=\frac{2\pi}3\). Therefore
+\[
+\highlightmath{d_F(\tfrac14,\tfrac34)=\frac\pi3}.
+\]
+}
+
+\begin{frame}{The arc coordinate is nonlinear}
+\vspace{-.2cm}
+\begin{center}\begin{tikzpicture}
+\begin{axis}[courseplot,xmin=0,xmax=1,ymin=0,ymax=3.25,
+ xlabel={$p$},ylabel={arc coordinate $\theta$},
+ xtick={0,.25,.5,.75,1},ytick={0,1.0472,1.5708,2.0944,3.14159},
+ yticklabels={0,$\pi/3$,$\pi/2$,$2\pi/3$,$\pi$}]
+\addplot[courseteal,very thick,domain=.00001:.99999,samples=150]
+{2*asin(sqrt(x))*pi/180};
+\addplot[only marks,coursecopper,mark=*,mark size=2pt]
+coordinates{(.25,1.04719755)(.75,2.0943951)};
+\end{axis}\end{tikzpicture}\end{center}
+\end{frame}
+
+\begin{frame}{The categorical Fisher matrix}
+Let \(P=(x,y,z)\) with \(z=1-x-y\). Then \(dz=-dx-dy\), so
+\[
+ds^2=\frac{dx^2}{x}+\frac{dy^2}{y}+\frac{(dx+dy)^2}{z}.
+\]
+\vspace{.38cm}
+In independent coordinates \((x,y)\),
+\[
+\highlightmath{G(x,y)=\begin{pmatrix}1/x+1/z&1/z\\1/z&1/y+1/z\end{pmatrix}}.
+\]
+\end{frame}
+
+\coursepair{The metric at a categorical law}{
+For \(P=(x,y,z)=(.2,.3,.5)\), compute
+\[
+G=\begin{pmatrix}1/x+1/z&1/z\\1/z&1/y+1/z\end{pmatrix}.
+\]
+\vspace{.45cm}
+What are its three distinct entries?
+}{
+For \(P=(x,y,z)=(.2,.3,.5)\), compute
+\[
+G=\begin{pmatrix}1/x+1/z&1/z\\1/z&1/y+1/z\end{pmatrix}.
+\]
+\vspace{.45cm}
+The result is
+\[
+\highlightmath{G=\begin{pmatrix}7&2\\2&16/3\end{pmatrix}}.
+\]
+}
+
+\begin{frame}{Tangent velocity as a random variable}
+At positive \(P\), assign a tangent vector \(v\) the values
+\[
+a_i=\frac{v_i}{p_i}.
+\]
+\vspace{.43cm}
+Then \(E_P[a]=\sum_i v_i=0\), and
+\[
+\highlightmath{g_P(v,v)=E_P[a^2]=\operatorname{Var}_P(a)}.
+\]
+\vspace{.36cm}
+Fisher norm is an ordinary variance when expressed in relative rates.
+\end{frame}
+
+\begin{frame}{Replicator velocities have a simple norm}
+The replicator equation is
+\[
+p_i'=p_i(f_i-\bar f).
+\]
+\vspace{.45cm}
+Its relative rate is \(p_i'/p_i=f_i-\bar f\). Hence
+\[
+\highlightmath{\|\mathbf p'\|_F^2
+=\sum_i p_i(f_i-\bar f)^2
+=\operatorname{Var}_{\mathbf p}(f)}.
+\]
+\end{frame}
+
+\coursepair{The speed of a replicator state}{
+At \(P=(.2,.3,.5)\), let \(f=(3,1,2)\).
+\vspace{.43cm}
+The mean fitness is \(\bar f=1.9\).
+\vspace{.3cm}
+Compute \(\|P'\|_F^2=\operatorname{Var}_P(f)\).
+}{
+At \(P=(.2,.3,.5)\), let \(f=(3,1,2)\).
+\vspace{.43cm}
+The fitness deviations are \((1.1,-.9,.1)\).
+\[
+\|P'\|_F^2=.2(1.1)^2+.3(-.9)^2+.5(.1)^2
+=\highlightmath{.49}.
+\]
+\vspace{.17cm}
+The Fisher speed is \(\highlightmath{.7}\).
+}
+
+\begin{frame}{Motion and geometry now use the same units}
+The replicator equation supplies tangent vectors.
+\vspace{.5cm}
+Fisher information assigns lengths to those vectors.
+\vspace{.5cm}
+The next step is to find the shortest intrinsic paths
+between two distributions. Their geometry becomes visible
+after a square-root change of coordinates.
+\end{frame}
+\end{document}

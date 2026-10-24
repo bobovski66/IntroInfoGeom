@@ -1,0 +1,230 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+\def\courseweek{9}
+\input{course_beamer_style.tex}
+\title{Natural Gradients and Replicator Flows}
+\subtitle{Week 9 \(\cdot\) Lecture 1}
+\date{}
+\begin{document}
+\begin{frame}[plain]\titlepage\end{frame}
+
+\begin{frame}{Which direction increases a function fastest?}
+For a function \(\Phi:\mathbb R^n\to\mathbb R\), the ordinary gradient
+is defined by
+\[
+d\Phi_p(v)=\nabla\Phi(p)\cdot v.
+\]
+\vspace{.45cm}
+This dot product measures length using Euclidean geometry.
+\vspace{.48cm}
+Probability distributions come with a different way to measure
+the length of a small change.
+\end{frame}
+
+\begin{frame}{A gradient depends on the metric}
+Given a metric \(g\), define the \emph{metric gradient} by
+\[
+\highlightmath{g_p(\operatorname{grad}_g\Phi,v)=d\Phi_p(v)}
+\quad\text{for every tangent vector }v.
+\]
+\vspace{.55cm}
+In local coordinates, write \(g(v,w)=v^TG(p)w\). Then
+\[
+\highlightmath{\operatorname{grad}_g\Phi=G(p)^{-1}\nabla\Phi}.
+\]
+\end{frame}
+
+\begin{frame}{Fisher geometry on a Bernoulli family}
+For \(P=(x,1-x)\), the Fisher line element is
+\[
+ds_F^2=\frac{dx^2}{x(1-x)}.
+\]
+\vspace{.45cm}
+Its metric coefficient is \(G(x)=1/[x(1-x)]\).
+\vspace{.50cm}
+Consequently the Fisher-gradient ascent equation is
+\[
+\highlightmath{x'=x(1-x)\Phi'(x)}.
+\]
+\end{frame}
+
+\coursepair{An ascent flow on the Bernoulli interval}{
+Take the potential \(\Phi(x)=3x-2x^2\).
+\vspace{.48cm}
+Find its natural-gradient equation and any interior equilibrium.
+\[
+x'=x(1-x)\Phi'(x).
+\]
+}{
+Take the potential \(\Phi(x)=3x-2x^2\).
+\vspace{.38cm}
+Since \(\Phi'(x)=3-4x\),
+\[
+\highlightmath{x'=x(1-x)(3-4x)}.
+\]
+\vspace{.23cm}
+The interior equilibrium is \(\highlightmath{x_*=3/4}\).
+}
+
+\begin{frame}{The phase line of this flow}
+\vspace{.35cm}
+\begin{center}
+\stateinterval{
+  \fill[coursecopper] (6.75,0)circle(3pt);
+  \node[below=9pt,text=coursecopper] at (6.75,0) {\(3/4\)};
+  \draw[courseteal,-{Stealth[length=4mm]},line width=1.9pt](1.7,.18)--(3.8,.18);
+  \draw[courseteal,-{Stealth[length=4mm]},line width=1.9pt](8.45,.18)--(7.35,.18);
+}
+\end{center}
+\vspace{.63cm}
+The potential rises until \(x=3/4\) and falls after it.
+The gradient flow moves toward the interior maximum.
+\end{frame}
+
+\begin{frame}{Why the potential increases}
+Along a solution \(x(t)\), the chain rule gives
+\[
+\frac{d\Phi}{dt}=\Phi'(x)x'.
+\]
+\vspace{.44cm}
+Substitute the Fisher-gradient equation:
+\[
+\highlightmath{\frac{d\Phi}{dt}=x(1-x)[\Phi'(x)]^2\geq0}.
+\]
+\vspace{.43cm}
+The identity expresses ascent without requiring us to solve the ODE.
+\end{frame}
+
+\coursepair{How fast is the potential increasing?}{
+At \(x=1/2\), for \(\Phi(x)=3x-2x^2\), calculate
+\[
+\frac{d\Phi}{dt}=x(1-x)(3-4x)^2.
+\]
+\vspace{.5cm}
+Also find the maximal value of \(\Phi\) on \([0,1]\).
+}{
+At \(x=1/2\), we have \(3-4x=1\), so
+\[
+\highlightmath{\frac{d\Phi}{dt}=\tfrac12\cdot\tfrac12\cdot1^2=\tfrac14}.
+\]
+\vspace{.34cm}
+The maximum occurs at \(x=3/4\):
+\[
+\highlightmath{\Phi(3/4)=\tfrac98}.
+\]
+}
+
+\begin{frame}{Tangent vectors on a simplex}
+For \(p=(p_1,\ldots,p_n)\), the coordinates satisfy
+\[\sum_i p_i=1.\]
+\vspace{.37cm}
+Every tangent vector \(v\) therefore satisfies \(\sum_i v_i=0\).
+\vspace{.43cm}
+The categorical Fisher metric is
+\[
+\highlightmath{g_p(v,w)=\sum_i\frac{v_iw_i}{p_i}}.
+\]
+\end{frame}
+
+\begin{frame}{The Fisher gradient on the simplex}
+Let \(a_i=\partial\Phi/\partial p_i\), and set
+\(\bar a=\sum_jp_j a_j\).
+\vspace{.48cm}
+The Fisher gradient has coordinates
+\[
+\highlightmath{(\operatorname{grad}_F\Phi)_i
+=p_i(a_i-\bar a)}.
+\]
+\vspace{.40cm}
+Its coordinates sum to zero, so the resulting velocity is tangent
+to the probability simplex.
+\end{frame}
+
+\coursepair{A gradient at the center of the simplex}{
+Let \(\Phi(p)=2p_A+p_B\), and take
+\(P=(1/3,1/3,1/3)\).
+\vspace{.46cm}
+Find \(\bar a\) and the Fisher-gradient velocity
+\[
+p_i'=p_i(a_i-\bar a),\quad a=(2,1,0).
+\]
+}{
+Let \(\Phi(p)=2p_A+p_B\), and take
+\(P=(1/3,1/3,1/3)\).
+\vspace{.36cm}
+The weighted mean is \(\bar a=(2+1+0)/3=1\). Hence
+\[
+\highlightmath{p'=(1/3,\ 0,\ -1/3)}.
+\]
+\vspace{.28cm}
+Type A increases, type B is momentarily constant,
+and type C decreases.
+}
+
+\begin{frame}{Replicator dynamics is a Fisher gradient}
+If the payoff or fitness values have the form
+\[
+f_i(p)=\frac{\partial\Phi}{\partial p_i},
+\]
+\vspace{.37cm}
+then the natural-gradient flow becomes
+\[
+\highlightmath{p_i'=p_i(f_i-\bar f)}.
+\]
+\vspace{.46cm}
+This is exactly the replicator equation, now understood as motion
+up a potential in Fisher geometry.
+\end{frame}
+
+\begin{frame}{Variance measures both speed and ascent}
+For the flow \(p'=\operatorname{grad}_F\Phi\),
+\[
+\frac{d\Phi}{dt}=d\Phi_p(p')=g_p(p',p').
+\]
+\vspace{.38cm}
+Using \(p_i'=p_i(f_i-\bar f)\) gives
+\[
+\highlightmath{\frac{d\Phi}{dt}=\|p'\|_F^2
+=\operatorname{Var}_p(f)}.
+\]
+\vspace{.32cm}
+Fitness variance is the squared geometric speed of ascent.
+\end{frame}
+
+\coursepair{Check the ascent identity numerically}{
+For \(P=(1/3,1/3,1/3)\) and \(\Phi=2p_A+p_B\),
+calculate the instantaneous increase in \(\Phi\).
+\vspace{.44cm}
+Use \(p'=(1/3,0,-1/3)\) and
+\(\dot\Phi=2p_A'+p_B'\).
+}{
+For \(P=(1/3,1/3,1/3)\) and \(\Phi=2p_A+p_B\),
+\[
+\highlightmath{\dot\Phi=2(1/3)+0=2/3}.
+\]
+\vspace{.31cm}
+The fitness variance gives the same answer:
+\[
+\tfrac13(2-1)^2+\tfrac13(1-1)^2+\tfrac13(0-1)^2
+=\highlightmath{\tfrac23}.
+\]
+}
+
+\begin{frame}{The boundary and the metric}
+The formula \(p_i'=p_i(f_i-\bar f)\) makes each face
+\(p_i=0\) invariant.
+\vspace{.53cm}
+The Fisher metric becomes singular in these coordinates at that face.
+\vspace{.53cm}
+Interior trajectories remain in the positive simplex at every
+finite time when the fitness functions are sufficiently regular.
+\end{frame}
+
+\begin{frame}{A question for the next lecture}
+We have described motion that increases a chosen potential.
+\vspace{.45cm}
+Which potential should we choose if we want a population of
+probabilities to approach a specified target distribution?
+\vspace{.45cm}
+Relative entropy supplies two instructive answers.
+\end{frame}
+\end{document}

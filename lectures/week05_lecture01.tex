@@ -1,0 +1,181 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+\def\courseweek{5}
+\input{course_beamer_style.tex}
+\title{Surprisal and Shannon Entropy}
+\subtitle{Week 5 \(\cdot\) Lecture 1}
+\date{}
+\begin{document}
+\begin{frame}[plain]\titlepage\end{frame}
+
+\begin{frame}{The information in one outcome}
+An outcome with probability \(p\) has surprisal
+\[
+\highlightmath{I(p)=-\log_2 p}\quad\text{bits}.
+\]
+\vspace{.45cm}
+With natural logarithms, \(-\ln p\) measures surprisal in nats.
+\vspace{.47cm}
+An outcome assigned a smaller probability carries greater surprisal
+when it occurs.
+\end{frame}
+
+\begin{frame}{Surprisal changes nonlinearly}
+\vspace{-.18cm}
+\begin{center}\begin{tikzpicture}
+\begin{axis}[courseplot,xmin=.02,xmax=1,ymin=0,ymax=5.8,
+ xlabel={event probability $p$},ylabel={bits},xtick={.125,.25,.5,.75,1},
+ ytick={0,1,2,3,4,5}]
+\addplot[courseteal,very thick,domain=.02:1,samples=150]{-ln(x)/ln(2)};
+\addplot[only marks,coursecopper,mark=*,mark size=2pt]
+coordinates{(.125,3)(.25,2)(.5,1)};
+\end{axis}\end{tikzpicture}\end{center}
+\vspace{-.1cm}
+Halving a probability increases surprisal by exactly one bit.
+\end{frame}
+
+\coursepair{Computing surprisal}{
+An event has probability \(p=\frac18\).
+\vspace{.55cm}
+Find its surprisal in bits and in nats:
+\[
+I_2=-\log_2(\tfrac18)=\;?,
+\qquad I_e=-\ln(\tfrac18)=\;?.
+\]
+}{
+An event has probability \(p=\frac18\).
+\vspace{.55cm}
+Its surprisal in bits and in nats is
+\[
+\highlightmath{I_2=3}\text{ bits},
+\qquad \highlightmath{I_e=\ln8}\text{ nats}.
+\]
+}
+
+\begin{frame}{Entropy is average surprisal}
+For a categorical law \(P=(p_1,\ldots,p_n)\),
+\[
+\highlightmath{H(P)=-\sum_i p_i\log_2 p_i}\quad\text{bits}.
+\]
+\vspace{.50cm}
+This is the expected information of one random draw.
+\vspace{.37cm}
+The convention \(0\log 0=0\) makes entropy continuous
+at the boundary of a finite simplex.
+\end{frame}
+
+\coursepair{Entropy of a three-outcome law}{
+Let \(P=(\frac12,\frac14,\frac14)\).
+\vspace{.4cm}
+Evaluate
+\[
+H(P)=-\frac12\log_2\frac12
+-\frac14\log_2\frac14
+-\frac14\log_2\frac14.
+\]
+\vspace{.4cm}
+Find \(H(P)\) in bits.
+}{
+Let \(P=(\frac12,\frac14,\frac14)\).
+\vspace{.4cm}
+The three terms are \(\frac12,\frac12,\frac12\) bits.
+\vspace{.32cm}
+\[
+\highlightmath{H(P)=\frac32}\text{ bits}.
+\]
+\vspace{.32cm}
+The uniform three-outcome law has a larger entropy, \(\log_2 3\).
+}
+
+\begin{frame}{Binary entropy}
+For \(P_p=(p,1-p)\),
+\[
+\highlightmath{h(p)=-p\log_2p-(1-p)\log_2(1-p)}.
+\]
+\vspace{.35cm}
+\begin{center}\begin{tikzpicture}
+\begin{axis}[courseplot,width=10cm,height=4cm,xmin=0,xmax=1,
+ ymin=0,ymax=1.12,xlabel={$p$},ylabel={entropy (bits)},
+ xtick={0,.25,.5,.75,1},ytick={0,.5,1}]
+\addplot[courseteal,very thick,domain=.001:.999,samples=150]
+{-x*ln(x)/ln(2)-(1-x)*ln(1-x)/ln(2)};
+\addplot[only marks,coursecopper,mark=*,mark size=2.3pt]coordinates{(.5,1)};
+\end{axis}\end{tikzpicture}\end{center}
+\end{frame}
+
+\coursepair{Where is binary entropy greatest?}{
+Using natural logs, let
+\[
+h(p)=-p\ln p-(1-p)\ln(1-p).
+\]
+\vspace{.35cm}
+Compute \(h'(p)\), solve \(h'(p)=0\), and check concavity.
+\vspace{.3cm}
+\[
+h'(p)=\;?,\qquad h''(p)=\;?.
+\]
+}{
+Using natural logs, let
+\[
+h(p)=-p\ln p-(1-p)\ln(1-p).
+\]
+\vspace{.35cm}
+Then
+\[
+\highlightmath{h'(p)=\ln\frac{1-p}{p}},\qquad
+\highlightmath{h''(p)=-\frac{1}{p(1-p)}<0}.
+\]
+\vspace{.3cm}
+The unique maximum occurs at \(\highlightmath{p=\frac12}\).
+}
+
+\begin{frame}{Uniform distributions maximize entropy}
+For \(n\) possible outcomes,
+\[
+H(P)\leq\log_2n.
+\]
+\vspace{.5cm}
+Equality holds for \(p_i=1/n\) for all \(i\).
+\vspace{.4cm}
+The maximum depends on how many outcomes the model allows.
+\end{frame}
+
+\begin{frame}{Entropy changes along a trajectory}
+Let \(P(t)\) be a differentiable path of interior distributions.
+Using natural logarithms,
+\[
+H(t)=-\sum_i p_i(t)\ln p_i(t).
+\]
+\vspace{.4cm}
+Because \(\sum_i p_i'=0\),
+\[
+\highlightmath{\frac{dH}{dt}=-\sum_i p_i'\ln p_i}.
+\]
+\end{frame}
+
+\coursepair{The entropy rate at one state}{
+For a Bernoulli path \(p(t)\),
+\[
+\frac{dH}{dt}=\ln\frac{1-p}{p}\,p'.
+\]
+\vspace{.42cm}
+At an instant where \(p=\frac14\) and \(p'=0.12\), find \(dH/dt\).
+}{
+For a Bernoulli path \(p(t)\),
+\[
+\frac{dH}{dt}=\ln\frac{1-p}{p}\,p'.
+\]
+\vspace{.42cm}
+At \(p=\frac14\), \(p'=0.12\),
+\[
+\highlightmath{\frac{dH}{dt}=0.12\ln3>0}\quad\text{nats/time}.
+\]
+}
+
+\begin{frame}{Two uses of the word information}
+Surprisal measures the information associated with one realized outcome.
+\vspace{.5cm}
+Entropy averages that quantity over all possible outcomes.
+\vspace{.5cm}
+Both depend on the chosen probability model.
+\end{frame}
+\end{document}

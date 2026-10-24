@@ -61,6 +61,14 @@
 .course-module .module-no{border-radius:50%;font-family:Georgia,Cambria,serif;font-size:1.18rem;}
 .course-module .module-head{margin-bottom:15px;}
 .course-module .summary{max-width:79ch;line-height:1.5;}
+.lecture-section{margin:0 0 14px;padding:14px 0 16px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.lecture-label{font-size:.74rem;font-weight:750;letter-spacing:.075em;text-transform:uppercase;color:var(--muted);margin:0 0 9px;}
+.lecture-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.lecture-item{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;padding:13px 14px;background:var(--panel);border:1px solid var(--line);border-radius:8px;}
+.lecture-item span{display:block;color:var(--muted);font-size:.74rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;}
+.lecture-item strong{display:block;margin:3px 0 0;font-size:.93rem;line-height:1.36;font-weight:650;}
+.lecture-files{display:flex;flex-direction:column;gap:5px;flex-shrink:0;}
+.lecture-files a{font-size:.8rem;font-weight:650;white-space:nowrap;}
 .course-module .resources{grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;}
 .course-module .resource{padding:9px 11px;border:1px solid var(--line);background:transparent;border-radius:8px;}
 .course-module .resource a{font-size:.875rem;font-weight:650;text-decoration:none;line-height:1.35;}
@@ -70,7 +78,7 @@
 .study-note{border-top:1px solid var(--line);margin-top:30px;padding:27px 0 8px;}
 .study-note p{max-width:80ch;}
 @media(max-width:1060px){.course-module .resources{grid-template-columns:repeat(3,minmax(0,1fr));}}
-@media(max-width:830px){.course-introduction{grid-template-columns:1fr;}.course-arc{grid-template-columns:1fr;gap:15px;}.course-arc li{padding-top:9px;}.course-arc li p{max-width:65ch;}}
+@media(max-width:830px){.course-introduction{grid-template-columns:1fr;}.course-arc{grid-template-columns:1fr;gap:15px;}.course-arc li{padding-top:9px;}.course-arc li p{max-width:65ch;}.lecture-grid{grid-template-columns:1fr;}}
 @media(max-width:660px){
   .course-hero{padding-top:17px;}
   .course-hero h1{font-size:2.8rem;}

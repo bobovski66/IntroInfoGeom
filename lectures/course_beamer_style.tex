@@ -1,0 +1,115 @@
+% Shared style for the Introduction to Information Geometry lecture slides.
+% Compile the lecture .tex files from this directory.
+\providecommand{\courseweek}{1}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[sc]{mathpazo}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{booktabs}
+
+\definecolor{courseink}{HTML}{173749}
+\definecolor{coursemuted}{HTML}{526674}
+\definecolor{courseteal}{HTML}{0E7287}
+\definecolor{coursecopper}{HTML}{B66B43}
+\definecolor{courseline}{HTML}{D4E0E3}
+\definecolor{coursepale}{HTML}{EFF5F5}
+
+\setbeamercolor{normal text}{fg=courseink,bg=white}
+\setbeamercolor{structure}{fg=courseteal}
+\setbeamercolor{frametitle}{fg=courseink,bg=white}
+\setbeamercolor{title}{fg=courseink}
+\setbeamercolor{subtitle}{fg=coursemuted}
+\setbeamercolor{block title}{fg=courseink,bg=white}
+\setbeamercolor{block body}{fg=courseink,bg=white}
+\setbeamercolor{alerted text}{fg=coursecopper}
+\setbeamerfont{title}{family=\rmfamily,series=\bfseries,size=\fontsize{32}{37}}
+\setbeamerfont{frametitle}{family=\rmfamily,series=\bfseries,size=\fontsize{26}{31}}
+\setbeamerfont{normal text}{size=\fontsize{18}{22}}
+\setbeamerfont{subtitle}{size=\fontsize{17}{21}}
+\setbeamersize{text margin left=0.78cm,text margin right=0.78cm}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{blocks}[default]
+\setlength{\parskip}{0.22em}
+\setbeamertemplate{footline}{%
+  \leavevmode\hbox to \paperwidth{\hspace{.78cm}%
+  {\color{coursemuted}\fontsize{8.5}{10}\selectfont Introduction to Information Geometry \hspace{.32cm} / \hspace{.32cm} Week \courseweek}%
+  \hfill{\color{coursemuted}\fontsize{8.5}{10}\selectfont \insertframenumber\hspace{.17cm}/\hspace{.17cm}\inserttotalframenumber}\hspace{.78cm}}%
+  \vskip.17cm
+}
+\setbeamertemplate{frametitle}{%
+  \vspace{.13cm}
+  \insertframetitle\par
+  \vspace{.08cm}
+}
+\setbeamertemplate{title page}{%
+  \vspace*{1.00cm}
+  {\color{courseteal}\fontsize{10}{13}\selectfont\bfseries
+  INTRODUCTION TO INFORMATION GEOMETRY\par}
+  \vspace{.40cm}
+  {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}
+  \vspace{.22cm}
+  {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}
+  \vfill
+  {\color{coursemuted}\fontsize{13}{16}\selectfont Christopher Lee\par}
+  \vspace{.34cm}
+}
+
+\pgfplotsset{
+  courseplot/.style={
+    width=11.05cm,
+    height=5.15cm,
+    axis line style={coursemuted!75},
+    tick style={coursemuted!65},
+    ticklabel style={font=\scriptsize,color=coursemuted},
+    label style={font=\normalsize,color=courseink},
+    grid=major,
+    major grid style={courseline!70,line width=.4pt},
+    line width=1.45pt,
+    legend style={font=\small,draw=none,fill=none,at={(.98,.03)},anchor=south east},
+    clip=true
+  }
+}
+
+\newcommand{\highlightmath}[1]{{\color{courseteal}#1}}
+\newcommand{\thinrule}{\par\vspace{.25cm}{\color{courseline}\rule{\linewidth}{.8pt}}\par}
+
+% A one-dimensional state space.  x=0 and x=1 are placed at 0 and 9 units.
+\newcommand{\stateinterval}[1]{%
+ \begin{tikzpicture}[x=1cm,y=1cm]
+   \draw[courseink,line width=1.25pt] (0,0)--(9,0);
+   \foreach \pos/\lab in {0/0,9/1} {
+     \fill[courseink] (\pos,0) circle(2.7pt);
+     \node[below=9pt,text=coursemuted] at (\pos,0) {\(\lab\)};
+   }
+   #1
+ \end{tikzpicture}%
+}
+
+% Paired pages are separate frames in the PDF, with matching titles.
+% Supply the whole frame body for each version; the instructor may edit them
+% independently without changing overlay logic.
+\newcommand{\coursepair}[3]{%
+  \begin{frame}{#1}#2\end{frame}%
+  \begin{frame}{#1}#3\end{frame}%
+}
+
+% Equilateral representation of the categorical simplex, in barycentric
+% coordinates with vertices A=(0,0), B=(1,0), C=(1/2,sqrt(3)/2).
+\newcommand{\coursesimplex}[1]{%
+ \begin{tikzpicture}[scale=4.9]
+  \fill[coursepale] (0,0)--(1,0)--(.5,.8660254)--cycle;
+  \draw[courseink,line width=.65pt] (0,0)--(1,0)--(.5,.8660254)--cycle;
+  \node[below left,font=\small] at (0,0) {A};
+  \node[below right,font=\small] at (1,0) {B};
+  \node[above,font=\small] at (.5,.8660254) {C};
+  #1
+ \end{tikzpicture}%
+}

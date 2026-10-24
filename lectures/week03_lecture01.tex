@@ -1,0 +1,208 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+\def\courseweek{3}
+\input{course_beamer_style.tex}
+\title{Three Strategies and the Simplex}
+\subtitle{Week 3 \(\cdot\) Lecture 1}
+\date{}
+\begin{document}
+\begin{frame}[plain]\titlepage\end{frame}
+
+\begin{frame}{Three proportions, two independent coordinates}
+Write the population state as \(\mathbf p=(p_A,p_B,p_C)\).
+\vspace{.48cm}
+\[
+\highlightmath{p_A+p_B+p_C=1},\qquad p_i\geq0.
+\]
+\vspace{.48cm}
+The possible states form a triangle:
+\[
+\Delta^2=\{\mathbf p\in\mathbb R^3:p_i\geq0,\;\sum_i p_i=1\}.
+\]
+\vspace{.36cm}
+Its vertices are pure populations. An edge contains two types.
+\end{frame}
+
+\begin{frame}{Drawing a distribution as a point}
+\begin{center}
+\coursesimplex{
+ \fill[courseteal](.4,.173205)circle(2pt);
+ \node[above right,text=courseteal,font=\small]at(.4,.173205){\((.5,.3,.2)\)};
+}
+\end{center}
+\vspace{.16cm}
+A state is the weighted average of the three vertex locations.
+\end{frame}
+
+\begin{frame}{Barycentric coordinates}
+Choose planar vertices \(A=(0,0)\), \(B=(1,0)\), and
+\(C=(\frac12,\frac{\sqrt3}{2})\).
+\vspace{.48cm}
+\[
+\highlightmath{r(\mathbf p)=p_A A+p_B B+p_C C}.
+\]
+\vspace{.27cm}
+\[
+=\left(p_B+\frac12p_C,\;\frac{\sqrt3}{2}p_C\right).
+\]
+\vspace{.4cm}
+The triangle is an affine drawing of the normalization plane in \(\mathbb R^3\).
+\end{frame}
+
+\begin{frame}{Velocity is tangent to the normalization plane}
+If \(\mathbf p(t)\) is differentiable, then
+\[
+p_A(t)+p_B(t)+p_C(t)=1.
+\]
+\vspace{.4cm}
+Differentiate:
+\[
+\highlightmath{p_A'+p_B'+p_C'=0}.
+\]
+\vspace{.4cm}
+An increase in one coordinate is balanced by decreases in the others.
+\end{frame}
+
+\begin{frame}{The multi-strategy replicator equation}
+Suppose \(N_i'=f_iN_i\) and \(p_i=N_i/N\), where \(N=\sum_i N_i\).
+\vspace{.40cm}
+The mean fitness is
+\[
+\bar f=\sum_i p_i f_i.
+\]
+\vspace{.3cm}
+The proportion equation for each type is
+\[
+\highlightmath{p_i'=p_i(f_i-\bar f)}.
+\]
+\end{frame}
+
+\coursepair{Computing a three-type velocity}{
+Let \(\mathbf p=(0.2,0.3,0.5)\) and \(\mathbf f=(3,1,2)\).
+\vspace{.42cm}
+Find the mean fitness and the vector \(\mathbf p'\).
+\vspace{.37cm}
+\[
+\bar f=\sum_i p_i f_i=\;?,\qquad
+\mathbf p'=(\;?,\;?,\;?).
+\]
+\vspace{.3cm}
+Check that your components sum to zero.
+}{
+Let \(\mathbf p=(0.2,0.3,0.5)\) and \(\mathbf f=(3,1,2)\).
+\vspace{.42cm}
+The mean fitness is
+\[
+\bar f=0.2(3)+0.3(1)+0.5(2)=\highlightmath{1.9}.
+\]
+\vspace{.37cm}
+\[
+\highlightmath{\mathbf p'=(0.22,-0.27,0.05)}.
+\]
+\vspace{.3cm}
+The components sum to zero.
+}
+
+\begin{frame}{Conservation of total probability}
+Sum the replicator velocities:
+\vspace{.35cm}
+\[
+\sum_i p_i'=\sum_i p_i(f_i-\bar f)
+=\bar f-\bar f\sum_i p_i=0.
+\]
+\vspace{.58cm}
+Thus a solution starting in the normalization plane stays there.
+For smooth fitness functions, positivity of initially present types is
+also preserved at finite times.
+\end{frame}
+
+\begin{frame}{The faces of a simplex are invariant}
+Whenever \(p_C=0\),
+\[
+p_C'=p_C(f_C-\bar f)=0.
+\]
+\begin{center}
+\scalebox{.62}{\coursesimplex{\draw[courseteal,line width=2pt](0,0)--(1,0);
+\fill[courseteal](.6,0)circle(2.2pt);}}
+\end{center}
+On the AB edge, the system reduces to a two-strategy model.
+\end{frame}
+
+\begin{frame}{Cyclic interactions}
+Consider a three-strategy payoff family:
+\[
+\highlightmath{M_s=\begin{pmatrix}0&1&-s\\-s&0&1\\1&-s&0\end{pmatrix}},
+\qquad s>0.
+\]
+\vspace{.4cm}
+\[
+f_A=p_B-sp_C,\quad f_B=p_C-sp_A,\quad f_C=p_A-sp_B.
+\]
+\vspace{.37cm}
+A outperforms B, B outperforms C, and C outperforms A.
+\end{frame}
+
+\coursepair{A cyclic velocity at one state}{
+Take \(s=1\) and \(\mathbf p=(\frac12,\frac13,\frac16)\).
+\vspace{.4cm}
+Compute \(\mathbf f=M_1\mathbf p\), then \(\bar f\) and \(\mathbf p'\).
+\vspace{.38cm}
+\[
+\mathbf f=(\;?,\;?,\;?),\qquad\mathbf p'=(\;?,\;?,\;?).
+\]
+}{
+Take \(s=1\) and \(\mathbf p=(\frac12,\frac13,\frac16)\).
+\vspace{.4cm}
+The fitness vector is
+\[
+\mathbf f=(\tfrac16,-\tfrac13,\tfrac16),\qquad\bar f=0.
+\]
+\vspace{.38cm}
+\[
+\highlightmath{\mathbf p'=(\tfrac1{12},-\tfrac19,\tfrac1{36})}.
+\]
+}
+
+\begin{frame}{Three strategies permit turning}
+\begin{center}
+\scalebox{.90}{\coursesimplex{
+ \draw[-{Stealth[length=4mm]},courseteal,very thick]
+ (.25,.075) .. controls (.45,-.03) and (.75,.16) .. (.72,.29);
+ \draw[-{Stealth[length=4mm]},courseteal,very thick]
+ (.72,.29) .. controls (.70,.55) and (.48,.62) .. (.32,.42);
+ \draw[-{Stealth[length=4mm]},courseteal,very thick]
+ (.32,.42) .. controls (.15,.27) and (.18,.16) .. (.25,.075);
+ \fill[coursecopper](.5,.288675)circle(2pt);
+}}
+\end{center}
+\vspace{.10cm}
+An interior trajectory has two independent velocity components.
+The cyclic model can circulate around the equal mixture \((\frac13,\frac13,\frac13)\).
+\end{frame}
+
+\begin{frame}{Antisymmetry and mean fitness}
+At \(s=1\), the payoff matrix satisfies
+\[
+M_1^T=-M_1.
+\]
+\vspace{.45cm}
+The scalar \(\mathbf p^TM_1\mathbf p\) therefore equals its own negative.
+Hence
+\[
+\highlightmath{\bar f=\mathbf p^TM_1\mathbf p=0}
+\]
+\vspace{.4cm}
+at every state, even though individual fitnesses drive motion.
+\end{frame}
+
+\begin{frame}{Dimensions, support, and motion}
+For \(n\) outcomes,
+\[
+\Delta^{n-1}=\{\mathbf p:p_i\geq0,\ \sum_i p_i=1\}.
+\]
+\vspace{.4cm}
+Its dimension is \(n-1\). The support consists of indices with \(p_i>0\).
+\vspace{.44cm}
+The next lecture uses the cyclic example to distinguish
+inward spiraling, closed orbits, and outward motion.
+\end{frame}
+\end{document}

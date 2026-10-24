@@ -1,0 +1,172 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+\def\courseweek{6}
+\input{course_beamer_style.tex}
+\title{Relative Entropy as a Lyapunov Function}
+\subtitle{Week 6 \(\cdot\) Lecture 2}
+\date{}
+\begin{document}
+\begin{frame}[plain]\titlepage\end{frame}
+
+\begin{frame}{A scalar function can monitor a flow}
+For \(x'=F(x)\), a Lyapunov function \(V(x)\) has
+a strict minimum at an equilibrium \(q\).
+\vspace{.48cm}
+If
+\[
+\highlightmath{\dot V(x)=V'(x)F(x)\leq0},
+\]
+\vspace{.34cm}
+its value cannot increase along trajectories.
+When the derivative is strictly negative away from \(q\),
+the function can establish attraction.
+\end{frame}
+
+\begin{frame}{KL divergence from an equilibrium law}
+For a two-type law, fix \(q\in(0,1)\) and define
+\[
+\highlightmath{V(x)=D(q\|x)}
+\]
+\vspace{.25cm}
+\[
+=q\ln\frac qx+(1-q)\ln\frac{1-q}{1-x}.
+\]
+\vspace{.46cm}
+Its minimum is at \(x=q\), where \(V(q)=0\).
+\end{frame}
+
+\begin{frame}{The key derivative}
+Differentiate with respect to the evolving coordinate \(x\):
+\[
+\begin{aligned}
+V'(x)&=-\frac qx+\frac{1-q}{1-x}\\[4pt]
+&=\highlightmath{\frac{x-q}{x(1-x)}}.
+\end{aligned}
+\]
+\vspace{.50cm}
+The denominator will cancel the replicator factor \(x(1-x)\).
+\end{frame}
+
+\coursepair{A global stability calculation}{
+Consider \(x'=x(1-x)(3-4x)\) with \(q=\frac34\).
+\vspace{.40cm}
+Let \(V(x)=D(q\|x)\). Using
+\[
+V'(x)=\frac{x-q}{x(1-x)},
+\]
+find \(\dot V=V'(x)x'\).
+}{
+Consider \(x'=x(1-x)(3-4x)\) with \(q=\frac34\).
+\vspace{.40cm}
+The factors cancel:
+\[
+\dot V=(x-\tfrac34)(3-4x)
+=\highlightmath{-4(x-\tfrac34)^2}.
+\]
+\vspace{.25cm}
+It is negative at every non-equilibrium interior state.
+}
+
+\begin{frame}{Relative entropy is a bowl around the target}
+\vspace{-.25cm}
+\begin{center}\begin{tikzpicture}
+\begin{axis}[courseplot,xmin=.06,xmax=.97,ymin=0,ymax=1.6,
+ xlabel={state $x$},ylabel={$D(.75\|x)$},xtick={.1,.25,.5,.75,.9},
+ ytick={0,.5,1,1.5}]
+\addplot[courseteal,very thick,domain=.06:.97,samples=155]
+{.75*ln(.75/x)+.25*ln(.25/(1-x))};
+\addplot[only marks,coursecopper,mark=*,mark size=2.6pt]coordinates{(.75,0)};
+\end{axis}\end{tikzpicture}\end{center}
+\vspace{-.12cm}
+Its sublevel intervals remain away from \(0\) and \(1\).
+\end{frame}
+
+\begin{frame}{A global conclusion from local information}
+For \(x'=x(1-x)(a-bx)\) with \(b>0\) and \(q=a/b\in(0,1)\),
+\[
+\highlightmath{\frac d{dt}D(q\|x)=-b(x-q)^2}.
+\]
+\vspace{.5cm}
+Because KL diverges at both endpoints, its finite sublevel sets
+are compact inside \((0,1)\).
+\vspace{.34cm}
+Every interior trajectory approaches \(q\).
+\end{frame}
+
+\begin{frame}{Many strategies: a short formula}
+Let \(\mathbf q\) be a fixed positive reference law and
+\(p_i'=p_i(f_i-\bar f)\).
+\vspace{.40cm}
+Differentiate \(D(\mathbf q\|\mathbf p(t))\):
+\[
+\begin{aligned}
+\frac d{dt}D(\mathbf q\|\mathbf p)
+&=-\sum_iq_i\frac{p_i'}{p_i}\\[4pt]
+&=\highlightmath{\bar f-\sum_iq_if_i}.
+\end{aligned}
+\]
+\end{frame}
+
+\coursepair{The cyclic family revisited}{
+For the cyclic family, let \(\mathbf q=(\frac13,\frac13,\frac13)\)
+and \(P=p_Ap_Bp_C\).
+\vspace{.33cm}
+We know
+\[
+D(\mathbf q\|\mathbf p)=-\frac13\ln(27P),
+\qquad \frac d{dt}\ln P=(1-s)(1-3Q).
+\]
+\vspace{.30cm}
+Find \(\frac d{dt}D(\mathbf q\|\mathbf p)\).
+}{
+For the cyclic family, let \(\mathbf q=(\frac13,\frac13,\frac13)\)
+and \(P=p_Ap_Bp_C\).
+\vspace{.33cm}
+The KL derivative is
+\[
+\highlightmath{\frac d{dt}D(\mathbf q\|\mathbf p)
+=-\frac{1-s}{3}(1-3Q)}.
+\]
+\vspace{.3cm}
+It decays for \(s<1\), is constant for \(s=1\), and increases for \(s>1\).
+}
+
+\begin{frame}{The quadratic approximation of KL}
+For a Bernoulli reference \(q\) and a small displacement \(u\),
+\[
+\highlightmath{D(q\|q+u)=\frac{u^2}{2q(1-q)}+O(u^3)}.
+\]
+\vspace{.48cm}
+The coefficient depends on the reference distribution.
+An equal coordinate change can have a different information cost
+at a different state.
+\end{frame}
+
+\coursepair{Two equal changes with unequal costs}{
+Use \(u=0.01\) in the quadratic KL approximation
+\[
+D(q\|q+u)\approx\frac{u^2}{2q(1-q)}.
+\]
+\vspace{.42cm}
+Compare \(q=0.2\) with \(q=0.5\).
+}{
+Use \(u=0.01\) in the quadratic KL approximation
+\[
+D(q\|q+u)\approx\frac{u^2}{2q(1-q)}.
+\]
+\vspace{.42cm}
+At \(q=0.2\), the cost is \(\highlightmath{0.0003125}\).
+At \(q=0.5\), it is \(\highlightmath{0.0002}\).
+}
+
+\begin{frame}{A quadratic form on the simplex}
+For an interior reference law \(\mathbf q\) and tangent displacement
+\(\mathbf u\) with \(\sum_i u_i=0\),
+\[
+\highlightmath{D(\mathbf q\|\mathbf q+\mathbf u)
+=\frac12\sum_i\frac{u_i^2}{q_i}+O(\|\mathbf u\|^3)}.
+\]
+\vspace{.52cm}
+The quadratic term defines a state-dependent inner product
+on the tangent space. That is the Fisher information metric.
+\end{frame}
+\end{document}

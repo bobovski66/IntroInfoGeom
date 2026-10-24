@@ -1,0 +1,164 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+\def\courseweek{8}
+\input{course_beamer_style.tex}
+\title{Geodesics and Statistical Midpoints}
+\subtitle{Week 8 \(\cdot\) Lecture 2}
+\date{}
+\begin{document}
+\begin{frame}[plain]\titlepage\end{frame}
+
+\begin{frame}{A constant-speed spherical geodesic}
+Map \(P\) and \(R\) to \(s_0=2\sqrt P\) and \(s_1=2\sqrt R\).
+Let \(\alpha=\arccos B(P,R)\).
+\vspace{.40cm}
+Then
+\[
+\highlightmath{s(t)=\frac{\sin((1-t)\alpha)}{\sin\alpha}s_0
++\frac{\sin(t\alpha)}{\sin\alpha}s_1}.
+\]
+\vspace{.38cm}
+The probability path is \(\gamma_i(t)=s_i(t)^2/4\).
+\end{frame}
+
+\begin{frame}{Why the speed is constant}
+Choose an orthonormal basis \(e_0,e_1\) for the plane of the great circle.
+Then the same path has the form
+\[
+s(t)=2\big(\cos(t\alpha)e_0+\sin(t\alpha)e_1\big).
+\]
+\vspace{.50cm}
+Differentiate:
+\[
+\highlightmath{\|s'(t)\|=2\alpha}.
+\]
+\vspace{.42cm}
+Its length over \(0\leq t\leq1\) is \(2\alpha=d_F(P,R)\).
+\end{frame}
+
+\begin{frame}{The Fisher midpoint formula}
+At \(t=\frac12\), both sine coefficients agree.
+The probability midpoint between \(P\) and \(R\) is
+\vspace{.4cm}
+\[
+\highlightmath{\gamma_i(\tfrac12)=
+\frac{(\sqrt{p_i}+\sqrt{r_i})^2}{2(1+B(P,R))}}.
+\]
+\vspace{.42cm}
+The squares make every coordinate nonnegative;
+the denominator makes them sum to one.
+\end{frame}
+
+\coursepair{The Bernoulli midpoint}{
+Find the constant-speed Fisher midpoint between \(p=\frac14\)
+and \(p=\frac34\).
+\vspace{.43cm}
+Recall \(\theta(p)=2\arcsin\sqrt p\).
+\vspace{.42cm}
+The midpoint is \(p_{\mathrm{mid}}=\;?\).
+}{
+Find the constant-speed Fisher midpoint between \(p=\frac14\)
+and \(p=\frac34\).
+\vspace{.43cm}
+The arc coordinates are \(\pi/3\) and \(2\pi/3\).
+\vspace{.42cm}
+Their midpoint is \(\pi/2\), so \(\highlightmath{p_{\mathrm{mid}}=\frac12}\).
+}
+
+\begin{frame}{Mixtures trace straight probability segments}
+The ordinary mixture between distributions is
+\[
+M(t)=(1-t)P+tR.
+\]
+\vspace{.48cm}
+It is a straight segment in the affine simplex drawing.
+\vspace{.37cm}
+The Fisher geodesic comes from a great-circle arc after taking
+square roots. For typical three-outcome endpoints, the two paths differ.
+\end{frame}
+
+\begin{frame}{Two paths between the same laws}
+\begin{center}\scalebox{.92}{\coursesimplex{
+ \coordinate (p) at (.22,.13);
+ \coordinate (r) at (.69,.45);
+ \draw[coursecopper,line width=1.3pt](p)--(r);
+ \draw[courseteal,line width=1.8pt](p)..controls(.30,.47)and(.55,.57)..(r);
+ \fill[courseink](p)circle(2pt);\fill[courseink](r)circle(2pt);
+ \node[below left,font=\small]at(p){\(P\)};
+ \node[above right,font=\small]at(r){\(R\)};
+}}\end{center}
+\vspace{.1cm}
+Schematic: copper shows a mixture segment; teal shows a curved Fisher route.
+\end{frame}
+
+\begin{frame}{Hellinger distance and spherical chords}
+The square-root overlap also determines a Euclidean chord:
+\[
+\|2\sqrt P-2\sqrt R\|^2=8(1-B(P,R)).
+\]
+\vspace{.42cm}
+In one common normalization, Hellinger distance satisfies
+\[
+\highlightmath{h(P,R)^2=1-B(P,R)}.
+\]
+\vspace{.38cm}
+The chord and the spherical arc agree to first order for nearby laws.
+\end{frame}
+
+\coursepair{Chord and arc between pure laws}{
+Take \(P=(1,0)\) and \(R=(0,1)\).
+\vspace{.47cm}
+Their overlap is \(B=0\). Find
+\[
+h(P,R),\quad \|2\sqrt P-2\sqrt R\|,\quad d_F(P,R).
+\]
+}{
+Take \(P=(1,0)\) and \(R=(0,1)\).
+\vspace{.47cm}
+Their overlap is \(B=0\), so
+\[
+\highlightmath{h(P,R)=1},\qquad
+\highlightmath{\|2\sqrt P-2\sqrt R\|=2\sqrt2},
+\]
+\vspace{.18cm}
+\[
+\highlightmath{d_F(P,R)=\pi}.
+\]
+}
+
+\begin{frame}{Global distance and the local metric agree}
+For a small tangent change \(h\), with \(\sum_i h_i=0\),
+\[
+B(P,P+h)=1-\frac18\sum_i\frac{h_i^2}{p_i}
++O(\|h\|^3).
+\]
+\vspace{.43cm}
+It follows that
+\[
+\highlightmath{d_F(P,P+h)^2=\sum_i\frac{h_i^2}{p_i}
++O(\|h\|^3)}.
+\]
+\end{frame}
+
+\begin{frame}{Curvature and the simplex boundary}
+The categorical Fisher manifold is an open region of
+the radius-2 sphere.
+\vspace{.45cm}
+Its sectional curvature is
+\[
+\highlightmath{K=\frac1{2^2}=\frac14}.
+\]
+\vspace{.43cm}
+The positive interior is incomplete. Including distributions with zero
+coordinates gives its metric completion as the closed spherical orthant.
+\end{frame}
+
+\begin{frame}{Two geometries of the same state space}
+The affine simplex represents mixtures as straight segments.
+\vspace{.48cm}
+The Fisher metric represents the same probability states
+as an orthant of a sphere.
+\vspace{.48cm}
+Next week we will use that metric to construct gradient flows
+on spaces of distributions.
+\end{frame}
+\end{document}

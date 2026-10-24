@@ -1,0 +1,226 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+\def\courseweek{9}
+\input{course_beamer_style.tex}
+\title{Potentials, Stability, and KL Flows}
+\subtitle{Week 9 \(\cdot\) Lecture 2}
+\date{}
+\begin{document}
+\begin{frame}[plain]\titlepage\end{frame}
+
+\begin{frame}{When a payoff matrix has a potential}
+Suppose fitness is \(f(p)=Mp\), with \(M\) symmetric.
+Define
+\[
+\highlightmath{\Phi(p)=\tfrac12p^TMp}.
+\]
+\vspace{.47cm}
+Then \(\partial_i\Phi=(Mp)_i=f_i\), and the replicator
+equation is the Fisher gradient of \(\Phi\).
+\end{frame}
+
+\begin{frame}{An example that favors balance}
+Choose \(M=-I\). Each strategy's fitness is \(f_i=-p_i\), and
+\[
+\highlightmath{\Phi(p)=-\frac12\sum_i p_i^2}.
+\]
+\vspace{.43cm}
+For a fixed total probability, the sum of squares is smallest
+at the uniform distribution.
+\vspace{.35cm}
+Thus the uniform state maximizes this potential.
+\end{frame}
+
+\coursepair{Compute a balancing flow}{
+For \(M=-I\), calculate the replicator velocity at
+\[
+P=(.6,.3,.1).
+\]
+\vspace{.32cm}
+Use \(f_i=-p_i\) and \(p_i'=p_i(f_i-\bar f)\).
+}{
+For \(P=(.6,.3,.1)\), the mean fitness is
+\(\bar f=-\sum p_i^2=-.46\).
+\vspace{.35cm}
+Therefore
+\[
+\highlightmath{p'=(-.084,\ .048,\ .036)}.
+\]
+\vspace{.24cm}
+The largest probability falls; the smaller two rise.
+}
+
+\coursepair{Verify ascent at the same state}{
+At \(P=(.6,.3,.1)\), we found
+\(p'=(-.084,.048,.036)\).
+\vspace{.39cm}
+Evaluate the potential derivative using
+\[
+\dot\Phi=\sum_i f_i p_i'=-\sum_i p_i p_i'.
+\]
+}{
+At \(P=(.6,.3,.1)\),
+\[
+\dot\Phi=-(.6)(-.084)-(.3)(.048)-(.1)(.036).
+\]
+\vspace{.28cm}
+Thus
+\[
+\highlightmath{\dot\Phi=.0324>0}.
+\]
+}
+
+\begin{frame}{Curvature of the potential and stability}
+At an interior critical point \(q\), the derivative of a metric
+gradient field is
+\[
+\highlightmath{DF(q)=G(q)^{-1}\operatorname{Hess}\Phi(q)}.
+\]
+\vspace{.51cm}
+If the Hessian is negative definite on the tangent space,
+then \(q\) is locally attracting.
+\end{frame}
+
+\begin{frame}{Why gradient equilibria have real eigenvalues}
+The linearization \(G^{-1}H\) need not itself be symmetric.
+\vspace{.45cm}
+But it is similar to
+\[
+\highlightmath{G^{-1/2}HG^{-1/2}},
+\]
+\vspace{.40cm}
+which is symmetric whenever \(H=\operatorname{Hess}\Phi\) is symmetric.
+\vspace{.36cm}
+Consequently its eigenvalues are real.
+\end{frame}
+
+\begin{frame}{A target distribution as a potential}
+Let \(Q=(q_1,\ldots,q_n)\) have strictly positive coordinates.
+\vspace{.32cm}
+Define
+\[
+\highlightmath{\Phi(P)=-D(Q\Vert P)
+=-\sum_i q_i\ln\frac{q_i}{p_i}}.
+\]
+\vspace{.38cm}
+The potential is largest when \(P=Q\).
+What does its Fisher-gradient flow look like?
+\end{frame}
+
+\begin{frame}{The target-seeking flow is linear}
+Differentiate the potential with respect to \(p_i\):
+\[
+\frac{\partial\Phi}{\partial p_i}=\frac{q_i}{p_i},
+\qquad\sum_i p_i\frac{\partial\Phi}{\partial p_i}=1.
+\]
+\vspace{.39cm}
+The natural-gradient equation simplifies to
+\[
+\highlightmath{p_i'=q_i-p_i}.
+\]
+\vspace{.34cm}
+Every coordinate relaxes toward its specified target.
+\end{frame}
+
+\coursepair{Solve the target-seeking system}{
+Consider \(P'=Q-P\), where \(Q\) is fixed.
+\vspace{.49cm}
+Solve the initial-value problem \(P(0)=P_0\).
+\vspace{.34cm}
+What happens to the distance \(P(t)-Q\) as time increases?
+}{
+Consider \(P'=Q-P\), with \(P(0)=P_0\).
+\vspace{.47cm}
+Each coordinate satisfies a first-order linear equation:
+\[
+\highlightmath{P(t)=Q+e^{-t}(P_0-Q)}.
+\]
+\vspace{.29cm}
+The displacement from the target decays by \(e^{-t}\).
+}
+
+\coursepair{One step toward a chosen target}{
+Let
+\[
+Q=(.3,.4,.3),\qquad P_0=(.65,.2,.15).
+\]
+\vspace{.38cm}
+Use \(P(1)=Q+e^{-1}(P_0-Q)\).
+\vspace{.32cm}
+Find \(P(1)\) to three decimal places.
+}{
+Let \(Q=(.3,.4,.3)\) and \(P_0=(.65,.2,.15)\).
+\[
+P(1)=(.3+.35/e,\ .4-.2/e,\ .3-.15/e).
+\]
+\vspace{.24cm}
+Thus
+\[
+\highlightmath{P(1)\approx(.429,.326,.245)}.
+\]
+}
+
+\begin{frame}{Reverse the KL divergence}
+Now choose the distinct potential
+\[
+\Phi(P)=-D(P\Vert Q)=-\sum_i p_i\ln\frac{p_i}{q_i}.
+\]
+\vspace{.43cm}
+Its Fisher gradient is
+\[
+\highlightmath{p_i'=p_i\left[-\ln\frac{p_i}{q_i}
++D(P\Vert Q)\right]}.
+\]
+\end{frame}
+
+\begin{frame}{Reverse-KL flow has a geometric interpolation}
+Let \(a(t)=e^{-t}\). The reverse-KL solution is
+\[
+\highlightmath{p_i(t)=\frac{q_i^{1-a(t)}p_i(0)^{a(t)}}
+{\sum_j q_j^{1-a(t)}p_j(0)^{a(t)}}}.
+\]
+\vspace{.41cm}
+This path interpolates multiplicatively between the initial
+distribution and the target, then renormalizes.
+\end{frame}
+
+\coursepair{Reverse-KL flow toward uniformity}{
+Suppose \(Q=(1/3,1/3,1/3)\) and
+\(P_0=(.64,.25,.11)\).
+\vspace{.42cm}
+At \(t=\ln2\), find the unnormalized weights
+\(p_i(0)^{e^{-t}}\).
+\vspace{.29cm}
+How would you turn them into a probability distribution?
+}{
+Suppose \(Q=(1/3,1/3,1/3)\) and
+\(P_0=(.64,.25,.11)\).
+\vspace{.33cm}
+At \(t=\ln2\), \(e^{-t}=1/2\), so the weights are
+\[
+\highlightmath{(.8,.5,\sqrt{.11})}.
+\]
+\vspace{.26cm}
+Dividing by \(.8+.5+\sqrt{.11}\) gives
+\(P(t)\approx\highlightmath{(.490,.306,.203)}\).
+}
+
+\begin{frame}{Why every flow is not a gradient flow}
+An increasing potential cannot return to its starting value
+along a nonstationary closed orbit.
+\vspace{.55cm}
+The balanced three-strategy cyclic replicator has closed orbits.
+\vspace{.52cm}
+Such cyclic motion cannot be globally realized as ascent of a
+single smooth Fisher potential.
+\end{frame}
+
+\begin{frame}{Dynamics constrain the possible geometry}
+When fitness comes from a potential, its Fisher-gradient flow
+provides monotone ascent and a direct stability test.
+\vspace{.48cm}
+When motion cycles, a single global ascent potential is unavailable.
+\vspace{.48cm}
+These two behaviors give us complementary ways to organize
+the dynamics of probability distributions.
+\end{frame}
+\end{document}

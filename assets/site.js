@@ -17,6 +17,25 @@ function heading(w,kind){return '<h1>'+esc(w.title)+'</h1><p class="lead">'+esc(
 function pager(){return '<div class="nav-pager"><span>'+(week>1?'<a href="'+path('readings/week'+String(week-1).padStart(2,'0')+'.html')+'">← Previous reading</a>':'')+'</span><span>'+(week<10?'<a href="'+path('readings/week'+String(week+1).padStart(2,'0')+'.html')+'">Next reading →</a>':'')+'</span></div>'}
 function renderIndex(target) {
   const chapterPdf = n => 'pdf/chapter_' + String(n).padStart(2, '0') + '.pdf';
+  const lectureFile = (n, lecture, ext) => 'lectures/week' + String(n).padStart(2, '0') + '_lecture0' + lecture + '.' + ext;
+  const lectureTitles = [
+    ['Population Proportions and Replicator Dynamics', 'Frequency-Dependent Fitness and Stability'],
+    ['Payoff Matrices and Expected Fitness', 'Stability, Parameters, and Inference'],
+    ['Three Strategies and the Simplex', 'Cyclic Motion and Invasion'],
+    ['Probability Laws, Means, and Variances', 'Curves of Distributions and Sampling'],
+    ['Surprisal and Shannon Entropy', 'Log-Odds and Exponential Updating'],
+    ['Relative Entropy and Prediction', 'Relative Entropy as a Lyapunov Function'],
+    ['Fisher Information and Scores', 'Fisher Length and Replicator Speed'],
+    ['Square-Root Coordinates and the Sphere', 'Geodesics and Statistical Midpoints'],
+    ['Natural Gradients and Replicator Flows', 'Potentials, Stability, and KL Flows'],
+    ['Gaussian Scores and the Hyperbolic Metric', 'Gaussian Geodesics and Statistical Distance']
+  ];
+  const lectureLinks = w => `<section class="lecture-section" aria-label="Week ${w.week} lecture slides">
+    <p class="lecture-label">Lecture presentations</p>
+    <div class="lecture-grid">${[1,2].map(n => `<div class="lecture-item">
+      <div><span>Lecture ${n}</span><strong>${esc(lectureTitles[w.week-1][n-1])}</strong></div>
+      <div class="lecture-files"><a href="${path(lectureFile(w.week,n,'pdf'))}">PDF ↗</a><a href="${path(lectureFile(w.week,n,'tex'))}">LaTeX source ↗</a></div>
+    </div>`).join('')}</div></section>`;
   target.innerHTML = `
     <header class="course-hero">
       <p class="course-kicker">Undergraduate mathematics · Ten-week course</p>
@@ -25,9 +44,10 @@ function renderIndex(target) {
       <p class="lead">We begin with replicator equations and the dynamics of competing strategies. Along the way, probability distributions become states, entropy and relative entropy become ways to compare them, and Fisher information provides a metric for their space. The final weeks connect that geometry to natural-gradient flows and the hyperbolic geometry of Gaussian distributions.</p>
       <div class="hero-actions">
         <a class="btn primary" href="${path('pdf/information_geometry.pdf')}">Download complete textbook (PDF) ↗</a>
+        <a class="btn" href="${path('lectures/InformationGeometry_All20Lectures_Beamer_PDF.zip')}">Download all 20 lecture decks (ZIP) ↗</a>
         <a class="btn" href="#weekly-materials">Explore the ten weeks ↓</a>
       </div>
-      <p class="hero-note">Each week has an illustrated online reading, a downloadable textbook chapter, an interactive demonstration, a guided lab, and a self-check quiz.</p>
+      <p class="hero-note">Each week has two lecture presentations in PDF and editable LaTeX, an illustrated online reading, a downloadable textbook chapter, an interactive demonstration, a guided lab, and a self-check quiz.</p>
     </header>
     <section class="course-introduction" aria-labelledby="about-course">
       <div>
@@ -39,7 +59,7 @@ function renderIndex(target) {
         <div><span>Level</span><strong>Undergraduate</strong></div>
         <div><span>Preparation</span><strong>Calculus and introductory differential equations</strong></div>
         <div><span>Length</span><strong>10 weeks / 10 chapters</strong></div>
-        <div><span>Materials</span><strong>Free web readings, PDF text, demos, labs, quizzes</strong></div>
+        <div><span>Materials</span><strong>20 lectures, free web and PDF readings, demos, labs, quizzes</strong></div>
       </aside>
     </section>
     <section class="course-sequence" aria-labelledby="course-arc">
@@ -51,14 +71,14 @@ function renderIndex(target) {
       </ol>
     </section>
     <section id="weekly-materials" aria-labelledby="weekly-heading">
-      <div class="weekly-heading"><div><p class="eyebrow">Course materials</p><h2 id="weekly-heading">Week-by-week readings and activities</h2><p>Read in your browser or use the corresponding PDF textbook chapter. The demo, lab, and quiz support each week's mathematical ideas.</p></div><button id="theme">Toggle theme</button></div>
+      <div class="weekly-heading"><div><p class="eyebrow">Course materials</p><h2 id="weekly-heading">Week-by-week lectures and activities</h2><p>Each week has two lecture PDFs with editable Beamer sources, a web reading, and a PDF textbook chapter. Demos, labs, and quizzes accompany the mathematical material.</p></div><button id="theme">Toggle theme</button></div>
       <div class="progress-panel"><div class="progress-top"><div><strong>Personal checklist</strong><p class="small muted" id="progress-label"></p></div><button id="clear-progress">Reset checklist</button></div><div class="track" aria-hidden="true"><span id="progress-fill"></span></div><p class="small muted">Checkmarks are saved in this browser only; they are not submitted as grades.</p></div>
       <div id="weeks" class="week-list"></div>
     </section>
     <section class="study-note" aria-labelledby="study-heading">
       <h2 id="study-heading">Working through a week</h2>
-      <p>The web reading introduces definitions and derives the central calculations, with diagrams and examples. The PDF chapter provides a continuous textbook treatment and exercises. Use the demo to test how changing parameters affects the model, then complete the lab and check your understanding with the quiz. The activities can be revisited as the course develops.</p>
-      <p class="small muted">Textbook LaTeX: <a href="${path('textbook/information_geometry.tex')}">complete source</a> · <a href="https://github.com/bobovski66/IntroInfoGeom/tree/main/textbook/chapters">individual chapter sources</a> · <a href="${path('textbook/README.md')}">compilation notes</a>.</p>
+      <p>The two lecture presentations introduce each topic and alternate mathematical explanations with calculations suitable for working on a separate whiteboard. The following slide reveals the completed result. The web reading develops the definitions with diagrams and examples; the PDF chapter provides a continuous textbook treatment and exercises. Use the demo to test parameters, then complete the lab and quiz.</p>
+      <p class="small muted">Textbook LaTeX: <a href="${path('textbook/information_geometry.tex')}">complete source</a> · <a href="https://github.com/bobovski66/IntroInfoGeom/tree/main/textbook/chapters">individual chapter sources</a> · <a href="${path('textbook/README.md')}">compilation notes</a>. Lecture slides: <a href="${path('lectures/README.md')}">source notes</a> · <a href="https://github.com/bobovski66/IntroInfoGeom/tree/main/lectures">all source files</a>.</p>
     </section>`;
   const list = target.querySelector('#weeks');
   const resources = w => [
@@ -74,7 +94,7 @@ function renderIndex(target) {
     card.innerHTML = `<div class="module-head">
       <div class="module-no">${w.week}</div>
       <div><h3>Week ${w.week}: ${esc(w.title)}</h3><p class="summary">${esc(w.summary)}</p></div>
-    </div><div class="resources">${resources(w).map(([label, file, id]) =>
+    </div>${lectureLinks(w)}<div class="resources">${resources(w).map(([label, file, id]) =>
       `<div class="resource"><a href="${path(file)}">${label} ↗</a>
       <label><input type="checkbox" data-progress="${key(w.week, id)}" aria-label="Mark Week ${w.week} ${label} complete"> Done</label></div>`
     ).join('')}</div>`;

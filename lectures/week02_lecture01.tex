@@ -1,0 +1,192 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+\def\courseweek{2}
+\input{course_beamer_style.tex}
+\title{Payoff Matrices and Expected Fitness}
+\subtitle{Week 2 \(\cdot\) Lecture 1}
+\date{}
+\begin{document}
+
+\begin{frame}[plain]\titlepage\end{frame}
+
+\begin{frame}{Fitness comes from encounters}
+In a well-mixed population, a type meets A with probability \(x\)
+and B with probability \(1-x\).
+\vspace{.38cm}
+\[
+\highlightmath{M=\begin{pmatrix}a&b\\c&d\end{pmatrix}}
+\]
+\vspace{.37cm}
+\begin{center}
+\begin{tabular}{@{}lcc@{}}
+ & Opponent A & Opponent B\\\midrule
+Type A receives & \(a\) & \(b\)\\
+Type B receives & \(c\) & \(d\)
+\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}{A weighted average of encounters}
+An A individual receives payoff \(a\) from an A opponent
+and payoff \(b\) from a B opponent.
+\vspace{.4cm}
+\[
+\highlightmath{f_A(x)=ax+b(1-x)}.
+\]
+\vspace{.55cm}
+Similarly,
+\[
+\highlightmath{f_B(x)=cx+d(1-x)}.
+\]
+\vspace{.35cm}
+Both expected fitnesses depend on the current population composition.
+\end{frame}
+
+\coursepair{A matrix becomes a dynamical model}{
+Let \(M=\begin{pmatrix}2&4\\3&1\end{pmatrix}\).
+\vspace{.35cm}
+\[
+f_A(x)=2x+4(1-x)=\;?,
+\qquad f_B(x)=3x+(1-x)=\;?.
+\]
+\vspace{.45cm}
+Find the fitnesses at \(x=\frac14\).
+\[
+f_A(\tfrac14)=\;?,\qquad f_B(\tfrac14)=\;?.
+\]
+}{
+Let \(M=\begin{pmatrix}2&4\\3&1\end{pmatrix}\).
+\vspace{.35cm}
+\[
+f_A(x)=2x+4(1-x)=\highlightmath{4-2x},
+\qquad f_B(x)=3x+(1-x)=\highlightmath{1+2x}.
+\]
+\vspace{.45cm}
+At \(x=\frac14\),
+\[
+f_A(\tfrac14)=\highlightmath{\tfrac72},\qquad
+f_B(\tfrac14)=\highlightmath{\tfrac32}.
+\]
+}
+
+\begin{frame}{The two expected fitness functions}
+\vspace{-.25cm}
+\begin{center}\begin{tikzpicture}
+\begin{axis}[courseplot,xmin=0,xmax=1,ymin=.75,ymax=4.25,
+ xlabel={$x$},ylabel={fitness},xtick={0,.25,.5,.75,1},ytick={1,2,3,4},
+ legend style={at={(.97,.98)},anchor=north east}]
+\addplot[courseteal,very thick,domain=0:1]{4-2*x};\addlegendentry{\(f_A=4-2x\)}
+\addplot[coursecopper,very thick,domain=0:1]{1+2*x};\addlegendentry{\(f_B=1+2x\)}
+\addplot[only marks,courseink,mark=*,mark size=2.7pt] coordinates {(.75,2.5)};
+\end{axis}\end{tikzpicture}\end{center}
+\vspace{-.15cm}
+Where the two lines intersect, both types have equal fitness.
+\end{frame}
+
+\begin{frame}{The advantage is an affine function}
+Subtract the fitnesses:
+\vspace{.4cm}
+\[
+\highlightmath{\Delta(x)=f_A(x)-f_B(x)}
+\]
+\vspace{.28cm}
+\[
+=\underbrace{(b-d)}_{\Delta(0)}+
+\underbrace{(a-b-c+d)}_{\text{slope}}x.
+\]
+\vspace{.52cm}
+The differential equation is
+\[
+\highlightmath{x'=x(1-x)\Delta(x)}.
+\]
+\end{frame}
+
+\begin{frame}{Reading the advantage at the endpoints}
+\[
+\Delta(0)=b-d, \qquad \Delta(1)=a-c.
+\]
+\vspace{.5cm}
+\begin{itemize}\setlength{\itemsep}{.47cm}
+\item At \(x\approx0\), a rare A mostly meets B. A increases when \(b>d\).
+\item At \(x\approx1\), a rare B mostly meets A. B increases when \(c>a\).
+\end{itemize}
+\vspace{.38cm}
+These invasion tests determine the direction of motion near the two ends.
+\end{frame}
+
+\begin{frame}{Four phase portraits from two signs}
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\foreach \y/\name in {2.65/{A dominance},1.45/{B dominance},.25/{Coexistence},-1.0/{Coordination}}{
+ \node[anchor=east,font=\small] at (-.2,\y){\name};
+ \draw[courseink,line width=1.1pt] (0,\y)--(6.3,\y);
+ \fill[courseink] (0,\y) circle(2pt);\fill[courseink] (6.3,\y) circle(2pt);
+}
+\foreach \x in {1.35,4.4}{\draw[-{Stealth[length=3mm]},courseteal,thick](\x,2.65)--++(.7,0);\draw[-{Stealth[length=3mm]},coursecopper,thick](\x+.7,1.45)--++(-.7,0);}
+\draw[-{Stealth[length=3mm]},courseteal,thick](1,.25)--(2.1,.25);
+\draw[-{Stealth[length=3mm]},coursecopper,thick](5.3,.25)--(4.2,.25);
+\fill[courseteal] (3.15,.25) circle(3pt);
+\draw[-{Stealth[length=3mm]},coursecopper,thick](2.1,-1)--(1,-1);
+\draw[-{Stealth[length=3mm]},courseteal,thick](4.2,-1)--(5.3,-1);
+\fill[coursecopper] (3.15,-1) circle(3pt);
+\end{tikzpicture}
+\end{center}
+\vspace{.08cm}
+\centering The signs of \(\Delta(0)\) and \(\Delta(1)\) determine the case.
+\end{frame}
+
+\coursepair{A coordination example}{
+Consider \(M=\begin{pmatrix}4&1\\2&3\end{pmatrix}\).
+\vspace{.37cm}
+Find \(\Delta(0)\), \(\Delta(1)\), and the interior equilibrium.
+\vspace{.35cm}
+\[
+\Delta(0)=\;?,\qquad \Delta(1)=\;?,\qquad x^*=\;?.
+\]
+\vspace{.4cm}
+Which endpoint does a solution approach from \(x(0)=0.35\)?
+}{
+Consider \(M=\begin{pmatrix}4&1\\2&3\end{pmatrix}\).
+\vspace{.37cm}
+The advantage is \(\Delta(x)=\highlightmath{4x-2}\).
+\vspace{.35cm}
+\[
+\Delta(0)=\highlightmath{-2},\quad\Delta(1)=\highlightmath{2},
+\quad x^*=\highlightmath{\tfrac12}.
+\]
+\vspace{.4cm}
+The solution from \(x(0)=0.35\) approaches \(0\).
+}
+
+\coursepair{The coordination phase line}{
+For \(x'=x(1-x)(4x-2)\), the interior equilibrium is \(x^*=\frac12\).
+\vspace{.6cm}
+\begin{center}\stateinterval{\fill[coursecopper](4.5,0)circle(4pt);\node[above=10pt]at(4.5,0){\(\frac12\)};}\end{center}
+\vspace{.45cm}
+Draw the arrows. Determine the basins of attraction.
+}{
+For \(x'=x(1-x)(4x-2)\), the interior equilibrium is \(x^*=\frac12\).
+\vspace{.6cm}
+\begin{center}\stateinterval{
+\fill[coursecopper](4.5,0)circle(4pt);\node[above=10pt]at(4.5,0){\(\frac12\)};
+\draw[-{Stealth[length=4mm]},courseteal,very thick](3.2,0)--(1.4,0);
+\draw[-{Stealth[length=4mm]},courseteal,very thick](5.8,0)--(7.6,0);
+}\end{center}
+\vspace{.45cm}
+The basins are \(\highlightmath{[0,\frac12)}\) and \(\highlightmath{(\frac12,1]}\).
+}
+
+\begin{frame}{The one-dimensional conclusion}
+For a two-strategy payoff matrix,
+\[
+x'=x(1-x)\big[(b-d)+(a-b-c+d)x\big].
+\]
+\vspace{.55cm}
+The difference between the rows determines the motion.
+\vspace{.40cm}
+\begin{itemize}\setlength{\itemsep}{.35cm}
+\item Its values at \(0\) and \(1\) determine the phase portrait.
+\item Its zero, when interior, locates the coexistence or threshold state.
+\end{itemize}
+\end{frame}
+
+\end{document}

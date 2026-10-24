@@ -3,14 +3,6 @@
   padding:32px 0 30px;
   border-bottom:1px solid var(--line);
 }
-.course-kicker{
-  color:var(--accent);
-  font-size:.75rem;
-  font-weight:750;
-  letter-spacing:.115em;
-  text-transform:uppercase;
-  margin:0 0 14px;
-}
 .course-hero h1{font-size:clamp(2.5rem,5vw,4.6rem);line-height:1.08;margin:0 0 20px;}
 .course-hero .hero-deck{
   max-width:26ch;
@@ -19,9 +11,8 @@
   color:var(--ink);
 }
 .course-hero .lead{max-width:76ch;margin:0 0 24px;font-size:1.055rem;line-height:1.75;}
-.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 13px;}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin:0;}
 .hero-actions .btn{text-decoration:none;font-weight:650;}
-.hero-note{font-size:.88rem;color:var(--muted);max-width:76ch;margin:8px 0 0;}
 .course-introduction{
   display:grid;
   grid-template-columns:minmax(0,1.6fr) minmax(220px,1fr);
@@ -29,7 +20,7 @@
   padding:27px 0;
   border-bottom:1px solid var(--line);
 }
-.course-introduction h2,.course-sequence h2,.study-note h2{margin:0 0 15px;}
+.course-introduction h2,.course-sequence h2{margin:0 0 15px;}
 .course-introduction p{max-width:68ch;margin:0 0 13px;}
 .course-facts{
   border-left:3px solid var(--accent);
@@ -75,8 +66,6 @@
 .course-module .resource a:hover{text-decoration:underline;}
 .course-module .resource label{color:var(--muted);margin-top:9px;}
 .course-module .resource input{accent-color:var(--accent);}
-.study-note{border-top:1px solid var(--line);margin-top:30px;padding:27px 0 8px;}
-.study-note p{max-width:80ch;}
 @media(max-width:1060px){.course-module .resources{grid-template-columns:repeat(3,minmax(0,1fr));}}
 @media(max-width:830px){.course-introduction{grid-template-columns:1fr;}.course-arc{grid-template-columns:1fr;gap:15px;}.course-arc li{padding-top:9px;}.course-arc li p{max-width:65ch;}.lecture-grid{grid-template-columns:1fr;}}
 @media(max-width:660px){

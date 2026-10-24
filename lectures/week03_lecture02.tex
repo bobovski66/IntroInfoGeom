@@ -78,14 +78,28 @@ The sign of \(\frac{d}{dt}\ln P\) is controlled by \(1-s\).
  \fill[coursecopper](1.75,1.01)circle(2.3pt);
  \node[above,font=\small]at(1.75,3.2){\(\ss\)};
  \node[below,font=\small]at(1.75,-.27){\note};
- \draw[courseteal,line width=1.5pt] (1.75,1.01)ellipse[x radius=.82,y radius=.55];
- \draw[courseteal,line width=1pt,dashed] (1.75,1.01)ellipse[x radius=1.11,y radius=.74];
  \end{scope}
 }
+% All three trajectories turn clockwise in the simplex coordinates above.
+% The spiral radius decreases, stays fixed, or increases with forward time.
+\draw[courseteal,line width=1.5pt,-{Stealth[length=2.8mm]}]
+  plot[domain=0:630,samples=141,variable=\t]
+  ({1.75+(0.83-0.00104*\t)*cos(\t)},
+   {1.01-(0.56-0.00070*\t)*sin(\t)});
+\draw[courseteal,line width=1.5pt]
+  (6.35,1.01) ellipse[x radius=.69,y radius=.46];
+\draw[courseteal,line width=1.5pt,-{Stealth[length=2.8mm]}]
+  (7.04,1.01) arc[start angle=0,end angle=-65,x radius=.69,y radius=.46];
+\begin{scope}[xshift=9.2cm]
+\draw[courseteal,line width=1.5pt,-{Stealth[length=2.8mm]}]
+  plot[domain=0:630,samples=141,variable=\t]
+  ({1.75+(0.18+0.00104*\t)*cos(\t)},
+   {1.01-(0.12+0.00070*\t)*sin(\t)});
+\end{scope}
 \end{tikzpicture}
 \end{center}
 \vspace{.10cm}
-The ellipses schematically show nested product levels.
+Representative trajectories are schematic; arrows show forward time.
 \end{frame}
 
 \begin{frame}{What the product proves}

@@ -65,7 +65,7 @@ host.innerHTML=[
 '<div class="panel"><canvas id="w6-path" width="900" height="332" role="img" aria-label="Directional KL divergences along the interpolation path toward the reference distribution" style="width:100%;height:auto"></canvas><p class="small muted">This straight-line interpolation is not asserted to be a replicator trajectory. It illustrates a decreasing mismatch toward Q.</p></div></div>',
 '<style>.w6-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}.w6-metrics>div{padding:10px;background:var(--soft);border-radius:9px;min-width:0}.w6-metrics span{font-size:.79rem;color:var(--muted);display:block}.w6-metrics strong{font-size:1.25rem;font-variant-numeric:tabular-nums}.w6-chart-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.w6-chart-grid>.panel{min-width:0;padding:12px}@media(max-width:890px){.w6-chart-grid{grid-template-columns:1fr}}@media(max-width:620px){.w6-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}</style>'
 ].join('');
-const el=id=>host.querySelector('#w6-'+id);
+const el=id=>document.getElementById('w6-'+id);
 const s={mode:'binary',q:.75,k:4,x0:.1,t:0,running:false,speed:3,path:[],last:0,ref:[.5,.3,.2],start:[.15,.2,.65],heat:'forward',u:0};
 function pause(){s.running=false;el('play').textContent='Play'}
 function totalTime(){return s.mode==='binary'?T:1}

@@ -104,7 +104,7 @@ host.innerHTML=[
 '<div class="panel"><canvas id="w8-sphere" width="740" height="556" role="img" aria-label="Positive octant of the radius-2 sphere with great-circle geodesic and mapped probability mixture" style="width:100%;height:auto;touch-action:none"></canvas><p class="small muted" id="w8-spherecap">Drag to rotate the sphere, or use the rotation sliders.</p></div></div>',
 '<style>.w8-endpoints{display:grid;grid-template-columns:1fr 1fr;gap:14px}.w8-endpoints>div{padding:12px;background:var(--soft);border-radius:12px;min-width:0}.w8-endpoints .control{margin-top:8px}.w8-endpoints input{width:100%}.w8-visual-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.w8-visual-grid>.panel{min-width:0;padding:11px}.w8-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.w8-metrics>div{background:var(--soft);padding:11px;border-radius:10px;min-width:0}.w8-metrics span{font-size:.8rem;color:var(--muted);display:block}.w8-metrics strong{font-size:1.23rem;font-variant-numeric:tabular-nums}@media(max-width:930px){.w8-visual-grid{grid-template-columns:1fr}}@media(max-width:660px){.w8-endpoints{grid-template-columns:1fr}.w8-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}</style>'
 ].join('');
-const el=id=>host.querySelector('#w8-'+id);
+const el=id=>document.getElementById('w8-'+id);
 const s={mode:'cat',path:'great',P:[.65,.25,.1],Q:[.15,.2,.65],ba:.25,bb:.75,t:0,select:'P',yaw:0,elev:35,playing:false,last:0,mixtureLen:0};
 function pause(){s.playing=false;el('play').textContent='Play'}
 function recalc(){s.mixtureLen=s.mode==='cat'?mixLength(s.P,s.Q):bernDist(s.ba,s.bb)}

@@ -1,0 +1,397 @@
+\documentclass[11pt,oneside,openany]{book}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[sc]{mathpazo}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[paperwidth=7.5in,paperheight=10in,inner=.85in,outer=.85in,top=.85in,bottom=.85in,headheight=15pt,headsep=20pt]{geometry}
+\usepackage{microtype}
+\usepackage{xcolor,graphicx,booktabs,array,longtable}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\usepackage{tikz,pgfplots}
+\usetikzlibrary{arrows.meta,calc,patterns,decorations.markings}
+\pgfplotsset{compat=1.18}
+\definecolor{ink}{HTML}{17334B}
+\definecolor{teal}{HTML}{137C83}
+\definecolor{copper}{HTML}{AE5932}
+\definecolor{soft}{HTML}{EEF3F5}
+\pgfplotsset{every axis/.append style={axis line style={black!65},tick style={black!60},tick label style={font=\small},label style={font=\small},legend style={font=\small,draw=none,fill=white},grid style={black!10},major grid style={black!10},line width=.6pt},every axis plot/.append style={line width=1.15pt}}
+\usepackage{enumitem,needspace,etoolbox}
+\setlist[enumerate]{topsep=5pt,itemsep=5pt,parsep=0pt}
+\setlist[itemize]{topsep=4pt,itemsep=3pt,parsep=0pt}
+\usepackage{titlesec,fancyhdr}
+\titleformat{\chapter}[display]{\normalfont\color{ink}}{\large\sffamily\MakeUppercase{Chapter \thechapter}}{12pt}{\huge\bfseries\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000}[\vspace{12pt}\titlerule]
+\titlespacing*{\chapter}{0pt}{-10pt}{24pt}
+\titleformat{\section}{\large\bfseries\color{ink}}{\thesection}{.65em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{ink}}{\thesubsection}{.6em}{}
+\titlespacing*{\section}{0pt}{18pt plus 3pt minus 2pt}{7pt}
+\titlespacing*{\subsection}{0pt}{12pt plus 2pt minus 2pt}{5pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\nouppercase{\leftmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{.3pt}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter\quad #1}{}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+\usepackage[font=small,labelfont=bf,labelsep=period]{caption}
+\usepackage{float,placeins}
+\floatplacement{figure}{htbp}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\renewcommand{\topfraction}{.9}
+\renewcommand{\textfraction}{.08}
+\renewcommand{\floatpagefraction}{.8}
+\usepackage{makeidx}
+\usepackage[columns=3,font=small,indentunit=11pt,columnsep=14pt]{idxlayout}
+\makeindex
+\usepackage[pdfencoding=auto,psdextra,colorlinks=true,linkcolor=ink,citecolor=teal,urlcolor=teal,bookmarksnumbered=true]{hyperref}
+\usepackage{bookmark}
+\hypersetup{pdftitle={The Calculus of Probability Distributions},pdfsubject={An undergraduate introduction to information geometry}}
+\urlstyle{same}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}{Example}[chapter]
+% A worked example may continue naturally across a page break.  Space, rather
+% than a heavy colored box, distinguishes it from the surrounding discussion.
+\BeforeBeginEnvironment{example}{\par\addvspace{9pt}\needspace{4\baselineskip}}
+\AfterEndEnvironment{example}{\par\addvspace{8pt}}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newenvironment{solution}{\par\smallskip\noindent\textit{Solution.}\ }{\par\smallskip}
+\newenvironment{exercises}{\begin{enumerate}[label=\thechapter.\arabic*,ref=\thechapter.\arabic*,leftmargin=2.8em,itemsep=6pt]}{\end{enumerate}}
+\newenvironment{answers}{\begin{description}[leftmargin=2.9em,labelwidth=2.5em,labelsep=.4em,itemsep=8pt,font=\normalfont\bfseries]}{\end{description}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\KL}[2]{D\!\left(#1\,\middle\|\,#2\right)}
+\newcommand{\grad}{\operatorname{grad}}
+\newcommand{\arcosh}{\operatorname{arcosh}}
+\newcommand{\sech}{\operatorname{sech}}
+\newcommand{\softmax}{\operatorname{softmax}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\ip}[2]{\left\langle #1,#2\right\rangle}
+\newcommand{\p}{\mathbf{p}}
+\newcommand{\q}{\mathbf{q}}
+\newcommand{\f}{\mathbf{f}}
+\newcommand{\uvec}{\mathbf{u}}
+\newcommand{\vvec}{\mathbf{v}}
+\newcommand{\ones}{\mathbf{1}}
+\newcommand{\simp}{\Delta^{n-1}}
+\newcommand{\simpi}{\Delta^{n-1}_{\!\circ}}
+\numberwithin{equation}{chapter}
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0pt}
+\linespread{1.115}
+\setlength{\emergencystretch}{2em}
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+\raggedbottom
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{2}
+% Leave enough room for the four-character subsection numbers in Chapter 10.
+\makeatletter
+\renewcommand*\l@section{\@dottedtocline{1}{1.5em}{3.35em}}
+\makeatother
+
+
+\hypersetup{pdftitle={Chapter 4: Probability Distributions as States}}
+\begin{document}
+\mainmatter
+\setcounter{chapter}{3}
+\chapter{Probability Distributions as States}
+\label{ch:probability}
+
+A normalized population state becomes a probability distribution when one individual is sampled. The same mathematical structure describes any finite list of possible observations. This chapter develops probability, expectation, and sampling directly on the simplex, providing the statistical interpretation needed for information geometry.
+
+There are two ways to use a probability vector. It may describe the current mixture in a changing population, or it may specify the chances of possible outcomes in a fixed observation model. Both interpretations assign the same coordinates to the same simplex. They differ in the questions we ask: how the state moves in the first setting, and what we expect to observe in the second.
+
+\section{Outcomes, events, and probability laws}\index{probability law}
+Let $\Omega=\{\omega_1,\ldots,\omega_n\}$ be a finite set of possible outcomes. A probability law assigns a number $p_i\geq0$ to each outcome, with $\sum_i p_i=1$. An \emph{event} is a subset $E\subseteq\Omega$, and its probability is the sum of the probabilities of its outcomes:
+\[
+\Pr(E)=\sum_{\omega_i\in E}p_i.
+\]
+This includes $\Pr(\Omega)=1$ and $\Pr(\varnothing)=0$. For disjoint events $E$ and $F$, their union has probability $\Pr(E)+\Pr(F)$, since the two sums have no outcomes in common.
+
+A law $P=(p_1,\ldots,p_n)$ is a point of the simplex $\Delta^{n-1}$. It describes the probabilities before an observation is made. An observation is one realized element of $\Omega$. A sequence of observations can be summarized by another simplex point, the empirical distribution, developed below.
+
+\begin{example}[A finite observation model]
+A device returns one of three symbols A, B, and C, with probabilities $(1/2,1/3,1/6)$. Find the probability of a return other than A.
+\begin{solution}
+The event is $\{B,C\}$, whose probability is $1/3+1/6=1/2$. Equivalently it is the complement of $\{A\}$, so its probability is $1-1/2$.
+\end{solution}
+\end{example}
+
+The outcome labels carry no numerical information by themselves. To compute a mean, one must specify the numbers assigned to them. Assigning measurement values, monetary returns, or indicator values produces different random variables on the same probability law.
+
+\section{Random variables and expectation}\index{expectation}
+A \emph{random variable}\index{random variable} on a finite outcome space is a function $Z:\Omega\to\R$. Write $z_i=Z(\omega_i)$. Its expectation is
+\begin{equation}\label{eq:expectation}
+\E_P[Z]=\sum_i p_i z_i.
+\end{equation}
+The subscript emphasizes which distribution supplies the weights. If the law changes while the numerical assignment stays fixed, the expectation changes as a function on the simplex.
+
+\begin{example}[A weighted mean]
+Let $(z_A,z_B,z_C)=(0,1,3)$ and $P=(1/2,1/3,1/6)$. Compute the expectation.
+\begin{solution}
+Equation \eqref{eq:expectation} gives
+\[
+\E_P[Z]=0\left(\frac12\right)+1\left(\frac13\right)+3\left(\frac16\right)=\frac56.
+\]
+An individual reading can be $0$, $1$, or $3$. The mean $5/6$ describes the average under repeated independent observation, so it need not be a possible individual reading.
+\end{solution}
+\end{example}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=.83\textwidth,height=5cm,ybar,bar width=19pt,xmin=-.55,xmax=3.55,ymin=0,ymax=.6,xtick={0,1,3},ytick={0,.1666667,.3333333,.5},yticklabels={0,$1/6$,$1/3$,$1/2$},xlabel={numerical reading $z$},ylabel={probability},grid=major]
+\addplot[teal,fill=teal!55] coordinates {(0,.5)(1,.33333333)(3,.16666667)};
+\end{axis}
+\end{tikzpicture}
+\caption{The law of a numerical random variable. The horizontal positions are its actual values, including the larger gap between 1 and 3; the bar heights are probabilities.}
+\end{figure}
+
+Expectation is linear. For constants $a,b$ and random variables $Z,W$ on the same space,
+\[
+\E[aZ+bW]=a\E[Z]+b\E[W].
+\]
+This follows by distributing the finite sum. No independence assumption is needed. In particular, a constant random variable $c$ has expectation $c$, and adding $c$ to every reading adds $c$ to its mean.
+
+An indicator variable $\mathbf{1}_E$ equals 1 when event $E$ occurs and 0 otherwise. Its expectation is $\Pr(E)$. Thus event probabilities themselves are expectations of simple numerical assignments.
+
+\section{Variance and covariance}
+Writing $\mu=\E[Z]$, define the \emph{variance}\index{variance} by
+\[
+\Var_P(Z)=\E_P[(Z-\mu)^2].
+\]
+Expanding the square and using linearity gives
+\begin{equation}\label{eq:variance}
+\Var_P(Z)=\E_P[Z^2]-\bigl(\E_P[Z]\bigr)^2.
+\end{equation}
+Variance is nonnegative because it averages squares. It is zero exactly when all outcomes having positive probability receive the same numerical value. If the readings have physical units, variance has the square of those units; the standard deviation $\sqrt{\Var(Z)}$ has the original units.
+
+\begin{example}[Computing a variance]
+For the readings and probabilities of the previous example, calculate the variance.
+\begin{solution}
+The second moment is
+\[
+\E[Z^2]=0+\frac13+\frac{9}{6}=\frac{11}{6}.
+\]
+Thus $\Var(Z)=11/6-25/36=41/36$. The standard deviation is $\sqrt{41}/6$, approximately $1.067$.
+\end{solution}
+\end{example}
+
+For two random variables, their \emph{covariance}\index{covariance} is
+\begin{equation}\label{eq:covariance}
+\Cov_P(Z,W)=\E_P[(Z-\E_PZ)(W-\E_PW)]
+=\E_P[ZW]-\E_P[Z]\E_P[W].
+\end{equation}
+Positive covariance means that readings above their respective means tend to occur together in the weighted average. Covariance with itself is variance. Direct expansion gives
+\[
+\Var(aZ+b)=a^2\Var(Z),
+\]
+so shifting all readings leaves variance unchanged while rescaling them changes variance quadratically.
+
+\section{The Bernoulli family}\index{Bernoulli family}
+A Bernoulli variable $X$ has outcomes 0 and 1, with $\Pr(X=1)=p$. The single parameter $p\in[0,1]$ specifies its law. Since $X^2=X$ on these two possible values,
+\begin{equation}\label{eq:bernoullimoments}
+\E[X]=p,\qquad \Var(X)=p-p^2=p(1-p).
+\end{equation}
+Completing the square gives $p(1-p)=1/4-(p-1/2)^2$. Thus the variance is maximized at an equal split and vanishes at either certain outcome.
+
+An indicator variable is Bernoulli with parameter $\Pr(E)$. This observation connects Bernoulli calculations with the sampling of any event, even in a much larger outcome space.
+
+\begin{example}[What the probability parameter describes]
+Suppose a device returns a positive signal with probability $0.2$. Let $X$ indicate a positive signal. Find its expectation and variance, then repeat after the signal is coded as $Y=5X$.
+\begin{solution}
+For $X$, the mean is $0.2$ and variance is $0.2(0.8)=0.16$. For the recoded reading $Y$, the mean is $1$ and variance is $25(0.16)=4$. The probability law of positive versus negative signals has the same parameter; the numerical readings use a different scale.
+\end{solution}
+\end{example}
+
+\section{Functions and curves on the simplex}
+With fixed numerical values $z_i$, the mean $\mu(\p)=\sum_i p_i z_i$ is affine in the probabilities. For three outcomes with readings $(0,1,3)$ and coordinates $(x,y,1-x-y)$,
+\[
+\mu(x,y)=3-3x-2y.
+\]
+Its level sets are line segments in the simplex. Every state on a given segment has the same expected reading, even though its three probabilities can differ.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=4.3]
+\fill[soft] (0,0)--(1,0)--(.5,.866025)--cycle;
+\draw[ink] (0,0)--(1,0)--(.5,.866025)--cycle;
+\draw[teal,thick] (.5,0)--(.083333,.144338);
+\draw[teal,thick] (1,0)--(.166667,.288675);
+\draw[copper,thick] (.75,.433013)--(.333333,.577350);
+\node[below left] at (0,0){$A:0$};\node[below right] at (1,0){$B:1$};\node[above] at (.5,.866025){$C:3$};
+\node[font=\small,above] at (.41,.205){$\mu=1$};
+\node[font=\small,above] at (.55,.51){$\mu=2$};
+\end{tikzpicture}
+\caption{Expectation as an affine function on the probability triangle. Each line segment consists of laws with the same mean reading.}
+\end{figure}
+
+For a smooth curve $\p(t)$, differentiating normalization gives $\sum_i p_i'=0$. Differentiating expectation gives
+\begin{equation}\label{eq:meanvelocity}
+\frac{d}{dt}\E_{\p(t)}[Z]=\sum_i z_i p_i'(t).
+\end{equation}
+The numerical values are fixed in this formula; only their probabilities vary. Under replicator dynamics it becomes
+\begin{equation}\label{eq:covarianceidentity}
+\frac{d}{dt}\E_\p[Z]=\sum_i z_i p_i(f_i-\bar f)=\Cov_\p(Z,f).
+\end{equation}
+Here the fitness values at the current state form another random variable on the type labels. A reading increases in mean when it is positively associated with fitness.
+
+\begin{example}[A mean changing under selection]
+At $\p=(0.2,0.3,0.5)$, take readings $z=(0,1,3)$ and fitnesses $f=(3,1,2)$. Find the instantaneous mean change.
+\begin{solution}
+The replicator velocity is $(0.22,-0.27,0.05)$. Therefore $\mu'=0(0.22)+1(-0.27)+3(0.05)=-0.12$. Alternatively, $\E[Zf]=3.3$, $\E[Z]=1.8$, and $\E[f]=1.9$, so covariance is $3.3-1.8(1.9)=-0.12$.
+\end{solution}
+\end{example}
+
+\section{Mixtures of probability laws}\index{mixture}
+Given laws $P$ and $R$ on the same outcome set, their mixture is
+\begin{equation}\label{eq:mixture}
+M(t)=(1-t)P+tR,\qquad 0\leq t\leq1.
+\end{equation}
+Each coordinate is nonnegative, and their sum is one. This proves that the simplex is convex. Operationally, one can generate the mixture by selecting the first law with probability $1-t$ and the second with probability $t$, then drawing an observation from the selected law.
+
+Its mean is $(1-t)\mu_P+t\mu_R$. To find its variance, use the corresponding mixture of second moments and subtract the squared mixture mean. The result is
+\begin{equation}\label{eq:mixturevariance}
+\Var_{M(t)}(Z)=(1-t)\Var_P(Z)+t\Var_R(Z)
++t(1-t)(\mu_P-\mu_R)^2.
+\end{equation}
+The first two terms average the variances within the two component laws. The final term accounts for the separation of their means. A mixture of two concentrated laws can have substantial variance when their centers are far apart.
+
+\begin{example}[A straight distribution path]
+Let $P=(0.6,0.3,0.1)$, $R=(0.2,0.3,0.5)$, and $z=(0,1,3)$. Find the mean and variance along their mixture.
+\begin{solution}
+The path is $(0.6-0.4t,0.3,0.1+0.4t)$, with tangent velocity $(-0.4,0,0.4)$. Its mean is $0.6+1.2t$, and its second moment is $1.2+3.6t$. Consequently
+\[
+\Var_{M(t)}(Z)=0.84+2.16t-1.44t^2.
+\]
+The mean is affine along this path, while the variance is a quadratic function. At the endpoints the variances are $0.84$ and $1.56$.
+\end{solution}
+\end{example}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=.85\textwidth,height=5cm,xmin=0,xmax=1,ymin=0,ymax=2,xlabel={mixture parameter $t$},ylabel={moment value},grid=major,legend pos=south east]
+\addplot[teal,domain=0:1]{.6+1.2*x};\addlegendentry{mean}
+\addplot[copper,domain=0:1]{.84+2.16*x-1.44*x^2};\addlegendentry{variance}
+\end{axis}
+\end{tikzpicture}
+\caption{Two scalar functions along the same mixture path. Their different dependence on $t$ follows from their definitions as functions of the probabilities.}
+\end{figure}
+
+\section{Samples and empirical distributions}
+An abstract probability vector assigns chances to possible outcomes. A sample gives us a second probability vector obtained from observed relative frequencies. These two points of the simplex generally differ, and the difference is random. The first calculation measures the size of this sampling variation in each coordinate.
+Draw $N$ observations independently from a fixed law $\p$. Independence means that the joint probability of a specified sequence is the product of the individual outcome probabilities. Let $N_i$ count the occurrences of outcome $i$. The \emph{empirical distribution}\index{empirical distribution} is
+\[
+\widehat p_i=\frac{N_i}{N}.
+\]
+For example, counts $(27,21,12)$ in 60 observations give $(0.45,0.35,0.20)$. Sampling from the same law again generally gives a different point.
+
+Write $I_{ri}$ for the indicator that observation $r$ is outcome $i$. Then $\widehat p_i=N^{-1}\sum_{r=1}^N I_{ri}$. Each indicator has mean $p_i$ and variance $p_i(1-p_i)$. Independence between observations makes their cross-covariances zero, giving
+\begin{equation}\label{eq:empiricalmoments}
+\E[\widehat p_i]=p_i,\qquad
+\Var(\widehat p_i)=\frac{p_i(1-p_i)}{N}.
+\end{equation}
+Thus the empirical proportion is centered at the model probability, and its standard deviation decreases like $N^{-1/2}$. Multiplying the sample size by four halves that standard deviation.
+
+We can turn the variance calculation into a guarantee about large sampling errors. A general inequality bounds the chance of deviating from a mean by at least $\varepsilon$: any random variable $Y$ with mean $m$ satisfies
+\[
+\Pr(|Y-m|\geq\varepsilon)\leq\frac{\Var(Y)}{\varepsilon^2}.
+\]
+Indeed, $(Y-m)^2\geq\varepsilon^2$ on the indicated event, so averaging the square gives at least $\varepsilon^2$ times the event's probability. Applying this inequality to $\widehat p_i$ proves convergence in probability to $p_i$ as $N\to\infty$, a finite-outcome version of the \emph{law of large numbers}\index{law of large numbers}.
+
+The normalized sampling errors satisfy $\sum_i(\widehat p_i-p_i)=0$. Sampling therefore produces random displacements within the same affine plane that contains the dynamical tangent vectors. Information geometry will supply a location-dependent way to measure those displacements.
+
+\section{The shape of sampling fluctuations}\index{sampling covariance}
+The empirical probabilities fluctuate together because their sum is always one. To describe this dependence, let $i\ne j$ be two categories and consider their indicators in one observation. They cannot both equal 1, so
+\[
+\E[I_iI_j]=0,\qquad \Cov(I_i,I_j)=-p_ip_j.
+\]
+Indicators belonging to different independent observations have covariance zero. Averaging over the $N$ observations therefore gives
+\[
+\Cov(\widehat p_i,\widehat p_j)=-\frac{p_ip_j}{N}\qquad(i\ne j).
+\]
+Together with the coordinate variances, this yields the full covariance matrix
+\begin{equation}\label{eq:empiricalcovariance}
+\operatorname{Cov}(\widehat\p)=\frac1N\bigl(\diag(\p)-\p\p^T\bigr).
+\end{equation}
+Multiplying this matrix by $\ones$ gives zero, expressing the absence of fluctuation in the total probability. The random cloud of empirical states spreads only within the normalization plane.
+
+For three outcomes, retaining only the first two independent coordinates gives
+\[
+\operatorname{Cov}\begin{pmatrix}\widehat p_A\\\widehat p_B\end{pmatrix}
+=\frac1N\begin{pmatrix}p_A(1-p_A)&-p_Ap_B\\-p_Ap_B&p_B(1-p_B)\end{pmatrix}.
+\]
+Its off-diagonal entries are negative: an unusually large observed share of A uses some of the fixed total share, tending to accompany smaller shares elsewhere. The effect follows from normalization rather than from a physical interaction among the categories.
+
+\begin{example}[Uncertainty in two empirical coordinates]
+For $\p=(0.5,0.3,0.2)$ and $N=100$, find the covariance matrix for the first two empirical probabilities.
+\begin{solution}
+The matrix is
+\[
+\begin{pmatrix}0.0025&-0.0015\\-0.0015&0.0021\end{pmatrix}.
+\]
+The first coordinate's standard deviation is $0.05$, and the second's is $\sqrt{0.0021}\approx0.04583$. Their covariance is negative. Repeating independent samples produces a cloud centered at $(0.5,0.3)$ whose spread depends on direction.
+\end{solution}
+\end{example}
+
+Finite samples can also miss a possible category entirely. For a category of probability $p_i$, the probability of no occurrence in $N$ independent observations is $(1-p_i)^N$: every observation must avoid that category.
+
+\begin{example}[A possible category absent from a sample]
+A category has model probability $0.02$. Find the chance that it is absent from a sample of 25 observations.
+\begin{solution}
+The probability is $0.98^{25}\approx0.6035$. Thus a zero empirical coordinate is quite plausible for this sample size even though the model coordinate is positive. An empirical distribution reports what occurred in the sample; the probability model describes the process that produced it.
+\end{solution}
+\end{example}
+
+The probability of missing a fixed positive-probability category tends to zero as the sample grows. At each finite sample size, however, the empirical distribution can lie on a face of the simplex while the generating law lies in its interior. Support conventions in information calculations must distinguish these two laws carefully.
+
+\FloatBarrier
+\section{Exercises}
+\begin{exercises}
+\item For $P=(1/4,1/2,1/4)$ and readings $(0,1,3)$, compute the mean, second moment, and variance.
+\item Prove linearity of expectation directly from the finite sum. Explain why independence is unnecessary.
+\item If $Z$ takes values $-2,1,4$ with probabilities $1/3,1/2,1/6$, compute its mean and variance.
+\item Prove $\Var(aZ+b)=a^2\Var(Z)$.
+\item Derive the Bernoulli mean and variance from their definitions. Find the maximum variance and interpret both endpoints.
+\item Find two different laws on readings $(0,1,2)$ with the same mean. Compare their variances.
+\item For the readings $(0,1,3)$, find the directional derivative of the mean in tangent direction $v=(-0.1,0.05,0.05)$. Interpret the probability transfers.
+\item Derive \eqref{eq:mixturevariance} by expanding the second moments and means.
+\item For the mixture in the worked example, find the parameter at which variance is largest and calculate that variance.
+\item Prove the replicator covariance identity \eqref{eq:covarianceidentity}. What happens when the reading $z_i$ is a fixed constant fitness $f_i$?
+\item A sample of 80 observations gives counts $(38,27,15)$. Find the empirical distribution. Compare its mean reading for $(0,1,3)$ with that of $(1/2,1/3,1/6)$.
+\item Derive the expectation and variance of an empirical proportion using independent indicator variables.
+\item For a Bernoulli model with $p=0.4$, calculate the standard deviations of the empirical proportion for $N=100$ and $N=400$.
+\item Show that for distinct categories $i,j$, $\Cov(\widehat p_i,\widehat p_j)=-p_ip_j/N$. Explain why these empirical coordinates are dependent.
+\item \emph{Exploration.} Simulate samples of sizes 10, 100, and 1000 from $(1/2,1/3,1/6)$. Compare empirical simplex points and empirical mean readings across several independent runs.
+\item For four readings $(0,1,2,3)$, verify that the distributions $(1/4,1/4,1/4,1/4)$ and $(5/24,9/24,3/24,7/24)$ have the same mean and variance. What does this show about moment summaries?
+\item Use the variance bound above to give a sufficient sample size for $\Pr(|\widehat p-p|\geq0.05)\leq0.1$, uniformly over all Bernoulli parameters $p$.
+\item \emph{Exploration.} Trace a straight mixture between two categorical laws. Plot mean and variance against the mixture parameter and verify their predicted linear and quadratic forms.
+\end{exercises}
+
+\clearpage\backmatter
+\chapter*{Selected Solutions}
+\section*{Chapter 4}
+\begin{answers}
+\item[4.1] The mean is $5/4$, second moment is $11/4$, and variance is $19/16$.
+\item[4.3] The mean is $1/2$, second moment is $9/2$, and variance is $17/4$.
+\item[4.5] Since $X^2=X$, the two required expectations are both $p$. Variance is $p-p^2$, maximized at $p=1/2$ with value $1/4$. At either endpoint $X$ is constant.
+\item[4.7] The derivative is $0(-0.1)+1(0.05)+3(0.05)=0.20$. Probability is transferred away from the zero reading to both positive readings.
+\item[4.9] The derivative is $2.16-2.88t$, so the maximum occurs at $t=3/4$. Its value is $1.65$.
+\item[4.11] The empirical law is $(0.475,0.3375,0.1875)$. Its mean is $0.9$, compared with $5/6$ for the specified model.
+\item[4.13] The standard deviations are $\sqrt{0.24/100}\approx0.04899$ and $\sqrt{0.24/400}\approx0.02449$.
+\item[4.17] Since $p(1-p)\leq1/4$, the probability is at most $1/(4N(0.05)^2)=100/N$. Taking $N\geq1000$ makes this at most $0.1$. This general bound is sufficient and can be conservative.
+\end{answers}
+\end{document}

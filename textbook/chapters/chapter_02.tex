@@ -1,0 +1,391 @@
+\documentclass[11pt,oneside,openany]{book}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[sc]{mathpazo}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[paperwidth=7.5in,paperheight=10in,inner=.85in,outer=.85in,top=.85in,bottom=.85in,headheight=15pt,headsep=20pt]{geometry}
+\usepackage{microtype}
+\usepackage{xcolor,graphicx,booktabs,array,longtable}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\usepackage{tikz,pgfplots}
+\usetikzlibrary{arrows.meta,calc,patterns,decorations.markings}
+\pgfplotsset{compat=1.18}
+\definecolor{ink}{HTML}{17334B}
+\definecolor{teal}{HTML}{137C83}
+\definecolor{copper}{HTML}{AE5932}
+\definecolor{soft}{HTML}{EEF3F5}
+\pgfplotsset{every axis/.append style={axis line style={black!65},tick style={black!60},tick label style={font=\small},label style={font=\small},legend style={font=\small,draw=none,fill=white},grid style={black!10},major grid style={black!10},line width=.6pt},every axis plot/.append style={line width=1.15pt}}
+\usepackage{enumitem,needspace,etoolbox}
+\setlist[enumerate]{topsep=5pt,itemsep=5pt,parsep=0pt}
+\setlist[itemize]{topsep=4pt,itemsep=3pt,parsep=0pt}
+\usepackage{titlesec,fancyhdr}
+\titleformat{\chapter}[display]{\normalfont\color{ink}}{\large\sffamily\MakeUppercase{Chapter \thechapter}}{12pt}{\huge\bfseries\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000}[\vspace{12pt}\titlerule]
+\titlespacing*{\chapter}{0pt}{-10pt}{24pt}
+\titleformat{\section}{\large\bfseries\color{ink}}{\thesection}{.65em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{ink}}{\thesubsection}{.6em}{}
+\titlespacing*{\section}{0pt}{18pt plus 3pt minus 2pt}{7pt}
+\titlespacing*{\subsection}{0pt}{12pt plus 2pt minus 2pt}{5pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\nouppercase{\leftmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{.3pt}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter\quad #1}{}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+\usepackage[font=small,labelfont=bf,labelsep=period]{caption}
+\usepackage{float,placeins}
+\floatplacement{figure}{htbp}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\renewcommand{\topfraction}{.9}
+\renewcommand{\textfraction}{.08}
+\renewcommand{\floatpagefraction}{.8}
+\usepackage{makeidx}
+\usepackage[columns=3,font=small,indentunit=11pt,columnsep=14pt]{idxlayout}
+\makeindex
+\usepackage[pdfencoding=auto,psdextra,colorlinks=true,linkcolor=ink,citecolor=teal,urlcolor=teal,bookmarksnumbered=true]{hyperref}
+\usepackage{bookmark}
+\hypersetup{pdftitle={The Calculus of Probability Distributions},pdfsubject={An undergraduate introduction to information geometry}}
+\urlstyle{same}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}{Example}[chapter]
+% A worked example may continue naturally across a page break.  Space, rather
+% than a heavy colored box, distinguishes it from the surrounding discussion.
+\BeforeBeginEnvironment{example}{\par\addvspace{9pt}\needspace{4\baselineskip}}
+\AfterEndEnvironment{example}{\par\addvspace{8pt}}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newenvironment{solution}{\par\smallskip\noindent\textit{Solution.}\ }{\par\smallskip}
+\newenvironment{exercises}{\begin{enumerate}[label=\thechapter.\arabic*,ref=\thechapter.\arabic*,leftmargin=2.8em,itemsep=6pt]}{\end{enumerate}}
+\newenvironment{answers}{\begin{description}[leftmargin=2.9em,labelwidth=2.5em,labelsep=.4em,itemsep=8pt,font=\normalfont\bfseries]}{\end{description}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\KL}[2]{D\!\left(#1\,\middle\|\,#2\right)}
+\newcommand{\grad}{\operatorname{grad}}
+\newcommand{\arcosh}{\operatorname{arcosh}}
+\newcommand{\sech}{\operatorname{sech}}
+\newcommand{\softmax}{\operatorname{softmax}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\ip}[2]{\left\langle #1,#2\right\rangle}
+\newcommand{\p}{\mathbf{p}}
+\newcommand{\q}{\mathbf{q}}
+\newcommand{\f}{\mathbf{f}}
+\newcommand{\uvec}{\mathbf{u}}
+\newcommand{\vvec}{\mathbf{v}}
+\newcommand{\ones}{\mathbf{1}}
+\newcommand{\simp}{\Delta^{n-1}}
+\newcommand{\simpi}{\Delta^{n-1}_{\!\circ}}
+\numberwithin{equation}{chapter}
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0pt}
+\linespread{1.115}
+\setlength{\emergencystretch}{2em}
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+\raggedbottom
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{2}
+% Leave enough room for the four-character subsection numbers in Chapter 10.
+\makeatletter
+\renewcommand*\l@section{\@dottedtocline{1}{1.5em}{3.35em}}
+\makeatother
+
+
+\hypersetup{pdftitle={Chapter 2: Payoff Matrices and Stability}}
+\begin{document}
+\mainmatter
+\setcounter{chapter}{1}
+\chapter{Payoff Matrices and Stability}
+\label{ch:payoffs}
+
+The fitness functions in a replicator equation can be obtained from a model of interactions. A payoff matrix records the effect of each possible encounter. Taking a weighted average over opponents converts the matrix into fitness functions and, consequently, into a differential equation.
+
+The state now influences the rates governing its own motion. When the proportion of A changes, the typical opponent encountered by either type changes as well. This feedback can create an interior equilibrium, favor one type throughout the interval, or divide the interval into basins of attraction. The entries of a two-by-two matrix are enough to produce all four possibilities.
+
+\section{Expected fitness from pairwise interactions}\index{payoff matrix}\index{expected fitness}
+Consider two strategies, A and B, with frequencies $x$ and $1-x$. A payoff matrix has the form
+\begin{equation}\label{eq:matrix2}
+M=\begin{pmatrix}a&b\\c&d\end{pmatrix}.
+\end{equation}
+The entry in row $i$, column $j$ is the payoff received by strategy $i$ when it encounters strategy $j$. Thus $b$ is A's payoff against B, while $c$ is B's payoff against A. The two players in the same encounter can receive different payoffs.
+
+In a well-mixed population, an opponent is A with probability $x$ and B with probability $1-x$. The expected fitnesses are therefore
+\begin{equation}\label{eq:expectedfitness}
+f_A(x)=ax+b(1-x),\qquad f_B(x)=cx+d(1-x).
+\end{equation}
+This model assumes random encounters weighted by population frequency and takes expected payoff as the per-capita rate that drives selection. If a particular application uses a different payoff-to-growth rule, that rule must be included before deriving its differential equation.
+
+\begin{example}[Constructing the fitness functions]
+Let $M=\left(\begin{smallmatrix}2&4\\3&1\end{smallmatrix}\right)$. Find the fitnesses at a general state and at $x=1/4$.
+\begin{solution}
+The weighted averages are
+\[
+f_A=2x+4(1-x)=4-2x,\qquad f_B=3x+(1-x)=1+2x.
+\]
+At $x=1/4$, they are $7/2$ and $3/2$. Thus A's proportion increases. At $x=3/4$, both fitnesses equal $5/2$, producing an interior equilibrium.
+\end{solution}
+\end{example}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=.88\textwidth,height=5cm,xmin=0,xmax=1,ymin=0,ymax=4.3,xlabel={proportion $x$ of A},ylabel={expected fitness},grid=major,legend pos=north east,xtick={0,.25,.5,.75,1},xticklabels={0,$1/4$,$1/2$,$3/4$,1}]
+\addplot[teal,domain=0:1]{4-2*x};\addlegendentry{$f_A=4-2x$}
+\addplot[copper,domain=0:1]{1+2*x};\addlegendentry{$f_B=1+2x$}
+\addplot[only marks,ink,mark=*] coordinates {(.75,2.5)};
+\end{axis}
+\end{tikzpicture}
+\caption{Expected fitnesses obtained from a payoff matrix. At their intersection the two present strategies have equal fitness, so their proportions are stationary.}
+\end{figure}
+
+\section{The advantage line}\index{fitness difference}
+Subtracting the fitnesses in \eqref{eq:expectedfitness} gives
+\begin{align}
+\Delta(x)&=(a-c)x+(b-d)(1-x)\notag\\
+&=(b-d)+(a-b-c+d)x.\label{eq:advantageline}
+\end{align}
+The replicator equation is
+\begin{equation}\label{eq:matrixrep}
+x'=x(1-x)\bigl[(b-d)+(a-b-c+d)x\bigr].
+\end{equation}
+The right-hand side is cubic, but its sign in $(0,1)$ is controlled by the affine function $\Delta$. This reduces the qualitative analysis to the position and slope of a line.
+
+Write
+\[
+\alpha=b-d,\qquad\beta=a-b-c+d.
+\]
+If $\beta\ne0$, the only possible interior equilibrium is
+\begin{equation}\label{eq:interioreq}
+x^*=-\frac{\alpha}{\beta}=\frac{d-b}{a-b-c+d}.
+\end{equation}
+It represents a population state only when $0<x^*<1$. If $\beta=0$, the fitness difference is constant. A nonzero constant gives dominance; if $\alpha=\beta=0$, every composition is stationary.
+
+The endpoint values have direct meanings:
+\[
+\Delta(0)=b-d,\qquad \Delta(1)=a-c.
+\]
+A rare A individual encounters almost exclusively B individuals. It increases in frequency when its payoff $b$ against B exceeds the resident payoff $d$. Similarly, a rare B increases near an A population when $c>a$.
+
+\begin{definition}[Invasion from rarity]\index{invasion}
+A strategy \emph{invades} a pure resident population if its proportion increases when introduced at a sufficiently small positive frequency. A strictly positive rare-strategy advantage gives invasion in the present model.
+\end{definition}
+
+The strictness matters at a parameter value where the leading rare-strategy advantage vanishes. Higher-order terms then determine the direction of motion.
+
+\section{Four qualitative phase portraits}\index{dominance}
+The advantage function is a straight line, so knowing its sign at the two endpoints determines its sign pattern throughout the interval. This reduces the classification of a differential equation to four arrangements of two signs. The four pictures below describe every nondegenerate two-strategy interaction model.
+Let $\Delta_0=b-d$ and $\Delta_1=a-c$. If both are nonzero, their signs classify the dynamics completely:
+\begin{center}
+\begin{tabular}{@{}ccL{.31\textwidth}L{.28\textwidth}@{}}
+\toprule
+$\Delta_0$ & $\Delta_1$ & Behavior & Interior limits\\\midrule
+$+$ & $+$ & A dominance & $x(t)\to1$\\
+$-$ & $-$ & B dominance & $x(t)\to0$\\
+$+$ & $-$ & Stable coexistence & $x(t)\to x^*$\\
+$-$ & $+$ & Coordination & $0$ or $1$, according to the initial side of $x^*$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The coexistence case allows each strategy to invade when rare. Its advantage decreases as it becomes more common, and the two fitnesses agree at an attracting interior state. The coordination case gives each strategy an advantage when common. Its interior equilibrium separates two basins of attraction.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=4.5cm,y=1cm,>=Stealth]
+\foreach \yy/\title in {0/{A dominance},-1.15/{B dominance},-2.3/{Coexistence},-3.45/{Coordination}}{
+\node[anchor=east,font=\small] at (-.08,\yy) {\title};\draw (0,\yy)--(1,\yy);\node[below=3pt,font=\small] at (0,\yy){$0$};\node[below=3pt,font=\small] at (1,\yy){$1$};}
+\foreach \xx in {.15,.55}{\draw[teal,thick,->] (\xx,0)--(\xx+.22,0);\draw[teal,thick,<-] (\xx,-1.15)--(\xx+.22,-1.15);}
+\draw[teal,thick,->] (.12,-2.3)--(.37,-2.3);\draw[teal,thick,<-] (.63,-2.3)--(.88,-2.3);
+\draw[teal,thick,<-] (.12,-3.45)--(.37,-3.45);\draw[teal,thick,->] (.63,-3.45)--(.88,-3.45);
+\foreach \yy in {0,-1.15,-2.3,-3.45}{\foreach \xx in {0,1}{\draw[fill=white] (\xx,\yy) circle(2pt);}}
+\fill[teal] (1,0) circle(2pt);\fill[teal] (0,-1.15) circle(2pt);\fill[teal] (.5,-2.3) circle(2.4pt);
+\draw[fill=white] (.5,-3.45) circle(2.4pt);\fill[teal] (0,-3.45) circle(2pt);\fill[teal] (1,-3.45) circle(2pt);
+\end{tikzpicture}
+\caption{The four nondegenerate phase portraits. Interior equilibria are drawn at the midpoint schematically; their actual positions depend on the payoffs. Filled points indicate attracting equilibria.}
+\end{figure}
+
+\begin{example}[Dominance]
+For $M=\left(\begin{smallmatrix}4&3\\2&1\end{smallmatrix}\right)$, classify the dynamics.
+\begin{solution}
+Here $f_A=3+x$ and $f_B=1+x$, so $\Delta=2$ at every composition. The equation is $x'=2x(1-x)$. A dominates from every interior initial state, with the logistic solution derived in Chapter 1.
+\end{solution}
+\end{example}
+
+\begin{example}[Stable coexistence]
+Classify the model with $M=\left(\begin{smallmatrix}2&4\\3&1\end{smallmatrix}\right)$.
+\begin{solution}
+The endpoint advantages are $3$ and $-1$. Thus both types invade from rarity. The fitness difference is $3-4x$, giving the equilibrium $x^*=3/4$. The limit from any interior state is a population consisting of $75\%$ A and $25\%$ B.
+\end{solution}
+\end{example}
+
+\begin{example}[Coordination and basins of attraction]\index{basin of attraction}\index{coordination}
+For $M=\left(\begin{smallmatrix}4&1\\2&3\end{smallmatrix}\right)$, find the threshold and the limits from $x_0=0.35$ and $x_0=0.65$.
+\begin{solution}
+The fitnesses are $f_A=1+3x$ and $f_B=3-x$, so $\Delta=-2+4x$. The threshold is $x^*=1/2$. Below it, A loses share; above it, A gains share. Hence the limits are $0$ and $1$, respectively. The basin of $0$ within the state interval is $[0,1/2)$, and the basin of $1$ is $(1/2,1]$. The threshold itself is stationary.
+\end{solution}
+\end{example}
+
+\section{Linearization and degenerate cases}
+For $F(x)=x(1-x)(\alpha+\beta x)$, differentiation gives
+\[
+F'(x)=(1-2x)(\alpha+\beta x)+\beta x(1-x).
+\]
+At an interior equilibrium, the first term vanishes. Therefore
+\begin{equation}\label{eq:matrixlinear}
+F'(x^*)=\beta x^*(1-x^*).
+\end{equation}
+Because $x^*(1-x^*)>0$, a negative advantage-line slope gives attraction, and a positive slope gives repulsion. At the endpoints,
+\[
+F'(0)=b-d,\qquad F'(1)=c-a.
+\]
+These formulas agree with the invasion interpretation. A negative derivative at an endpoint gives attraction from the available interior side.
+
+\begin{example}[A zero derivative at an attracting endpoint]
+Let $M=\left(\begin{smallmatrix}3&4\\3&1\end{smallmatrix}\right)$. Determine the behavior near $x=1$.
+\begin{solution}
+The advantage is $3(1-x)$, so
+\[
+x'=3x(1-x)^2.
+\]
+Every interior velocity is positive, and every interior solution approaches 1. Yet $F'(1)=0$. Setting $u=1-x$ gives $u'=-3(1-u)u^2$. Near $u=0$ this is approximately $u'=-3u^2$, with decay on the scale $u(t)\approx1/(3t+C)$. The phase line establishes attraction even though the exponential linearization is inconclusive.
+\end{solution}
+\end{example}
+
+If the two rows of $M$ agree, the expected fitnesses agree at every state. Conversely, $\Delta\equiv0$ requires $b=d$ and $a=c$, so the rows agree. This gives a continuum of equilibria. Every state is stable in the sense of remaining close to its initial state, while no individual state attracts its distinct neighbors.
+
+\section{Parameters and bifurcation}
+An interaction model can change character when a payoff changes. We can see where this happens by tracking the advantage at an endpoint. An interior equilibrium may move toward that endpoint and disappear into it, changing the long-term behavior of nearby trajectories.
+Hold three payoffs fixed and vary the fourth:
+\[
+M(a)=\begin{pmatrix}a&4\\3&1\end{pmatrix},\qquad \Delta(x)=3+(a-6)x.
+\]
+For $a<3$, there is an attracting interior equilibrium
+\[
+x^*(a)=\frac{3}{6-a}.
+\]
+It approaches the boundary value $1$ as $a\to3$ from below. At $a=3$ the model is the degenerate attracting example above. For $a>3$, both endpoint advantages are positive, and A dominates.
+
+\begin{definition}[Bifurcation]\index{bifurcation}
+A \emph{bifurcation} occurs at a parameter value where the qualitative equilibrium or trajectory structure changes as the parameter varies.
+\end{definition}
+
+In this family the physically admissible coexistence state merges with a boundary equilibrium. The parameter determines both the final population composition and the rate at which that composition is approached. In particular, the linearized attraction rate at $x^*(a)$ tends to zero as the equilibrium approaches the boundary.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=.88\textwidth,height=5cm,xmin=0,xmax=4.5,ymin=0,ymax=1.08,xlabel={payoff parameter $a$},ylabel={equilibrium $x$},grid=major,legend pos=south east]
+\addplot[teal,domain=0:3,samples=70]{3/(6-x)};\addlegendentry{attracting}
+\addplot[copper,dashed,domain=0:3]{1};\addlegendentry{repelling}
+\addplot[teal,domain=3:4.5]{1};
+\addplot[copper,dashed,domain=0:4.5]{0};
+\addplot[only marks,ink] coordinates {(3,1)};
+\end{axis}
+\end{tikzpicture}
+\caption{Equilibrium branches within the population interval. Stable coexistence reaches the boundary at $a=3$; for larger $a$, the boundary state attracts. The critical point is nonhyperbolic.}
+\end{figure}
+
+\section{Transformations of payoffs}
+Only fitness differences enter the proportion equation. Adding a constant $k$ to every entry of $M$ increases each expected fitness by $k$ and leaves the vector field unchanged. A more general transformation also has this property:
+\begin{equation}\label{eq:columnshift}
+\widetilde M=M+\ones r^T,
+\end{equation}
+where $\ones=(1,1)^T$ and $r=(r_A,r_B)^T$. This adds $r_A$ to both entries of the first column and $r_B$ to both entries of the second. Each strategy then gains the same state-dependent payoff $r_Ax+r_B(1-x)$, which cancels in the difference.
+
+Multiplying all payoffs by a positive constant $\lambda$ gives the vector field $\lambda F$. If $x(t)$ solves the original equation, $x(\lambda t)$ solves the transformed equation with the same initial state. The equilibria, orbit directions, and limiting states agree, while the time scale changes.
+
+\begin{example}[Equivalent interaction models]
+Subtract the second row of $M=\left(\begin{smallmatrix}2&4\\3&1\end{smallmatrix}\right)$ from both rows, column by column.
+\begin{solution}
+The transformed matrix is $\left(\begin{smallmatrix}-1&3\\0&0\end{smallmatrix}\right)$. Its B fitness is zero, and its A fitness is $-x+3(1-x)=3-4x$. The replicator equation remains $x'=x(1-x)(3-4x)$. The transformation provides a simpler representation of the same composition dynamics.
+\end{solution}
+\end{example}
+
+\section{Designing and identifying an interaction model}
+The passage from a matrix to a phase portrait can also be used in reverse. Suppose the intended advantage line is $\Delta(x)=\alpha+\beta x$. One matrix realizing it is
+\[
+M=\begin{pmatrix}\alpha+\beta&\alpha\\0&0\end{pmatrix}.
+\]
+Against this matrix, the expected B payoff is zero and the expected A payoff is $(\alpha+\beta)x+\alpha(1-x)=\alpha+\beta x$. Column shifts then generate every matrix with the same row differences. This supplies a direct way to build a test model with specified scalar dynamics.
+
+\begin{example}[Choosing an equilibrium and a relaxation rate]
+Construct a two-strategy model with attracting composition $q=0.4$ and local linearized equation $u'=-0.6u$.
+\begin{solution}
+Choose $\Delta(x)=b(q-x)$ with $b>0$. Its equilibrium derivative is $F'(q)=-bq(1-q)$. The desired value requires
+\[
+b=\frac{0.6}{0.4(0.6)}=2.5.
+\]
+Thus $\Delta(x)=1-2.5x$, realized by
+\[
+M=\begin{pmatrix}-1.5&1\\0&0\end{pmatrix}.
+\]
+Adding 2 to all entries gives the nonnegative matrix $\left(\begin{smallmatrix}0.5&3\\2&2\end{smallmatrix}\right)$ with identical composition dynamics. The equilibrium and decay rate specify the relative selection pattern, while the common payoff level remains free.
+\end{solution}
+\end{example}
+
+Observed velocities can be used to infer the advantage line. At an interior state,
+\[
+\Delta(x)=\frac{x'}{x(1-x)}.
+\]
+Two distinct state-velocity observations determine the intercept and slope of a proposed affine advantage. A third observation can test that fitted relation. This procedure uses instantaneous velocity estimates; a finite difference over a long time interval generally averages several velocities and requires additional approximation.
+
+\begin{example}[Inferring the advantage from two velocities]
+Suppose measured instantaneous proportion velocities are $x'=0.16$ at $x=0.2$ and $x'=-0.24$ at $x=0.6$. Fit a two-strategy matrix model.
+\begin{solution}
+Dividing by $x(1-x)$ gives advantages 1 and $-1$. The line through $(0.2,1)$ and $(0.6,-1)$ has slope $-5$ and intercept 2. Hence the fitted model is
+\[
+x'=x(1-x)(2-5x).
+\]
+Its attracting state is $2/5$, and one payoff matrix is $\left(\begin{smallmatrix}-3&2\\0&0\end{smallmatrix}\right)$. The model predicts velocity $-0.32$ at $x=0.8$, providing an additional value against which to compare observations.
+\end{solution}
+\end{example}
+
+The division also explains a feature of data interpretation near an endpoint. An error $\varepsilon$ in a velocity estimate produces an error $\varepsilon/[x(1-x)]$ in the inferred advantage. When one type is rare, the same absolute velocity error produces a larger error in the fitted advantage. The phase portrait can still be estimated from direction information, while precise fitness estimation requires attention to the scale of the observations.
+
+\FloatBarrier
+\section{Exercises}
+\begin{exercises}
+\item For $M=\left(\begin{smallmatrix}1&5\\3&2\end{smallmatrix}\right)$, calculate both expected fitnesses, the advantage line, and all equilibria in $[0,1]$.
+\item Explain the meaning of all four entries of a general payoff matrix. Describe the random-mixing assumption used in the weighted averages.
+\item Classify $M=\left(\begin{smallmatrix}5&2\\3&1\end{smallmatrix}\right)$ using endpoint advantages. Confirm by a phase line.
+\item Construct one matrix for B dominance and one for coordination with threshold $x^*=1/3$.
+\item For $M=\left(\begin{smallmatrix}1&4\\3&2\end{smallmatrix}\right)$, find the coexistence equilibrium and its local linearized decay rate.
+\item Prove the four-case classification table from the fact that $\Delta$ is affine.
+\item Find all two-strategy payoff matrices for which every composition is an equilibrium.
+\item Show that $M$ and $M+\ones r^T$ generate the same replicator equation, where $r$ is any two-component vector.
+\item Show that positive payoff scaling preserves stability. Explain what negative scaling does to the phase arrows and to hyperbolic equilibrium stability.
+\item For $M(a)$ in the parameter family above, compute $x^*$ at $a=1,2,2.8$. Find the derivative $F'(x^*)$ at each value.
+\item Analyze $x'=x^2(1-x)$ and classify its two endpoint equilibria. Which linearization test is inconclusive?
+\item Suppose $b=d$ and $a>c$. Determine the entire phase portrait, including the behavior of a rare A type.
+\item For $M=\left(\begin{smallmatrix}4&1\\2&3\end{smallmatrix}\right)$, calculate the fitnesses and the velocity at $x=0.35$ and $x=0.65$. Use these values to interpret coordination.
+\item Show that if A can invade B and B can invade A, an interior attracting equilibrium exists for a two-strategy matrix model with strict invasion inequalities.
+\item \emph{Exploration.} In the payoff-matrix demonstration, vary $a$ through 3 while $b=4,c=3,d=1$. Compare the fitness intersection, phase line, and time series near the critical parameter.
+\item Can two different matrices have identical advantage lines? Characterize all such pairs by their row differences.
+\item In the coexistence matrix $M=\left(\begin{smallmatrix}2&4\\3&1\end{smallmatrix}\right)$, compute the equilibrium mean fitness. What is it after adding $10$ to every matrix entry?
+\item \emph{Exploration.} Compare the coexistence matrix with twice that matrix. Use the same initial state and determine which times should be compared to obtain matching compositions.
+\end{exercises}
+
+\clearpage\backmatter
+\chapter*{Selected Solutions}
+\section*{Chapter 2}
+\begin{answers}
+\item[2.1] $f_A=5-4x$, $f_B=2+x$, and $\Delta=3-5x$. The equilibria are $0,3/5,1$; the interior one attracts.
+\item[2.3] Both endpoint advantages are positive: $b-d=1$ and $a-c=2$. Thus $x'>0$ throughout $(0,1)$ and every interior trajectory tends to 1.
+\item[2.5] $\Delta=2-4x$, so $x^*=1/2$ and $F'(x^*)=-1$. Small perturbations decay approximately as $e^{-t}$.
+\item[2.7] The necessary and sufficient conditions are $a=c$ and $b=d$: the rows agree.
+\item[2.9] Scaling multiplies $F'$ by the same constant. Positive scaling preserves all phase arrows; negative scaling reverses them and interchanges attracting and repelling hyperbolic equilibria.
+\item[2.11] The velocity is positive throughout $(0,1)$. Thus 0 repels and 1 attracts. At 0 the derivative vanishes, while at 1 it equals $-1$.
+\item[2.13] At $x=0.35$, $(f_A,f_B)=(2.05,2.65)$ and $x'=-0.1365$. At $x=0.65$, the fitnesses are $(2.95,2.35)$ and $x'=0.1365$. Initial motion takes each state farther from the threshold $1/2$.
+\item[2.17] At $x^*=3/4$, both fitnesses equal $5/2$, so their weighted mean is $5/2$. Adding 10 to every payoff gives mean fitness $25/2$ and the same equilibrium composition.
+\end{answers}
+\end{document}

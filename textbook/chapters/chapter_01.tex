@@ -1,0 +1,381 @@
+\documentclass[11pt,oneside,openany]{book}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[sc]{mathpazo}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[paperwidth=7.5in,paperheight=10in,inner=.85in,outer=.85in,top=.85in,bottom=.85in,headheight=15pt,headsep=20pt]{geometry}
+\usepackage{microtype}
+\usepackage{xcolor,graphicx,booktabs,array,longtable}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\usepackage{tikz,pgfplots}
+\usetikzlibrary{arrows.meta,calc,patterns,decorations.markings}
+\pgfplotsset{compat=1.18}
+\definecolor{ink}{HTML}{17334B}
+\definecolor{teal}{HTML}{137C83}
+\definecolor{copper}{HTML}{AE5932}
+\definecolor{soft}{HTML}{EEF3F5}
+\pgfplotsset{every axis/.append style={axis line style={black!65},tick style={black!60},tick label style={font=\small},label style={font=\small},legend style={font=\small,draw=none,fill=white},grid style={black!10},major grid style={black!10},line width=.6pt},every axis plot/.append style={line width=1.15pt}}
+\usepackage{enumitem,needspace,etoolbox}
+\setlist[enumerate]{topsep=5pt,itemsep=5pt,parsep=0pt}
+\setlist[itemize]{topsep=4pt,itemsep=3pt,parsep=0pt}
+\usepackage{titlesec,fancyhdr}
+\titleformat{\chapter}[display]{\normalfont\color{ink}}{\large\sffamily\MakeUppercase{Chapter \thechapter}}{12pt}{\huge\bfseries\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000}[\vspace{12pt}\titlerule]
+\titlespacing*{\chapter}{0pt}{-10pt}{24pt}
+\titleformat{\section}{\large\bfseries\color{ink}}{\thesection}{.65em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{ink}}{\thesubsection}{.6em}{}
+\titlespacing*{\section}{0pt}{18pt plus 3pt minus 2pt}{7pt}
+\titlespacing*{\subsection}{0pt}{12pt plus 2pt minus 2pt}{5pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\nouppercase{\leftmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{.3pt}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter\quad #1}{}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+\usepackage[font=small,labelfont=bf,labelsep=period]{caption}
+\usepackage{float,placeins}
+\floatplacement{figure}{htbp}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\renewcommand{\topfraction}{.9}
+\renewcommand{\textfraction}{.08}
+\renewcommand{\floatpagefraction}{.8}
+\usepackage{makeidx}
+\usepackage[columns=3,font=small,indentunit=11pt,columnsep=14pt]{idxlayout}
+\makeindex
+\usepackage[pdfencoding=auto,psdextra,colorlinks=true,linkcolor=ink,citecolor=teal,urlcolor=teal,bookmarksnumbered=true]{hyperref}
+\usepackage{bookmark}
+\hypersetup{pdftitle={The Calculus of Probability Distributions},pdfsubject={An undergraduate introduction to information geometry}}
+\urlstyle{same}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}{Example}[chapter]
+% A worked example may continue naturally across a page break.  Space, rather
+% than a heavy colored box, distinguishes it from the surrounding discussion.
+\BeforeBeginEnvironment{example}{\par\addvspace{9pt}\needspace{4\baselineskip}}
+\AfterEndEnvironment{example}{\par\addvspace{8pt}}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newenvironment{solution}{\par\smallskip\noindent\textit{Solution.}\ }{\par\smallskip}
+\newenvironment{exercises}{\begin{enumerate}[label=\thechapter.\arabic*,ref=\thechapter.\arabic*,leftmargin=2.8em,itemsep=6pt]}{\end{enumerate}}
+\newenvironment{answers}{\begin{description}[leftmargin=2.9em,labelwidth=2.5em,labelsep=.4em,itemsep=8pt,font=\normalfont\bfseries]}{\end{description}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\KL}[2]{D\!\left(#1\,\middle\|\,#2\right)}
+\newcommand{\grad}{\operatorname{grad}}
+\newcommand{\arcosh}{\operatorname{arcosh}}
+\newcommand{\sech}{\operatorname{sech}}
+\newcommand{\softmax}{\operatorname{softmax}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\ip}[2]{\left\langle #1,#2\right\rangle}
+\newcommand{\p}{\mathbf{p}}
+\newcommand{\q}{\mathbf{q}}
+\newcommand{\f}{\mathbf{f}}
+\newcommand{\uvec}{\mathbf{u}}
+\newcommand{\vvec}{\mathbf{v}}
+\newcommand{\ones}{\mathbf{1}}
+\newcommand{\simp}{\Delta^{n-1}}
+\newcommand{\simpi}{\Delta^{n-1}_{\!\circ}}
+\numberwithin{equation}{chapter}
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0pt}
+\linespread{1.115}
+\setlength{\emergencystretch}{2em}
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+\raggedbottom
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{2}
+% Leave enough room for the four-character subsection numbers in Chapter 10.
+\makeatletter
+\renewcommand*\l@section{\@dottedtocline{1}{1.5em}{3.35em}}
+\makeatother
+
+
+\hypersetup{pdftitle={Chapter 1: Replicator Equations and Scalar Dynamics}}
+\begin{document}
+\mainmatter
+\setcounter{chapter}{0}
+\chapter{Replicator Equations and Scalar Dynamics}
+\label{ch:scalar}
+
+A population can grow while one of its types becomes less common. To describe this possibility, a model must keep track of relative abundance as well as absolute size. The differential equation for relative abundance provides a first example of dynamics on a space of probability distributions.
+
+The distinction is already visible in two observations of a population: its count may increase from one census to the next while its share of the total decreases. Composition is therefore a useful state variable in its own right. Once the equation for composition is known, a single point on an interval describes the population's state, and a moving point describes its evolution.
+
+\section{Population size and population composition}\index{proportion}\index{relative abundance}
+Let $N_A(t)$ and $N_B(t)$ denote the sizes of two populations. In a continuous model these variables are nonnegative real numbers, even when actual observations are integer counts. Suppose their per-capita growth rates are $f_A$ and $f_B$:
+\begin{equation}\label{eq:populations}
+N_A'=f_A N_A,\qquad N_B'=f_B N_B.
+\end{equation}
+The rate $f_A$ has units of inverse time: a value of $0.2$ per day means an instantaneous growth rate equal to $20\%$ of the current A population per day. The rates can depend on the current composition. A negative rate represents declining abundance.
+
+Whenever $N=N_A+N_B>0$, define
+\[
+x=\frac{N_A}{N},\qquad 1-x=\frac{N_B}{N}.
+\]
+The variable $x$ records the proportion of type A. Its state space is the interval $[0,1]$. The endpoints correspond to populations containing a single type; interior points correspond to mixtures.
+
+\begin{example}[Increasing count and decreasing share]
+A population changes from 48 A and 72 B individuals to 90 A and 180 B individuals. Determine the change in A's abundance and proportion.
+\begin{solution}
+The totals are $120$ and $270$. Type A increases from 48 to 90 individuals, while its proportion changes from $48/120=2/5$ to $90/270=1/3$. The total population grows faster, proportionally, than the A population. The count and the proportion therefore describe different features of the same observations.
+\end{solution}
+\end{example}
+
+Multiplying both population sizes by the same positive factor leaves $x$ unchanged. Thus many absolute population states represent the same composition. Passing from $(N_A,N_B)$ to $x$ removes the total-size variable while retaining the ratio of the two populations.
+
+\section{Deriving the equation for a proportion}
+Differentiate $x=N_A/N$ using the quotient rule. Since $N'=f_A N_A+f_B N_B$,
+\begin{align*}
+x'&=\frac{N_A'N-N_A N'}{N^2}\\
+&=\frac{f_A N_A(N_A+N_B)-N_A(f_A N_A+f_B N_B)}{N^2}\\
+&=\frac{N_A N_B}{N^2}(f_A-f_B).
+\end{align*}
+Substituting the proportions gives the \emph{two-strategy replicator equation}\index{replicator equation!two strategies}:
+\begin{equation}\label{eq:binaryrep}
+\boxed{x'=x(1-x)\bigl(f_A-f_B\bigr).}
+\end{equation}
+The word \emph{strategy} can refer to an inherited type, a behavior, or another category whose frequency changes according to relative success. The mathematical model specifies the interpretation of its fitness functions.
+
+For $0<x<1$, the factor $x(1-x)$ is positive. Consequently the sign of $x'$ is the sign of the fitness difference. A type gains share when its per-capita rate exceeds its competitor's. Both populations may be growing, or both may be shrinking; their difference still determines the change in composition.
+
+The factor $x(1-x)$ also affects speed. It is largest at $x=1/2$ and becomes small near either endpoint. For a fixed fitness advantage, a proportion changes slowly when one type is rare. The same advantage acts on a smaller population fraction.
+
+\begin{example}[Relative growth in a declining population]
+At a particular time, let $x=0.4$, $f_A=-0.1$, and $f_B=-0.4$, with time measured in days. Find $x'$ and the total population's per-capita growth rate.
+\begin{solution}
+The relative advantage of A is $0.3$, so $x'=0.4(0.6)(0.3)=0.072$ per day. Meanwhile
+\[
+\frac{N'}{N}=xf_A+(1-x)f_B=-0.04-0.24=-0.28.
+\]
+The total population is declining, and A's share is increasing. Its absolute population is declining more slowly than B's.
+\end{solution}
+\end{example}
+
+For a composition-dependent model, write
+\[
+\Delta(x)=f_A(x)-f_B(x),\qquad F(x)=x(1-x)\Delta(x).
+\]
+Then the model is the autonomous scalar equation $x'=F(x)$. Its \emph{equilibria}\index{equilibrium} are the states $e$ satisfying $F(e)=0$. Starting exactly at an equilibrium gives the constant solution $x(t)=e$.
+
+\section{Phase lines and solution curves}\index{phase line}
+A phase line records the sign of $F$ on intervals between equilibria. Draw an arrow to the right where $F(x)>0$ and an arrow to the left where $F(x)<0$. These arrows describe the motion of all solutions, with different initial conditions, in a single picture.
+
+\begin{definition}[Stability on the population interval]\index{stability}
+An equilibrium $e\in[0,1]$ is \emph{stable} if every sufficiently small initial displacement produces a solution that remains close to $e$ for all future time. It is \emph{asymptotically stable} if it is stable and all sufficiently nearby solutions converge to $e$. Stability is understood relative to the state space $[0,1]$.
+\end{definition}
+
+An interior equilibrium with arrows pointing toward it from both sides is asymptotically stable. Arrows pointing away from it indicate instability. At an endpoint, only the side lying inside $[0,1]$ is relevant.
+
+Consider the frequency-dependent fitnesses
+\[
+f_A(x)=3-2x,\qquad f_B(x)=2x.
+\]
+The resulting equation is
+\begin{equation}\label{eq:thread}
+x'=x(1-x)(3-4x).
+\end{equation}
+Its equilibria are $0$, $3/4$, and $1$. For $0<x<3/4$, every factor is positive. For $3/4<x<1$, the last factor is negative. Therefore every interior solution moves toward $3/4$.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=5.5cm,y=1cm,>=Stealth]
+\draw[->] (-.03,0)--(1.06,0) node[right] {$x$};
+\draw[teal,thick,->] (.15,0)--(.42,0);
+\draw[teal,thick,->] (.56,0)--(.68,0);
+\draw[teal,thick,->] (.96,0)--(.82,0);
+\foreach \x/\lab in {0/0,.75/{3/4},1/1}{\draw[fill=white] (\x,0) circle(2pt);\node[below=7pt] at (\x,0) {$\lab$};}
+\fill[teal] (.75,0) circle(2.4pt);
+\node[above=8pt] at (.75,0) {attracting};
+\end{tikzpicture}
+\caption{Phase line for $x'=x(1-x)(3-4x)$. The filled equilibrium attracts all interior initial states.}
+\end{figure}
+
+There are three useful graphs associated with this equation. The phase line shows directions of motion. The graph of $F(x)$ shows instantaneous velocity as a function of the state. The graph of $x(t)$ shows the state of one solution as time passes. In the last graph, the slope at time $t$ equals the height $F(x(t))$ in the velocity graph.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=.88\textwidth,height=5cm,xmin=0,xmax=1,ymin=-.15,ymax=.43,axis lines=middle,xlabel={$x$},ylabel={$F(x)$},xtick={0,.5,.75,1},xticklabels={0,$1/2$,$3/4$,1},grid=major]
+\addplot[teal,domain=0:1,samples=101]{x*(1-x)*(3-4*x)};
+\addplot[only marks,mark=*,mark size=1.8pt,ink] coordinates {(0,0)(.75,0)(1,0)};
+\end{axis}
+\end{tikzpicture}
+\caption{Velocity versus state for the coexistence model. Positive heights correspond to increasing solution curves; negative heights correspond to decreasing solution curves.}
+\end{figure}
+
+An interior solution beginning below $3/4$ is increasing and bounded above by $3/4$. It has a limit. That limit must be an equilibrium: if $F$ were positive at the limit, continuity would keep the velocity bounded away from zero near it, preventing convergence. The only possible limit is therefore $3/4$. The same argument applies to a solution beginning above $3/4$.
+
+The phase line and the velocity graph carry complementary information. The arrows show where the state moves and which equilibria attract. The height of the velocity graph gives the slope of the solution at the current state. Following one trajectory means reading these two pictures together: as $x(t)$ changes, the corresponding point $(x,F(x))$ moves along the velocity graph.
+
+\begin{example}[Reading a velocity]
+Evaluate the coexistence model at $x=0.4$ and $x=0.9$.
+\begin{solution}
+At $x=0.4$, $F(x)=0.4(0.6)(1.4)=0.336$. The solution is increasing with instantaneous slope $0.336$. At $x=0.9$, $F(x)=0.9(0.1)(-0.6)=-0.054$. That solution is decreasing. Both motions take the state toward $3/4$.
+\end{solution}
+\end{example}
+
+\section{Constant advantage and the logistic solution}\index{logistic equation}
+If $f_A-f_B=k$ is constant, the equation becomes
+\[
+x'=kx(1-x).
+\]
+For an interior solution, separate variables and use partial fractions:
+\[
+\int\frac{dx}{x(1-x)}=\int\left(\frac1x+\frac1{1-x}\right)dx=kt+C.
+\]
+Thus $\ln(x/(1-x))=kt+C$. Imposing $x(0)=x_0\in(0,1)$ and solving for $x$ yields
+\begin{equation}\label{eq:logisticsolution}
+\boxed{x(t)=\frac{1}{1+\left(\frac{1-x_0}{x_0}\right)e^{-kt}}.}
+\end{equation}
+For $k>0$, every interior solution approaches $1$; for $k<0$, it approaches $0$. When $k=0$, every state is stationary. The endpoint initial conditions are constant solutions and can be treated separately from the separation calculation.
+
+\begin{example}[Time to an equal mixture]
+Suppose $x'=1.2x(1-x)$ and $x(0)=1/4$. When does the population first reach $x=1/2$?
+\begin{solution}
+The solution is $x(t)=1/(1+3e^{-1.2t})$. Setting it equal to $1/2$ gives $3e^{-1.2t}=1$, so
+\[
+t=\frac{\ln3}{1.2}\approx0.916.
+\]
+The time unit is the one used in the fitness coefficient $1.2$.
+\end{solution}
+\end{example}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=.88\textwidth,height=5cm,xlabel={time $t$},ylabel={$x(t)$},xmin=0,xmax=5,ymin=0,ymax=1,grid=major,legend pos=south east]
+\addplot[teal,domain=0:5,samples=90]{1/(1+3*exp(-1.2*x))};\addlegendentry{$x_0=1/4$}
+\addplot[copper,domain=0:5,samples=90]{1/(1+exp(-1.2*x)/9)};\addlegendentry{$x_0=9/10$}
+\end{axis}
+\end{tikzpicture}
+\caption{Two solutions with the same positive constant advantage. The initial condition determines the starting composition; the vector field determines their subsequent slopes.}
+\end{figure}
+
+The logistic form also occurs in models of population size. In the present derivation, the limiting value $1$ means complete relative dominance. The total population still depends on the two absolute growth equations.
+
+This explicit solution supplies a time scale that the phase line alone does not provide. Two populations with the same constant fitness advantage follow the same arrows, yet their positions at a fixed time depend on the starting proportions. In the following section, linearization recovers a useful approximation to such time scales even when the full equation cannot be solved explicitly.
+
+\section{Linearization and the rate of approach}\index{relaxation rate}
+Near an equilibrium $e$, write $x=e+u$. Taylor's theorem gives
+\[
+u'=F(e+u)=F'(e)u+O(u^2).
+\]
+The linearized equation is $u'=F'(e)u$, whose solution is $u(t)=u(0)e^{F'(e)t}$. A negative derivative predicts exponential decay of small perturbations; a positive derivative predicts growth.
+
+\begin{proposition}[Scalar linearization test]\index{linearization}
+For a continuously differentiable scalar vector field, an equilibrium with $F'(e)<0$ is locally asymptotically stable, and an interior equilibrium with $F'(e)>0$ is unstable. If $F'(e)=0$, the linearization test gives no conclusion.
+\end{proposition}
+\begin{proof}
+For $x$ close to $e$, the quotient $F(x)/(x-e)$ has the sign of $F'(e)$ when that derivative is nonzero. A negative derivative gives arrows toward $e$ on both sides; a positive derivative gives arrows away. The same reasoning applies on the available side at a boundary equilibrium.
+\end{proof}
+
+\begin{example}[A local relaxation time]
+Find the linearized dynamics near the interior equilibrium of $x'=x(1-x)(3-4x)$.
+\begin{solution}
+At $e=3/4$, the factor $3-4e$ vanishes. Differentiating the product leaves
+\[
+F'(e)=e(1-e)(-4)=-\frac34.
+\]
+Hence $u'\approx-3u/4$. Small displacements decay approximately as $e^{-3t/4}$. Their magnitude is reduced by a factor $e$ in approximately $4/3$ time units. This is a local estimate; farther from equilibrium the nonlinear terms affect the rate.
+\end{solution}
+\end{example}
+
+\begin{example}[An unstable threshold]
+Analyze $x'=x(1-x)(4x-2)$.
+\begin{solution}
+The equilibria are $0$, $1/2$, and $1$. The velocity is negative below $1/2$ and positive above it. Thus $0$ and $1$ attract from the interior, and $1/2$ is an unstable threshold. Its derivative is $F'(1/2)=(1/2)(1/2)4=1$, agreeing with the phase line. The initial condition determines which endpoint is approached.
+\end{solution}
+\end{example}
+
+\section{Recovering population sizes from a composition path}
+The proportion equation was derived from an absolute population model. When the two fitnesses are specified, the total population can be recovered after the composition has been found. Its equation is
+\[
+N'=\bar f(x(t))N,\qquad
+\bar f(x)=xf_A(x)+(1-x)f_B(x).
+\]
+For an initial total $N_0>0$, the solution is
+\[
+N(t)=N_0\exp\left(\int_0^t\bar f(x(\tau))\dd\tau\right).
+\]
+Then $N_A=xN$ and $N_B=(1-x)N$. To check the reconstruction, differentiate the first product:
+\begin{align*}
+N_A'&=N\bigl[x'+x\bar f\bigr]\\
+&=Nx\bigl[(1-x)(f_A-f_B)+xf_A+(1-x)f_B\bigr]\\
+&=Nx f_A=N_Af_A.
+\end{align*}
+The B equation follows in the same way. Thus the composition equation and the total-size equation together recover the original system.
+
+\begin{example}[Following counts and proportions together]
+Initially there are 20 A and 80 B individuals. Suppose $f_A=1$ and $f_B=0$, with time measured in days. Find the counts, composition, and total when the two types first have equal proportions.
+\begin{solution}
+The absolute equations give $N_A(t)=20e^t$ and $N_B(t)=80$. Consequently
+\[
+x(t)=\frac{20e^t}{20e^t+80}=\frac1{1+4e^{-t}}.
+\]
+Equal proportions occur at $e^t=4$, or $t=\ln4$. At that time both counts are 80 and the total is 160. The proportion equation gives the same time without tracking the total, while the absolute equations also give the number of individuals.
+\end{solution}
+\end{example}
+
+A composition path determines the fitness difference along that path. It leaves a common contribution to both fitnesses unspecified. Such a contribution changes total growth, while canceling from the composition equation. This freedom is useful when deciding which observations a model is intended to explain.
+
+For example, the fitness pairs $(3-4x,0)$ and $(3-2x,2x)$ both produce $\Delta(x)=3-4x$. At the equilibrium composition $x=3/4$, the first pair has both fitnesses zero, so a population already at that composition has constant total size. The second pair has both fitnesses $3/2$, so a population at the same composition grows as $N(t)=N_0e^{3t/2}$. Both retain the same $3:1$ ratio of A to B.
+
+The term equilibrium therefore refers to the variables chosen for a state description. A composition equilibrium means stationary relative abundance. In a model retaining absolute counts as state variables, the same population may continue moving along a ray of fixed composition. Choosing the state variables establishes which features of the observations count as motion.
+
+\section{Invariance and the probability interpretation}
+The factor $x(1-x)$ makes both endpoints stationary. Suppose $\Delta$ is continuously differentiable on a neighborhood of $[0,1]$. The vector field is then locally Lipschitz, so the initial-value problem has a unique solution. An interior solution cannot cross an endpoint equilibrium in finite time: crossing would give two solutions through the same state, one constant and one moving.
+
+This proves that $[0,1]$ is \emph{invariant}\index{invariant state space}. The bounded state space and smooth vector field also give existence for all future time. An interior trajectory can tend to an endpoint as $t\to\infty$ while remaining strictly interior at every finite time.
+
+If one individual is sampled uniformly from the population, the probabilities of its type are $(x,1-x)$. Consequently a solution of the replicator equation is a curve of two-outcome probability distributions. The next chapters develop the same description for interaction models and for populations with three or more types.
+
+\FloatBarrier
+\section{Exercises}
+\begin{exercises}
+\item A population changes from 36 A and 54 B individuals to 72 A and 168 B individuals. Compute both totals and both A proportions. Interpret the two changes.
+\item Derive equation \eqref{eq:binaryrep} directly by differentiating $x=N_A/(N_A+N_B)$, without introducing a separate total-size symbol.
+\item At $x=0.3$, let $f_A=0.8$ and $f_B=0.2$. Compute $x'$ and $N'/N$. Explain the units of each quantity.
+\item Draw a phase line and classify the equilibria of $x'=2x(1-x)$ and $x'=-3x(1-x)$ on $[0,1]$.
+\item For $x'=x(1-x)(2-5x)$, find the equilibria, construct a sign chart, and calculate the derivative at the interior equilibrium.
+\item For $x'=x(1-x)(5x-2)$, determine the long-term limit from initial states $0.2$, $0.4$, and $0.8$.
+\item Solve $x'=2x(1-x)$ with $x(0)=1/5$. Find the first time at which $x=4/5$.
+\item For positive constant advantage $k$, show that the time to move from $a$ to $b$, where $0<a<b<1$, is $k^{-1}\ln[b(1-a)/(a(1-b))]$.
+\item For $F(x)=x(1-x)\Delta(x)$, prove that an interior root $e$ of $\Delta$ satisfies $F'(e)=e(1-e)\Delta'(e)$.
+\item Analyze the phase line of $x'=x(1-x)(x-1/2)^2$. Describe attraction or repulsion on each side of $1/2$ and decide whether that equilibrium is stable.
+\item A proposed model is $x'=0.1-x$. Decide whether $[0,1]$ is forward invariant. Compare the boundary behavior with that of a smooth replicator field.
+\item Show that a smooth autonomous scalar equation on an interval has no nonconstant periodic solutions. Explain the role of uniqueness.
+\item If both fitnesses are increased by the same function $c(x)$, what happens to the proportion equation? What happens to $N'/N$?
+\item \emph{Exploration.} For the coexistence model \eqref{eq:thread}, compare solutions from $x_0=0.2$ and $x_0=0.9$. At a chosen time, identify the state on the phase line, its height in the velocity graph, and its slope in the time graph.
+\item For $x'=x(1-x)(a-bx)$ with $b>0$ and $0<a<b$, find the interior equilibrium and its local exponential decay rate.
+\item Suppose $f_A=f_B=c$ is a constant. Solve for both population sizes and the total size. Explain why every initial composition is stationary.
+\item Prove that a nonconstant solution approaching a hyperbolic stable equilibrium has eventually decreasing distance from it. Compare this conclusion with the definition of stability.
+\item \emph{Exploration.} Use a forward Euler step $x_{m+1}=x_m+hF(x_m)$ for $F(x)=4x(1-x)$, starting at $x_0=0.8$. Compare $h=0.1$ and $h=1$. Explain why a numerical approximation can leave an invariant interval.
+\end{exercises}
+
+\clearpage\backmatter
+\chapter*{Selected Solutions}
+\section*{Chapter 1}
+\begin{answers}
+\item[1.1] The totals are $90$ and $240$; A's proportions are $2/5$ and $3/10$. Its count doubles, while its share decreases by $1/10$.
+\item[1.3] $x'=0.3(0.7)(0.6)=0.126$ per unit time. The total per-capita rate is $0.3(0.8)+0.7(0.2)=0.38$ per unit time.
+\item[1.5] The roots are $0,2/5,1$. The velocity is positive on $(0,2/5)$ and negative on $(2/5,1)$. The interior root attracts, with $F'(2/5)=-6/5$. Both endpoints repel from the interior.
+\item[1.7] $x(t)=1/(1+4e^{-2t})$. At $x=4/5$, $4e^{-2t}=1/4$, giving $t=\ln4$.
+\item[1.9] Differentiate the product: $F'=(1-2x)\Delta+x(1-x)\Delta'$. Evaluate at $\Delta(e)=0$.
+\item[1.11] At the endpoints the vector field points inward: $F(0)=0.1>0$ and $F(1)=-0.9<0$. The explicit solution $x(t)=0.1+(x_0-0.1)e^{-t}$ stays in $[0,1]$ for $t\geq0$. The endpoints are not equilibria of this field.
+\item[1.13] Fitness differences are unchanged, so the composition equation is unchanged. The total per-capita rate increases by $c(x)$.
+\item[1.15] The equilibrium is $e=a/b$. The derivative is $-be(1-e)$, so a small displacement decays approximately as $\exp[-be(1-e)t]$.
+\item[1.17] Since $F'(e)<0$, a sufficiently small punctured neighborhood satisfies $(x-e)F(x)<0$. A solution converging to $e$ eventually lies there. Then $\frac{d}{dt}(x-e)^2=2(x-e)F(x)<0$ away from equilibrium. Stability additionally controls every sufficiently close initial condition for all future times.
+\end{answers}
+\end{document}

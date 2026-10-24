@@ -1,0 +1,420 @@
+\documentclass[11pt,oneside,openany]{book}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[sc]{mathpazo}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[paperwidth=7.5in,paperheight=10in,inner=.85in,outer=.85in,top=.85in,bottom=.85in,headheight=15pt,headsep=20pt]{geometry}
+\usepackage{microtype}
+\usepackage{xcolor,graphicx,booktabs,array,longtable}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\usepackage{tikz,pgfplots}
+\usetikzlibrary{arrows.meta,calc,patterns,decorations.markings}
+\pgfplotsset{compat=1.18}
+\definecolor{ink}{HTML}{17334B}
+\definecolor{teal}{HTML}{137C83}
+\definecolor{copper}{HTML}{AE5932}
+\definecolor{soft}{HTML}{EEF3F5}
+\pgfplotsset{every axis/.append style={axis line style={black!65},tick style={black!60},tick label style={font=\small},label style={font=\small},legend style={font=\small,draw=none,fill=white},grid style={black!10},major grid style={black!10},line width=.6pt},every axis plot/.append style={line width=1.15pt}}
+\usepackage{enumitem,needspace,etoolbox}
+\setlist[enumerate]{topsep=5pt,itemsep=5pt,parsep=0pt}
+\setlist[itemize]{topsep=4pt,itemsep=3pt,parsep=0pt}
+\usepackage{titlesec,fancyhdr}
+\titleformat{\chapter}[display]{\normalfont\color{ink}}{\large\sffamily\MakeUppercase{Chapter \thechapter}}{12pt}{\huge\bfseries\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000}[\vspace{12pt}\titlerule]
+\titlespacing*{\chapter}{0pt}{-10pt}{24pt}
+\titleformat{\section}{\large\bfseries\color{ink}}{\thesection}{.65em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{ink}}{\thesubsection}{.6em}{}
+\titlespacing*{\section}{0pt}{18pt plus 3pt minus 2pt}{7pt}
+\titlespacing*{\subsection}{0pt}{12pt plus 2pt minus 2pt}{5pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\nouppercase{\leftmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{.3pt}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter\quad #1}{}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+\usepackage[font=small,labelfont=bf,labelsep=period]{caption}
+\usepackage{float,placeins}
+\floatplacement{figure}{htbp}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\renewcommand{\topfraction}{.9}
+\renewcommand{\textfraction}{.08}
+\renewcommand{\floatpagefraction}{.8}
+\usepackage{makeidx}
+\usepackage[columns=3,font=small,indentunit=11pt,columnsep=14pt]{idxlayout}
+\makeindex
+\usepackage[pdfencoding=auto,psdextra,colorlinks=true,linkcolor=ink,citecolor=teal,urlcolor=teal,bookmarksnumbered=true]{hyperref}
+\usepackage{bookmark}
+\hypersetup{pdftitle={The Calculus of Probability Distributions},pdfsubject={An undergraduate introduction to information geometry}}
+\urlstyle{same}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}{Example}[chapter]
+% A worked example may continue naturally across a page break.  Space, rather
+% than a heavy colored box, distinguishes it from the surrounding discussion.
+\BeforeBeginEnvironment{example}{\par\addvspace{9pt}\needspace{4\baselineskip}}
+\AfterEndEnvironment{example}{\par\addvspace{8pt}}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newenvironment{solution}{\par\smallskip\noindent\textit{Solution.}\ }{\par\smallskip}
+\newenvironment{exercises}{\begin{enumerate}[label=\thechapter.\arabic*,ref=\thechapter.\arabic*,leftmargin=2.8em,itemsep=6pt]}{\end{enumerate}}
+\newenvironment{answers}{\begin{description}[leftmargin=2.9em,labelwidth=2.5em,labelsep=.4em,itemsep=8pt,font=\normalfont\bfseries]}{\end{description}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\KL}[2]{D\!\left(#1\,\middle\|\,#2\right)}
+\newcommand{\grad}{\operatorname{grad}}
+\newcommand{\arcosh}{\operatorname{arcosh}}
+\newcommand{\sech}{\operatorname{sech}}
+\newcommand{\softmax}{\operatorname{softmax}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\ip}[2]{\left\langle #1,#2\right\rangle}
+\newcommand{\p}{\mathbf{p}}
+\newcommand{\q}{\mathbf{q}}
+\newcommand{\f}{\mathbf{f}}
+\newcommand{\uvec}{\mathbf{u}}
+\newcommand{\vvec}{\mathbf{v}}
+\newcommand{\ones}{\mathbf{1}}
+\newcommand{\simp}{\Delta^{n-1}}
+\newcommand{\simpi}{\Delta^{n-1}_{\!\circ}}
+\numberwithin{equation}{chapter}
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0pt}
+\linespread{1.115}
+\setlength{\emergencystretch}{2em}
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+\raggedbottom
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{2}
+% Leave enough room for the four-character subsection numbers in Chapter 10.
+\makeatletter
+\renewcommand*\l@section{\@dottedtocline{1}{1.5em}{3.35em}}
+\makeatother
+
+
+\hypersetup{pdftitle={Chapter 7: Fisher Information and Local Geometry}}
+\begin{document}
+\mainmatter
+\setcounter{chapter}{6}
+\chapter{Fisher Information and Local Geometry}
+\label{ch:fisher}
+
+The quadratic term of relative entropy assigns a positive squared length to an infinitesimal probability change. Allowing this inner product to vary with the underlying distribution produces the Fisher information metric. Calculus then supplies lengths of curves, angles between tangent vectors, and rates of motion through statistical state space.
+
+The key transition is from comparing two finite distributions to measuring a small displacement from one distribution. The leading quadratic term of relative entropy gives that displacement a length, much as a quadratic form in Euclidean geometry measures a vector. Because the coefficients depend on the starting distribution, the resulting geometry changes from point to point. This chapter develops that local measurement before the next chapter identifies its global shape.
+
+\section{A metric from the KL expansion}
+At a positive law $\p$, tangent vectors belong to
+\[
+T_\p\Delta^{n-1}_{\!\circ}=\{v\in\R^n:\sum_i v_i=0\}.
+\]
+For a tangent displacement $h$, Chapter 6 gives
+\[
+D(\p\|\p+h)=\frac12\sum_i\frac{h_i^2}{p_i}+O(\|h\|^3).
+\]
+This motivates the inner product
+\begin{equation}\label{eq:fishermetric}
+\boxed{g_\p(u,v)=\sum_i\frac{u_iv_i}{p_i}.}
+\end{equation}
+It is bilinear and symmetric, and $g_\p(v,v)>0$ for every nonzero tangent vector because each denominator is positive. Its coefficients depend smoothly on $\p$ in the interior.
+
+\begin{definition}[Fisher information metric]\index{Fisher information metric}\index{Riemannian metric}
+The inner products \eqref{eq:fishermetric}, one at each positive law, form the \emph{Fisher information metric}. A smoothly varying inner product on tangent spaces is called a \emph{Riemannian metric}. The associated tangent norm is $\|v\|_F=\sqrt{g_\p(v,v)}$.
+\end{definition}
+
+An inner product must be evaluated at a specified base point. A velocity vector can have the same numerical components at two distributions and different Fisher norms. A rare category has a large reciprocal weight, so changes in that probability make a larger contribution to the local quadratic log-loss comparison.
+
+The normalization used here gives $D(\p\|\p+h)\approx\tfrac12\|h\|_F^2$. The factor $1/2$ belongs to Taylor's formula; the Fisher metric itself is the quadratic form $\sum_i h_i^2/p_i$.
+
+\section{Scores and parameterized families}\index{Fisher information matrix}
+An arbitrary tangent vector represents an infinitesimal change in all category probabilities. In a statistical family, only changes produced by varying the model's parameters are available. The score measures the change in log probability of each outcome when a parameter changes; its expected square gives the Fisher length of that parameter velocity.
+Let $P_\theta$ be a smoothly parameterized positive categorical family, with probabilities $p_i(\theta)$. For one observed outcome $i$, its \emph{score}\index{score} is
+\[
+S_\theta(i)=\frac{\partial}{\partial\theta}\ln p_i(\theta)
+=\frac{p_i'(\theta)}{p_i(\theta)}.
+\]
+The expected score is zero:
+\[
+\E_\theta[S_\theta]=\sum_i p_i\frac{p_i'}{p_i}=\sum_i p_i'=0.
+\]
+Its expected square is the \emph{Fisher information}
+\begin{equation}\label{eq:scoreinfo}
+I(\theta)=\E_\theta[S_\theta^2]=\sum_i\frac{(p_i'(\theta))^2}{p_i(\theta)}.
+\end{equation}
+This is exactly the squared Fisher norm of the family velocity $\partial_\theta P$. A parameter change $d\theta$ has squared length $I(\theta)d\theta^2$.
+
+For a parameter vector $\theta=(\theta^1,\ldots,\theta^m)$, the score components $S_a(i)=\partial_a\ln p_i$ give
+\begin{equation}\label{eq:informationmatrix}
+G_{ab}(\theta)=\E_\theta[S_aS_b]
+=\sum_i\frac{\partial_ap_i\,\partial_bp_i}{p_i}.
+\end{equation}
+Substituting $dp_i=\sum_a\partial_ap_i\,d\theta^a$ into the categorical metric produces
+\[
+ds^2=d\theta^TG(\theta)d\theta.
+\]
+Thus the score definition is the categorical metric expressed along the chosen family. The matrix is positive definite when the parameter derivatives give independent tangent directions. Redundant parameters can instead give a singular matrix.
+
+\begin{example}[Bernoulli information from scores]
+For $\Pr_p(X=1)=p$, compute the score and information.
+\begin{solution}
+The score is $1/p$ for outcome 1 and $-1/(1-p)$ for outcome 0. Its mean is zero, and
+\[
+I(p)=p\left(\frac1p\right)^2+(1-p)\left(\frac1{1-p}\right)^2
+=\frac1{p(1-p)}.
+\]
+The same result follows from the tangent displacement $(dp,-dp)$ in \eqref{eq:fishermetric}.
+\end{solution}
+\end{example}
+
+Differentiating $\sum_i\partial_ap_i=0$ once more also gives
+\[
+G_{ab}=-\E_\theta[\partial_a\partial_b\ln p_i].
+\]
+The identity relates average score products to average log-likelihood curvature. For finite positive laws all differentiations pass through finite sums. Continuous families require regularity assumptions allowing the analogous differentiations under an integral.
+
+\section{Coordinate changes and statistical meaning}\index{coordinate transformation}
+Suppose $\theta=\theta(\eta)$ is a smooth change of parameters, with Jacobian $J=\partial\theta/\partial\eta$. The chain rule gives $d\theta=Jd\eta$, so
+\begin{equation}\label{eq:metrictransform}
+G_\eta=J^TG_\theta J.
+\end{equation}
+The matrix coefficients change, while the squared length of the same distribution change remains the same.
+
+\begin{example}[Information in log-odds coordinates]
+Use $L=\ln[p/(1-p)]$ in the Bernoulli family.
+\begin{solution}
+Since $dp/dL=p(1-p)$, the transformation law gives
+\[
+I_L=I_p\left(\frac{dp}{dL}\right)^2=p(1-p).
+\]
+Thus $ds^2=p(1-p)dL^2$. The log-odds coordinate simplifies constant-fitness dynamics, but its metric coefficient still varies. A different coordinate below makes the length coefficient constant.
+\end{solution}
+\end{example}
+
+For nearby parameters, the KL comparison becomes
+\[
+D(P_\theta\|P_{\theta+d\theta})
+=\frac12d\theta^TG(\theta)d\theta+O(\|d\theta\|^3).
+\]
+This formula connects the geometric length with the expected excess log loss of neighboring statistical models. Its value is independent of the coordinates used to describe the same displacement to the displayed order.
+
+\section{Information from independent observations}\index{independent observations}
+For $N$ independent observations, the log likelihood is a sum, so its score is $S_N=\sum_{r=1}^N S^{(r)}$. The individual scores have mean zero, and independence eliminates the cross terms in the expected square. Consequently
+\begin{equation}\label{eq:sampleinformation}
+I_N(\theta)=N I(\theta).
+\end{equation}
+The corresponding local squared lengths for the full sample model scale by $N$, and lengths scale by $\sqrt N$. A small change that is difficult to distinguish with one observation becomes more detectable with many observations.
+
+An estimator $T$ is a numerical function of the observed sample, intended to estimate $\theta$. It is \emph{unbiased} on an interval when $\E_\theta[T]=\theta$ throughout that interval. For a finite positive sample space, differentiate this identity:
+\[
+1=\frac{d}{d\theta}\E_\theta[T]=\E_\theta[T S_N]
+=\E_\theta[(T-\theta)S_N],
+\]
+where the last equality uses $\E_\theta[S_N]=0$. Cauchy--Schwarz now gives
+\[
+1\leq\E_\theta[(T-\theta)^2]\E_\theta[S_N^2]
+=\Var_\theta(T)\,N I(\theta).
+\]
+Thus the \emph{Cram\'er--Rao bound}\index{Cramer--Rao bound@Cram\'er--Rao bound} is
+\begin{equation}\label{eq:crbound}
+\Var_\theta(T)\geq\frac1{NI(\theta)}.
+\end{equation}
+The proof uses unbiasedness in a neighborhood, positivity, and differentiability. Those hypotheses specify the estimation problem to which the bound applies.
+
+\begin{example}[An estimator attaining the bound]
+Take $N$ independent Bernoulli observations and estimate $p$ by their empirical proportion.
+\begin{solution}
+Chapter 4 gives $\E[\widehat p]=p$ and $\Var(\widehat p)=p(1-p)/N$. Since $I(p)=1/[p(1-p)]$, this variance equals $1/(NI(p))$. The empirical proportion attains the bound for every interior parameter.
+\end{solution}
+\end{example}
+
+\section{Curve length and the Bernoulli distance}\index{curve length}\index{Fisher distance!Bernoulli}
+The metric assigns a length to one tangent vector at one distribution. A curve length accumulates these infinitesimal measurements as the distribution moves. It provides a way to compare paths whose coordinate speeds differ and, by taking the shortest available length, to define distance between endpoint laws.
+For a smooth probability curve $\p(t)$, its Fisher length is
+\begin{equation}\label{eq:fisherlength}
+L_F(\p)=\int_a^b\sqrt{\sum_i\frac{(p_i'(t))^2}{p_i(t)}}\dd t.
+\end{equation}
+The integrand is speed, computed with the metric at the current law. A monotone change of the time parameter leaves this integral unchanged, because the velocity scaling is canceled by the time differential.
+
+The \emph{intrinsic distance}\index{intrinsic distance} between two laws in a family is the infimum of lengths of curves in that family connecting them. In a Bernoulli family,
+\[
+ds^2=\frac{dp^2}{p(1-p)},\qquad
+d_F(a,b)=\left|\int_a^b\frac{dp}{\sqrt{p(1-p)}}\right|.
+\]
+Set $p=\sin^2(\theta/2)$ with $0<\theta<\pi$. Then
+\[
+dp=\tfrac12\sin\theta\,d\theta,
+\qquad \sqrt{p(1-p)}=\tfrac12\sin\theta.
+\]
+The line element becomes $ds^2=d\theta^2$, yielding
+\begin{equation}\label{eq:bernoullidistance}
+\boxed{d_F(a,b)=2\left|\arcsin\sqrt b-\arcsin\sqrt a\right|.}
+\end{equation}
+Any monotone Bernoulli curve between $a$ and $b$ has this length. A path that reverses direction adds extra travel. Constant-speed travel corresponds to an affine function of the arc coordinate $\theta$, and its probabilities are $p(t)=\sin^2(\theta(t)/2)$.
+
+\begin{example}[An exact Bernoulli distance]
+Find the Fisher distance from $p=1/4$ to $p=3/4$.
+\begin{solution}
+The corresponding $\theta$ values are $\pi/3$ and $2\pi/3$. Their separation is $\pi/3$. The coordinate probability difference is $1/2$; Fisher distance uses the integrated statistical line element.
+\end{solution}
+\end{example}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=.88\textwidth,height=5.1cm,xmin=0,xmax=1,ymin=0,ymax=3.2,xlabel={probability $p$},ylabel={arc coordinate $\theta$},ytick={0,1.04719755,1.57079633,2.0943951,3.14159265},yticklabels={0,$\pi/3$,$\pi/2$,$2\pi/3$,$\pi$},grid=major]
+\addplot[teal,domain=.0001:.9999,samples=160]{2*asin(sqrt(x))*pi/180};
+\addplot[only marks,ink] coordinates {(.25,1.04719755)(.5,1.57079633)(.75,2.0943951)};
+\end{axis}
+\end{tikzpicture}
+\caption{The Bernoulli arc coordinate. Its difference is exact Fisher distance for monotone travel, and its total range has length $\pi$.}
+\end{figure}
+
+The coefficient $1/[p(1-p)]$ tends to infinity near either boundary, but its square root has an integrable singularity. The limiting distance from 0 to 1 is $\pi$. Boundary states can therefore be added at finite distance even though the metric was defined on positive laws.
+
+\section{The categorical metric in independent coordinates}
+For $\p=(x,y,z)$ with $z=1-x-y$, a tangent displacement has $dz=-dx-dy$. Hence
+\begin{align*}
+ds^2&=\frac{dx^2}{x}+\frac{dy^2}{y}+\frac{(dx+dy)^2}{z}\\
+&=\begin{pmatrix}dx&dy\end{pmatrix}
+\underbrace{\begin{pmatrix}1/x+1/z&1/z\\1/z&1/y+1/z\end{pmatrix}}_{G(x,y)}
+\begin{pmatrix}dx\\dy\end{pmatrix}.
+\end{align*}
+Its determinant is $1/(xyz)>0$, so the matrix is positive definite throughout the interior. Its inverse is
+\begin{equation}\label{eq:inversefisher}
+G^{-1}(x,y)=\begin{pmatrix}x(1-x)&-xy\\-xy&y(1-y)\end{pmatrix}.
+\end{equation}
+The off-diagonal terms record the effect of the dependent third coordinate. Changing $x$ or $y$ necessarily changes $z$ as well.
+
+For nonzero tangent vectors, the Fisher angle is defined by
+\[
+\cos\alpha_F=\frac{g_\p(u,v)}{\sqrt{g_\p(u,u)g_\p(v,v)}}.
+\]
+The usual inner-product identities and Cauchy--Schwarz inequality apply in each tangent space.
+
+\begin{example}[Angles at a categorical law]
+At $\q=(0.5,0.3,0.2)$ take
+\[
+u=(0.1,-0.05,-0.05),\qquad v=(0,0.1,-0.1).
+\]
+Compare their Fisher and Euclidean angles.
+\begin{solution}
+The Euclidean dot product is zero. In the Fisher metric,
+\[
+g_\q(u,v)=\frac1{120},\qquad
+g_\q(u,u)=\frac{49}{1200},\qquad
+g_\q(v,v)=\frac1{12}.
+\]
+Thus $\cos\alpha_F=1/7$ and $\alpha_F\approx81.79^\circ$, while the Euclidean angle is $90^\circ$.
+\end{solution}
+\end{example}
+
+\begin{figure}[htbp]\centering\begin{tikzpicture}[scale=6]
+\fill[soft] (0,0)--(1,0)--(.5,.8660254)--cycle;
+\draw[ink!75] (0,0)--(1,0)--(.5,.8660254)--cycle;
+\node[below left,font=\small] at (0,0){$A$};\node[below right,font=\small] at (1,0){$B$};\node[above,font=\small] at (.5,.8660254){$C$};
+\filldraw[fill=teal!13,draw=teal,line width=1pt] plot coordinates {(0.3939340,0.2274379) (0.3979884,0.2208988) (0.4024454,0.2146272) (0.4072874,0.2086478) (0.4124953,0.2029842) (0.4180486,0.1976589) (0.4239252,0.1926927) (0.4301021,0.1881053) (0.4365549,0.1839148) (0.4432581,0.1801378) (0.4501851,0.1767891) (0.4573088,0.1738820) (0.4646010,0.1714279) (0.4720328,0.1694366) (0.4795751,0.1679158) (0.4871979,0.1668716) (0.4948713,0.1663081) (0.5025649,0.1662275) (0.5102484,0.1666302) (0.5178914,0.1675145) (0.5254639,0.1688770) (0.5329358,0.1707123) (0.5402778,0.1730131) (0.5474608,0.1757704) (0.5544565,0.1789733) (0.5612372,0.1826091) (0.5677763,0.1866635) (0.5740480,0.1911205) (0.5800274,0.1959626) (0.5856909,0.2011705) (0.5910163,0.2067237) (0.5959825,0.2126004) (0.6005698,0.2187773) (0.6047603,0.2252300) (0.6085373,0.2319332) (0.6118860,0.2388603) (0.6147931,0.2459840) (0.6172472,0.2532761) (0.6192386,0.2607080) (0.6207594,0.2682502) (0.6218036,0.2758731) (0.6223671,0.2835464) (0.6224476,0.2912400) (0.6220450,0.2989235) (0.6211606,0.3065666) (0.6197981,0.3141390) (0.6179628,0.3216110) (0.6156620,0.3289529) (0.6129047,0.3361359) (0.6097018,0.3431316) (0.6060660,0.3499124) (0.6020116,0.3564515) (0.5975546,0.3627231) (0.5927126,0.3687025) (0.5875047,0.3743660) (0.5819514,0.3796914) (0.5760748,0.3846576) (0.5698979,0.3892450) (0.5634451,0.3934354) (0.5567419,0.3972125) (0.5498149,0.4005611) (0.5426912,0.4034683) (0.5353990,0.4059223) (0.5279672,0.4079137) (0.5204249,0.4094345) (0.5128021,0.4104787) (0.5051287,0.4110422) (0.4974351,0.4111228) (0.4897516,0.4107201) (0.4821086,0.4098358) (0.4745361,0.4084733) (0.4670642,0.4066380) (0.4597222,0.4043371) (0.4525392,0.4015799) (0.4455435,0.3983770) (0.4387628,0.3947412) (0.4322237,0.3906867) (0.4259520,0.3862297) (0.4199726,0.3813877) (0.4143091,0.3761798) (0.4089837,0.3706266) (0.4040175,0.3647499) (0.3994302,0.3585730) (0.3952397,0.3521202) (0.3914627,0.3454171) (0.3881140,0.3384900) (0.3852069,0.3313663) (0.3827528,0.3240742) (0.3807614,0.3166423) (0.3792406,0.3091001) (0.3781964,0.3014772) (0.3776329,0.2938038) (0.3775524,0.2861102) (0.3779550,0.2784267) (0.3788394,0.2707837) (0.3802019,0.2632113) (0.3820372,0.2557393) (0.3843380,0.2483974) (0.3870953,0.2412144) (0.3902982,0.2342187) (0.3939340,0.2274379)}--cycle;
+\fill[teal] (0.5000000,0.2886751) circle(.008);
+\node[font=\small] at (0.6000000,0.4800000){$(1/3,1/3,1/3)$};
+\filldraw[fill=copper!13,draw=copper,line width=1pt] plot coordinates {(0.0600000,0.0346410) (0.0622837,0.0310958) (0.0649135,0.0277695) (0.0678791,0.0246755) (0.0711688,0.0218259) (0.0747697,0.0192319) (0.0786674,0.0169038) (0.0828466,0.0148508) (0.0872909,0.0130810) (0.0919827,0.0116013) (0.0969034,0.0104175) (0.1020337,0.0095345) (0.1073532,0.0089556) (0.1128411,0.0086832) (0.1184756,0.0087182) (0.1242346,0.0090607) (0.1300952,0.0097091) (0.1360344,0.0106611) (0.1420287,0.0119127) (0.1480544,0.0134591) (0.1540879,0.0152942) (0.1601052,0.0174106) (0.1660826,0.0198002) (0.1719965,0.0224534) (0.1778237,0.0253597) (0.1835410,0.0285078) (0.1891260,0.0318851) (0.1945565,0.0354784) (0.1998112,0.0392734) (0.2048694,0.0432552) (0.2097109,0.0474081) (0.2143169,0.0517157) (0.2186690,0.0561610) (0.2227501,0.0607264) (0.2265440,0.0653939) (0.2300359,0.0701451) (0.2332120,0.0749613) (0.2360596,0.0798234) (0.2385676,0.0847123) (0.2407260,0.0896086) (0.2425264,0.0944931) (0.2439617,0.0993464) (0.2450261,0.1041494) (0.2457155,0.1088832) (0.2460272,0.1135290) (0.2459598,0.1180686) (0.2455138,0.1224840) (0.2446908,0.1267578) (0.2434941,0.1308731) (0.2419285,0.1348137) (0.2400000,0.1385641) (0.2377163,0.1421093) (0.2350865,0.1454355) (0.2321209,0.1485296) (0.2288312,0.1513792) (0.2252303,0.1539732) (0.2213326,0.1563012) (0.2171534,0.1583543) (0.2127091,0.1601241) (0.2080173,0.1616038) (0.2030966,0.1627875) (0.1979663,0.1636706) (0.1926468,0.1642495) (0.1871589,0.1645219) (0.1815244,0.1644868) (0.1757654,0.1641444) (0.1699048,0.1634959) (0.1639656,0.1625440) (0.1579713,0.1612924) (0.1519456,0.1597460) (0.1459121,0.1579109) (0.1398948,0.1557944) (0.1339174,0.1534049) (0.1280035,0.1507517) (0.1221763,0.1478453) (0.1164590,0.1446973) (0.1108740,0.1413200) (0.1054435,0.1377267) (0.1001888,0.1339317) (0.0951306,0.1299498) (0.0902891,0.1257969) (0.0856831,0.1214894) (0.0813310,0.1170441) (0.0772499,0.1124787) (0.0734560,0.1078112) (0.0699641,0.1030600) (0.0667880,0.0982438) (0.0639404,0.0933817) (0.0614324,0.0884928) (0.0592740,0.0835965) (0.0574736,0.0787120) (0.0560383,0.0738587) (0.0549739,0.0690557) (0.0542845,0.0643219) (0.0539728,0.0596760) (0.0540402,0.0551365) (0.0544862,0.0507211) (0.0553092,0.0464473) (0.0565059,0.0423320) (0.0580715,0.0383913) (0.0600000,0.0346410)}--cycle;
+\fill[copper] (0.1500000,0.0866025) circle(.008);
+\node[font=\small] at (0.2000000,-0.0900000){$(.8,.1,.1)$};
+\end{tikzpicture}\caption{Tangent ellipses at two base laws. Each displacement from its ellipse center has Fisher norm $0.3$ in the metric frozen at that center. These are tangent-norm contours, rather than finite-distance circles.}\end{figure}
+
+\section{Tangent velocities as centered random variables}
+There is another way to read the reciprocal probabilities in the Fisher metric. At a positive law $\p$, assign to a tangent vector $v$ the category values
+\[
+a_i=\frac{v_i}{p_i}.
+\]
+Their probability-weighted mean is $\sum_i p_i a_i=\sum_i v_i=0$. Thus each tangent vector corresponds to a mean-zero random variable on the outcome labels. Conversely, any values $a_i$ of mean zero give a tangent vector $v_i=p_i a_i$.
+
+For two tangent vectors, this correspondence gives
+\[
+g_\p(u,v)=\sum_i p_i\left(\frac{u_i}{p_i}\right)
+\left(\frac{v_i}{p_i}\right).
+\]
+Their Fisher inner product is the expected product, or covariance, of their centered random-variable representatives. Their squared norms are the variances of those representatives. The metric weights become the ordinary probability weights after velocities are expressed as relative rates of change.
+
+For a curve $\p(t)$ through $\p$, the values $p_i'/p_i$ are the derivatives of its log probabilities. They are precisely its score values when $t$ is treated as the parameter. The score definition of information and the tangent-vector definition therefore agree at the level of an explicit isometry between two finite-dimensional inner-product spaces.
+
+\begin{example}[A tangent velocity and its score values]
+At $\p=(1/2,1/4,1/4)$ take $v=(0,0.1,-0.1)$. Calculate its centered random-variable representative and norm.
+\begin{solution}
+The values $v_i/p_i$ are $(0,0.4,-0.4)$, of weighted mean zero. Their variance is $0.25(0.4)^2+0.25(-0.4)^2=0.08$. Direct calculation gives $g_\p(v,v)=0.01/(1/4)+0.01/(1/4)=0.08$, so the norm is $\sqrt{0.08}$.
+\end{solution}
+\end{example}
+
+Sampling covariance gives a complementary description. In the two independent coordinates of a three-category law, Chapter 4 gave
+\[
+N\operatorname{Cov}\begin{pmatrix}\widehat p_A\\\widehat p_B\end{pmatrix}
+=\begin{pmatrix}x(1-x)&-xy\\-xy&y(1-y)\end{pmatrix}.
+\]
+This is exactly the inverse information matrix \eqref{eq:inversefisher}. Directions with larger empirical variance have smaller information cost in the corresponding inverse quadratic form. The normalization constraint is already incorporated by using two independent coordinates; the full three-coordinate covariance matrix has a zero direction and cannot be inverted as an ordinary three-by-three matrix.
+
+\section{Replicator speed and fitness variance}\index{Fisher speed}
+Substitute $p_i'=p_i(f_i-\bar f)$ into the length integrand:
+\begin{equation}\label{eq:speedvariance}
+\boxed{\|\p'\|_F^2=\sum_i\frac{p_i^2(f_i-\bar f)^2}{p_i}
+=\Var_\p(f).}
+\end{equation}
+This identity holds for every smooth interior replicator trajectory. The fitness field can be constant, state-dependent, or cyclic. Equal fitness among all present types gives zero velocity and zero variance. Greater fitness variation corresponds to greater instantaneous squared speed through Fisher geometry.
+
+\begin{example}[Checking the speed identity]
+Let $p_A=1/4$, $p_B=3/4$, and $(f_A,f_B)=(2,0)$.
+\begin{solution}
+The mean fitness is $1/2$, the A velocity is $3/8$, and
+\[
+\Var(f)=\frac14\left(\frac32\right)^2+\frac34\left(-\frac12\right)^2=\frac34.
+\]
+The squared speed calculated from the Bernoulli metric is $(3/8)^2/[(1/4)(3/4)]=3/4$, as required.
+\end{solution}
+\end{example}
+
+With constant fitnesses, Chapter 5 showed that $\bar f'=\Var(f)$. In that case the increase in mean fitness equals squared Fisher speed. For general state-dependent fitnesses, differentiating their values also contributes to $\bar f'$. The speed identity itself remains valid and will be combined with a potential function in Chapter 9.
+
+\FloatBarrier
+\section{Exercises}
+\begin{exercises}
+\item Derive the categorical Fisher metric from the quadratic KL expansion and verify positivity on tangent vectors.
+\item Derive the Bernoulli information from both score values and show that the expected score is zero.
+\item Compute $I(p)$ at $p=0.1,0.25,0.5,0.9$. Explain the symmetry between the first and last values.
+\item Prove the coordinate transformation rule \eqref{eq:metrictransform} using the chain rule for scores.
+\item Compute the exact Fisher lengths of the moves $0.10\to0.15$ and $0.50\to0.55$. Compare the first-order approximations based at the left endpoint.
+\item For Bernoulli log-odds $L$, derive $I_L=p(1-p)$ directly from the scores rather than from the metric transformation law.
+\item Find the constant-speed Bernoulli path from $1/4$ to $3/4$ over $0\leq t\leq1$ and calculate its speed.
+\item Explain why a monotone change of curve parameter preserves Fisher length. What changes if the new parameter repeatedly reverses direction?
+\item Derive the three-category matrix $G$ and verify both its determinant and the inverse in \eqref{eq:inversefisher}.
+\item At $\p=(1/3,1/3,1/3)$, compare the Fisher and ambient Euclidean inner products of arbitrary tangent vectors. What happens to angles?
+\item Verify every inner product in the worked angle example and obtain $\cos\alpha_F=1/7$.
+\item Prove $I_N=NI$ for independent observations and identify the use of the zero-mean score.
+\item For $N=100$ Bernoulli observations at $p=1/4$, compute the Cram\'er--Rao bound. Compare it with the empirical proportion variance.
+\item Explain why an unbiasedness assertion only at one parameter value is insufficient for the derivative argument in the Cram\'er--Rao proof.
+\item Derive \eqref{eq:speedvariance} and verify it at $\p=(0.2,0.3,0.5)$ with $f=(3,1,2)$.
+\item For state-dependent fitnesses along a trajectory, show $\bar f'=\Var_\p(f)+\sum_i p_i\frac{d}{dt}f_i(\p(t))$.
+\item \emph{Exploration.} Compare Fisher norms and angles at several simplex points. Keep the coordinate vectors fixed and explain the effect of moving the base distribution.
+\item A one-dimensional metric is $ds^2=g(x)dx^2$. Find a vector $w$ such that $g(x)wv=\Phi'(x)v$ for every scalar $v$. Apply your result to the Bernoulli metric and $\Phi(x)=3x-2x^2$.
+\end{exercises}
+
+\clearpage\backmatter
+\chapter*{Selected Solutions}
+\section*{Chapter 7}
+\begin{answers}
+\item[7.3] The coefficients are $100/9,16/3,4,100/9$. Interchanging the two Bernoulli outcomes replaces $p$ by $1-p$ and preserves information.
+\item[7.5] The exact values are approximately $0.151898$ and $0.100167$. The left-endpoint approximations are $1/6\approx0.166667$ and $0.1$, respectively.
+\item[7.7] The arc coordinate is $\theta(t)=\pi/3+t\pi/3$, so $p(t)=\sin^2(\pi/6+t\pi/6)$. Its speed is $\pi/3$ throughout.
+\item[7.9] Expanding $(dx+dy)^2/z$ gives the matrix. Its determinant is $1/(xy)+1/(xz)+1/(yz)=1/(xyz)$. The usual two-by-two inverse formula gives the stated inverse after using $x+y+z=1$.
+\item[7.11] The mixed product is $-1/60+1/40=1/120$. The squared norms are $49/1200$ and $1/12$. Their product has square root $7/120$, giving the cosine $1/7$.
+\item[7.13] The bound is $p(1-p)/N=3/1600=0.001875$. The empirical proportion has exactly that variance.
+\item[7.15] The mean fitness is $1.9$, and variance is $0.2(1.1)^2+0.3(-0.9)^2+0.5(0.1)^2=0.49$. The metric calculation gives $0.22^2/0.2+(-0.27)^2/0.3+0.05^2/0.5=0.49$.
+\item[7.18] Cancel the arbitrary $v$ to obtain $w=\Phi'/g$. For the given metric and potential, $w=x(1-x)(3-4x)$.
+\end{answers}
+\end{document}

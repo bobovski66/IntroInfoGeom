@@ -1,0 +1,413 @@
+\documentclass[11pt,oneside,openany]{book}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[sc]{mathpazo}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[paperwidth=7.5in,paperheight=10in,inner=.85in,outer=.85in,top=.85in,bottom=.85in,headheight=15pt,headsep=20pt]{geometry}
+\usepackage{microtype}
+\usepackage{xcolor,graphicx,booktabs,array,longtable}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\usepackage{tikz,pgfplots}
+\usetikzlibrary{arrows.meta,calc,patterns,decorations.markings}
+\pgfplotsset{compat=1.18}
+\definecolor{ink}{HTML}{17334B}
+\definecolor{teal}{HTML}{137C83}
+\definecolor{copper}{HTML}{AE5932}
+\definecolor{soft}{HTML}{EEF3F5}
+\pgfplotsset{every axis/.append style={axis line style={black!65},tick style={black!60},tick label style={font=\small},label style={font=\small},legend style={font=\small,draw=none,fill=white},grid style={black!10},major grid style={black!10},line width=.6pt},every axis plot/.append style={line width=1.15pt}}
+\usepackage{enumitem,needspace,etoolbox}
+\setlist[enumerate]{topsep=5pt,itemsep=5pt,parsep=0pt}
+\setlist[itemize]{topsep=4pt,itemsep=3pt,parsep=0pt}
+\usepackage{titlesec,fancyhdr}
+\titleformat{\chapter}[display]{\normalfont\color{ink}}{\large\sffamily\MakeUppercase{Chapter \thechapter}}{12pt}{\huge\bfseries\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000}[\vspace{12pt}\titlerule]
+\titlespacing*{\chapter}{0pt}{-10pt}{24pt}
+\titleformat{\section}{\large\bfseries\color{ink}}{\thesection}{.65em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{ink}}{\thesubsection}{.6em}{}
+\titlespacing*{\section}{0pt}{18pt plus 3pt minus 2pt}{7pt}
+\titlespacing*{\subsection}{0pt}{12pt plus 2pt minus 2pt}{5pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\nouppercase{\leftmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{.3pt}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter\quad #1}{}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+\usepackage[font=small,labelfont=bf,labelsep=period]{caption}
+\usepackage{float,placeins}
+\floatplacement{figure}{htbp}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\renewcommand{\topfraction}{.9}
+\renewcommand{\textfraction}{.08}
+\renewcommand{\floatpagefraction}{.8}
+\usepackage{makeidx}
+\usepackage[columns=3,font=small,indentunit=11pt,columnsep=14pt]{idxlayout}
+\makeindex
+\usepackage[pdfencoding=auto,psdextra,colorlinks=true,linkcolor=ink,citecolor=teal,urlcolor=teal,bookmarksnumbered=true]{hyperref}
+\usepackage{bookmark}
+\hypersetup{pdftitle={The Calculus of Probability Distributions},pdfsubject={An undergraduate introduction to information geometry}}
+\urlstyle{same}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}{Example}[chapter]
+% A worked example may continue naturally across a page break.  Space, rather
+% than a heavy colored box, distinguishes it from the surrounding discussion.
+\BeforeBeginEnvironment{example}{\par\addvspace{9pt}\needspace{4\baselineskip}}
+\AfterEndEnvironment{example}{\par\addvspace{8pt}}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newenvironment{solution}{\par\smallskip\noindent\textit{Solution.}\ }{\par\smallskip}
+\newenvironment{exercises}{\begin{enumerate}[label=\thechapter.\arabic*,ref=\thechapter.\arabic*,leftmargin=2.8em,itemsep=6pt]}{\end{enumerate}}
+\newenvironment{answers}{\begin{description}[leftmargin=2.9em,labelwidth=2.5em,labelsep=.4em,itemsep=8pt,font=\normalfont\bfseries]}{\end{description}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\KL}[2]{D\!\left(#1\,\middle\|\,#2\right)}
+\newcommand{\grad}{\operatorname{grad}}
+\newcommand{\arcosh}{\operatorname{arcosh}}
+\newcommand{\sech}{\operatorname{sech}}
+\newcommand{\softmax}{\operatorname{softmax}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\ip}[2]{\left\langle #1,#2\right\rangle}
+\newcommand{\p}{\mathbf{p}}
+\newcommand{\q}{\mathbf{q}}
+\newcommand{\f}{\mathbf{f}}
+\newcommand{\uvec}{\mathbf{u}}
+\newcommand{\vvec}{\mathbf{v}}
+\newcommand{\ones}{\mathbf{1}}
+\newcommand{\simp}{\Delta^{n-1}}
+\newcommand{\simpi}{\Delta^{n-1}_{\!\circ}}
+\numberwithin{equation}{chapter}
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0pt}
+\linespread{1.115}
+\setlength{\emergencystretch}{2em}
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+\raggedbottom
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{2}
+% Leave enough room for the four-character subsection numbers in Chapter 10.
+\makeatletter
+\renewcommand*\l@section{\@dottedtocline{1}{1.5em}{3.35em}}
+\makeatother
+
+
+\hypersetup{pdftitle={Chapter 6: Relative Entropy and Lyapunov Stability}}
+\begin{document}
+\mainmatter
+\setcounter{chapter}{5}
+\chapter{Relative Entropy and Lyapunov Stability}
+\label{ch:kl}
+
+Predicting an observation requires a probability law. If the predictive law differs from the generating law, logarithmic scoring measures the resulting average penalty. The excess penalty is relative entropy, a comparison that also supplies useful functions for studying dynamical stability.
+
+The direction of this comparison matters. Observations have one distribution, while predictions use another; reversing their roles changes the expected penalty. After developing this statistical meaning, we will fix one distribution as a reference and let the other move. Relative entropy then becomes a function along a dynamical trajectory, and its rate of change reveals stability.
+
+\section{Prediction and expected logarithmic loss}\index{logarithmic loss}
+Suppose observations are generated by $Q=(q_i)$ and predicted using $P=(p_i)$. If outcome $i$ occurs, the logarithmic loss assigned to the prediction is $-\ln p_i$. Averaging over the actual outcome law gives the \emph{cross-entropy}\index{cross-entropy}
+\[
+\operatorname{CE}(Q,P)=-\sum_iq_i\ln p_i.
+\]
+Using $Q$ itself for prediction gives expected loss $H(Q)$. The difference is
+\begin{equation}\label{eq:kl}
+\boxed{D(Q\|P)=\operatorname{CE}(Q,P)-H(Q)
+=\sum_iq_i\ln\frac{q_i}{p_i}.}
+\end{equation}
+It is called \emph{relative entropy} or \emph{Kullback--Leibler divergence}\index{relative entropy|see{KL divergence}}\index{KL divergence}. Its first argument supplies the averaging distribution. This convention determines which expected prediction loss is being calculated.
+
+\begin{example}[The cost of using an equal-probability model]
+Let $Q=(3/4,1/4)$ and $P=(1/2,1/2)$. Compute the entropy, cross-entropy, and divergence.
+\begin{solution}
+Every outcome receives loss $\ln2$ under $P$, so $\operatorname{CE}(Q,P)=\ln2\approx0.693147$. The entropy is
+\[
+H(Q)=-\frac34\ln\frac34-\frac14\ln\frac14\approx0.562335.
+\]
+Their difference is
+\[
+D(Q\|P)=\frac34\ln\frac32+\frac14\ln\frac12\approx0.130812.
+\]
+The equal-probability model incurs about $0.1308$ extra nats of expected log loss per observation.
+\end{solution}
+\end{example}
+
+For $N$ independent observations, the model probability of a sequence is the product of its predicted probabilities. Negative logarithms turn this product into a sum of individual losses. The expected excess total loss is therefore $N D(Q\|P)$. This gives divergence a direct interpretation at different sample sizes.
+
+\section{Nonnegativity and the role of support}
+The elementary inequality
+\[
+\ln u\leq u-1\qquad(u>0)
+\]
+has equality exactly at $u=1$. It follows by differentiating $u-1-\ln u$, whose unique minimum is zero at 1.
+
+\begin{theorem}[Gibbs' inequality]\index{Gibbs' inequality}
+For finite probability distributions, $D(Q\|P)\geq0$, with equality exactly when $P=Q$.
+\end{theorem}
+\begin{proof}
+First assume every coordinate is positive. Apply the logarithm inequality to $u=p_i/q_i$, multiply by $q_i$, and sum:
+\[
+D(Q\|P)\geq\sum_iq_i\left(1-\frac{p_i}{q_i}\right)
+=\sum_i(q_i-p_i)=0.
+\]
+Equality forces $p_i/q_i=1$ for every $i$.
+
+At the boundary, terms with $q_i=0$ are assigned value zero. If $q_i>0$ but $p_i=0$, the divergence is infinite and the inequality holds. Otherwise apply the same calculation over the support $S$ of $Q$ to obtain $D(Q\|P)\geq1-\sum_{i\in S}p_i\geq0$. Equality requires $p_i=q_i$ on $S$ and no mass outside $S$, which again means $P=Q$.
+\end{proof}
+
+A predictive model assigning zero probability to a possible observation has infinite log loss when that observation occurs. The divergence becomes infinite whenever this happens with positive generating probability. Its finiteness condition is $\operatorname{supp}Q\subseteq\operatorname{supp}P$.
+
+\begin{example}[Boundary direction matters]
+Compare $Q=(1,0)$ and $P=(1/2,1/2)$ in both directions.
+\begin{solution}
+$D(Q\|P)=\ln2$ is finite: the single outcome generated by $Q$ receives positive probability under $P$. In the reverse direction, $Q$ assigns zero predictive probability to an outcome generated with probability $1/2$ under $P$, giving $D(P\|Q)=\infty$.
+\end{solution}
+\end{example}
+
+\section{Divergence as a scalar function on the simplex}\index{convexity}
+Fix a positive law $Q$. Then $P\mapsto D(Q\|P)$ is a smooth function on the positive simplex, with unique minimum zero at $P=Q$. Its ambient first and second derivatives are
+\[
+\frac{\partial D}{\partial p_i}=-\frac{q_i}{p_i},\qquad
+\frac{\partial^2D}{\partial p_i\partial p_j}
+=\begin{cases}q_i/p_i^2&i=j,\\0&i\ne j.\end{cases}
+\]
+The Hessian is positive definite, so the function is strictly convex. It diverges toward every boundary face when $Q$ has full support.
+
+\begin{example}[Reversing two interior laws]
+Reverse the laws in the first worked example.
+\begin{solution}
+\[
+D(P\|Q)=\frac12\ln\frac{2}{3}+\frac12\ln2
+=\frac12\ln\frac43\approx0.143841.
+\]
+The two values use different averaging laws. Both are nonnegative and vanish at equality, while their difference records the direction of prediction.
+\end{solution}
+\end{example}
+
+KL divergence is generally asymmetric. It also fails the triangle inequality. For example, take $A=(1,0)$, $B=(1/2,1/2)$, and $C=(1/4,3/4)$. Then
+\[
+D(A\|C)=\ln4>\ln2+\frac12\ln\frac43
+=D(A\|B)+D(B\|C).
+\]
+Thus divergence provides a prediction comparison rather than a metric distance. A metric will emerge from its local second-order behavior.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=.88\textwidth,height=5.3cm,xmin=.03,xmax=.97,ymin=0,ymax=2.3,xlabel={current probability $x$},ylabel={divergence in nats},grid=major,legend pos=north east]
+\addplot[teal,domain=.03:.97,samples=150]{.75*ln(.75/x)+.25*ln(.25/(1-x))};\addlegendentry{$D(3/4\|x)$}
+\addplot[copper,domain=.03:.97,samples=150]{x*ln(x/.75)+(1-x)*ln((1-x)/.25)};\addlegendentry{$D(x\|3/4)$}
+\addplot[only marks,ink] coordinates {(.75,0)};
+\end{axis}
+\end{tikzpicture}
+\caption{Two directed comparisons with the same reference probability. They share the minimum at equality and have different global shapes.}
+\end{figure}
+
+Along the mixture $M(t)=(1-t)P+tQ$, set $V(t)=D(Q\|M(t))$. Its second derivative is nonnegative, while $V'(1)=-\sum_i(q_i-p_i)=0$. Hence $V'(t)\leq0$ on $[0,1]$, strictly below zero for $t<1$ when $P\ne Q$. Moving along this mixture toward the reference reduces expected excess log loss.
+
+\section{Fitting a model to observed frequencies}
+Relative entropy also appears when a model is fitted to a finite data set. Suppose $N$ independent observations have category counts $N_i$, and set $\widehat q_i=N_i/N$. The probability assigned to the observed ordered sequence by a proposed law $P$ is
+\[
+L(P)=\prod_i p_i^{N_i}.
+\]
+As a function of the proposed law with the observed sequence fixed, this expression is called its \emph{likelihood}\index{likelihood}. The average negative log likelihood is
+\[
+-\frac1N\ln L(P)=-\sum_i\widehat q_i\ln p_i
+=H(\widehat Q)+D(\widehat Q\|P).
+\]
+The empirical entropy does not depend on the proposed model. Maximizing likelihood therefore amounts to minimizing divergence from the empirical law to the model law. The direction of the divergence is determined by the observed frequencies that weight the logarithmic terms.
+
+Among all laws on the closed simplex, Gibbs' inequality shows that the unique maximizing law is $P=\widehat Q$. When some observed counts are zero, this maximum can lie on the boundary. If the proposed laws are restricted to a smaller family, the fitted law minimizes the same directed divergence within that family. The data need not themselves lie in the chosen family.
+
+\begin{example}[An empirical law and a uniform model]
+A sample of 40 observations gives counts $(20,12,8)$. Compare the likelihood of the empirical law with that of the uniform three-category law.
+\begin{solution}
+The empirical law is $\widehat Q=(0.5,0.3,0.2)$. Let $U=(1/3,1/3,1/3)$. The divergence is
+\[
+D(\widehat Q\|U)=0.5\ln1.5+0.3\ln0.9+0.2\ln0.6.
+\]
+The average negative log likelihood under the uniform law is $\ln3$, whereas under the empirical law it is $H(\widehat Q)$. Their total log-likelihood difference is $40D(\widehat Q\|U)$, and the likelihood ratio is $\exp[40D(\widehat Q\|U)]$. This compares the two models' probabilities for the same observations.
+\end{solution}
+\end{example}
+
+If only the counts are recorded, the probability of those counts includes the number of sequences that produce them. That multiplicative factor depends on the counts and sample size, while being the same for every proposed law. It cancels from likelihood ratios and leaves the fitted probabilities unchanged.
+
+For a Bernoulli sample with $k$ successes in $N$ observations, the log likelihood is
+\[
+\ell(p)=k\ln p+(N-k)\ln(1-p).
+\]
+When $0<k<N$, differentiation gives
+\[
+\ell'(p)=\frac{N(\widehat q-p)}{p(1-p)},\qquad \widehat q=\frac{k}{N}.
+\]
+It is positive below the empirical proportion and negative above it, so the maximum occurs at $p=\widehat q$. At that maximum,
+\[
+-\ell''(\widehat q)=\frac{N}{\widehat q(1-\widehat q)}.
+\]
+The reciprocal-variance coefficient from the KL Taylor expansion has appeared again, now as local curvature of a data-fitting objective. The next chapter relates it to score fluctuations and Fisher information.
+
+\section{Lyapunov functions}
+A scalar function can establish stability by controlling the possible motion of a trajectory. Suppose an equilibrium $q$ lies in an open state domain and a continuously differentiable function $V$ satisfies
+\[
+V(q)=0,\qquad V(x)>0\quad(x\ne q)
+\]
+near $q$. Its derivative along $x'=F(x)$ is $\dot V=\nabla V\cdot F$. A nonpositive derivative keeps a solution within the sublevel set $V\leq V(x_0)$.
+
+\begin{definition}[Lyapunov function]\index{Lyapunov function}
+A \emph{Lyapunov function} is a function with a strict local minimum at the equilibrium and nonpositive derivative along nearby trajectories. If its derivative is strictly negative away from equilibrium, it is a \emph{strict Lyapunov function}.
+\end{definition}
+
+The usual Lyapunov stability theorem follows from nested sublevel sets. A sufficiently small sublevel component around a strict local minimum lies inside any prescribed small neighborhood and is forward invariant when $\dot V\leq0$. This proves stability. When $\dot V<0$ away from the equilibrium, compact annuli around the equilibrium have a negative upper bound for $\dot V$. A trajectory cannot remain in one of these annuli forever, since $V$ would eventually become negative. Applying this observation to successively smaller neighborhoods gives convergence.
+
+The argument applies in any finite dimension when the relevant sublevel components are compactly contained in the domain. A globally strict minimum together with compact sublevels and strict decay gives convergence from every initial state in that domain.
+
+\section{A relative-entropy proof of coexistence}
+Consider the family
+\[
+x'=x(1-x)(a-bx),\qquad b>0,\quad q=\frac ab\in(0,1).
+\]
+The equilibrium $q$ is the attracting interior state. Define
+\begin{equation}\label{eq:binarylyap}
+V(x)=D(q\|x)=q\ln\frac qx+(1-q)\ln\frac{1-q}{1-x}.
+\end{equation}
+Gibbs' inequality gives the required strict minimum. Differentiate with respect to the evolving probability:
+\[
+V'(x)=-\frac qx+\frac{1-q}{1-x}
+=\frac{x-q}{x(1-x)}.
+\]
+The chain rule now yields
+\begin{equation}\label{eq:kldecay}
+\boxed{\dot V=(x-q)(a-bx)=-b(x-q)^2.}
+\end{equation}
+Thus $V$ decreases strictly along every nonstationary interior trajectory.
+
+Because $q$ is positive and less than 1, $V(x)\to\infty$ at both endpoints. Every finite sublevel is compactly contained in $(0,1)$. The strict Lyapunov argument therefore gives convergence to $q$ for every interior initial condition. It also gives a quantitative function with which to monitor the approach.
+
+\begin{example}[The recurring coexistence model]
+For $x'=x(1-x)(3-4x)$, write its KL Lyapunov function and its decay rate.
+\begin{solution}
+Here $q=3/4$ and $b=4$, so
+\[
+V(x)=\frac34\ln\frac{3}{4x}+\frac14\ln\frac{1}{4(1-x)},
+\qquad \dot V=-4\left(x-\frac34\right)^2.
+\]
+The reference is the equilibrium law. This choice yields decay throughout the interior, including portions of the trajectory where Shannon entropy changes its direction of variation.
+\end{solution}
+\end{example}
+
+\begin{figure}[htbp]\centering\begin{tikzpicture}\begin{axis}[width=.9\textwidth,height=5.4cm,xmin=0,xmax=12,ymin=0,ymax=1.4,xlabel={time $t$},ylabel={function value},grid=major,legend pos=north east]
+\addplot[ink] coordinates {(0.0000000,0.1000000) (0.0750000,0.1186821) (0.1500000,0.1395951) (0.2250000,0.1626096) (0.3000000,0.1874889) (0.3750000,0.2138985) (0.4500000,0.2414290) (0.5250000,0.2696284) (0.6000000,0.2980378) (0.6750000,0.3262250) (0.7500000,0.3538100) (0.8250000,0.3804818) (0.9000000,0.4060045) (0.9750000,0.4302148) (1.0500000,0.4530152) (1.1250000,0.4743629) (1.2000000,0.4942583) (1.2750000,0.5127344) (1.3500000,0.5298465) (1.4250000,0.5456649) (1.5000000,0.5602682) (1.5750000,0.5737389) (1.6500000,0.5861598) (1.7250000,0.5976116) (1.8000000,0.6081719) (1.8750000,0.6179136) (1.9500000,0.6269049) (2.0250000,0.6352086) (2.1000000,0.6428830) (2.1750000,0.6499810) (2.2500000,0.6565513) (2.3250000,0.6626382) (2.4000000,0.6682819) (2.4750000,0.6735191) (2.5500000,0.6783830) (2.6250000,0.6829039) (2.7000000,0.6871094) (2.7750000,0.6910244) (2.8500000,0.6946717) (2.9250000,0.6980721) (3.0000000,0.7012446) (3.0750000,0.7042062) (3.1500000,0.7069729) (3.2250000,0.7095590) (3.3000000,0.7119777) (3.3750000,0.7142411) (3.4500000,0.7163603) (3.5250000,0.7183454) (3.6000000,0.7202060) (3.6750000,0.7219505) (3.7500000,0.7235869) (3.8250000,0.7251225) (3.9000000,0.7265642) (3.9750000,0.7279181) (4.0500000,0.7291901) (4.1250000,0.7303854) (4.2000000,0.7315092) (4.2750000,0.7325659) (4.3500000,0.7335599) (4.4250000,0.7344951) (4.5000000,0.7353753) (4.5750000,0.7362038) (4.6500000,0.7369839) (4.7250000,0.7377186) (4.8000000,0.7384106) (4.8750000,0.7390626) (4.9500000,0.7396769) (5.0250000,0.7402560) (5.1000000,0.7408018) (5.1750000,0.7413163) (5.2500000,0.7418015) (5.3250000,0.7422590) (5.4000000,0.7426906) (5.4750000,0.7430976) (5.5500000,0.7434817) (5.6250000,0.7438440) (5.7000000,0.7441858) (5.7750000,0.7445085) (5.8500000,0.7448130) (5.9250000,0.7451003) (6.0000000,0.7453716) (6.0750000,0.7456277) (6.1500000,0.7458695) (6.2250000,0.7460977) (6.3000000,0.7463133) (6.3750000,0.7465168) (6.4500000,0.7467089) (6.5250000,0.7468904) (6.6000000,0.7470619) (6.6750000,0.7472237) (6.7500000,0.7473767) (6.8250000,0.7475211) (6.9000000,0.7476575) (6.9750000,0.7477864) (7.0500000,0.7479081) (7.1250000,0.7480232) (7.2000000,0.7481318) (7.2750000,0.7482345) (7.3500000,0.7483315) (7.4250000,0.7484231) (7.5000000,0.7485097) (7.5750000,0.7485915) (7.6500000,0.7486689) (7.7250000,0.7487419) (7.8000000,0.7488109) (7.8750000,0.7488762) (7.9500000,0.7489378) (8.0250000,0.7489961) (8.1000000,0.7490511) (8.1750000,0.7491031) (8.2500000,0.7491523) (8.3250000,0.7491988) (8.4000000,0.7492427) (8.4750000,0.7492842) (8.5500000,0.7493234) (8.6250000,0.7493605) (8.7000000,0.7493955) (8.7750000,0.7494286) (8.8500000,0.7494599) (8.9250000,0.7494895) (9.0000000,0.7495175) (9.0750000,0.7495439) (9.1500000,0.7495689) (9.2250000,0.7495925) (9.3000000,0.7496148) (9.3750000,0.7496359) (9.4500000,0.7496558) (9.5250000,0.7496747) (9.6000000,0.7496925) (9.6750000,0.7497093) (9.7500000,0.7497252) (9.8250000,0.7497403) (9.9000000,0.7497545) (9.9750000,0.7497679) (10.0500000,0.7497806) (10.1250000,0.7497926) (10.2000000,0.7498040) (10.2750000,0.7498147) (10.3500000,0.7498248) (10.4250000,0.7498344) (10.5000000,0.7498435) (10.5750000,0.7498520) (10.6500000,0.7498601) (10.7250000,0.7498678) (10.8000000,0.7498750) (10.8750000,0.7498819) (10.9500000,0.7498883) (11.0250000,0.7498944) (11.1000000,0.7499002) (11.1750000,0.7499057) (11.2500000,0.7499108) (11.3250000,0.7499157) (11.4000000,0.7499203) (11.4750000,0.7499247) (11.5500000,0.7499288) (11.6250000,0.7499327) (11.7000000,0.7499364) (11.7750000,0.7499399) (11.8500000,0.7499432) (11.9250000,0.7499463) (12.0000000,0.7499492)};\addlegendentry{$x(t)$}
+\addplot[copper] coordinates {(0.0000000,0.3250830) (0.0750000,0.3642908) (0.1500000,0.4042277) (0.2250000,0.4439720) (0.3000000,0.4825613) (0.3750000,0.5190762) (0.4500000,0.5527215) (0.5250000,0.5828889) (0.6000000,0.6091926) (0.6750000,0.6314729) (0.7500000,0.6497733) (0.8250000,0.6642995) (0.9000000,0.6753713) (0.9750000,0.6833754) (1.0500000,0.6887255) (1.1250000,0.6918321) (1.2000000,0.6930812) (1.2750000,0.6928228) (1.3500000,0.6913645) (1.4250000,0.6889708) (1.5000000,0.6858650) (1.5750000,0.6822326) (1.6500000,0.6782258) (1.7250000,0.6739682) (1.8000000,0.6695588) (1.8750000,0.6650763) (1.9500000,0.6605824) (2.0250000,0.6561253) (2.1000000,0.6517414) (2.1750000,0.6474584) (2.2500000,0.6432965) (2.3250000,0.6392700) (2.4000000,0.6353887) (2.4750000,0.6316584) (2.5500000,0.6280823) (2.6250000,0.6246612) (2.7000000,0.6213940) (2.7750000,0.6182786) (2.8500000,0.6153116) (2.9250000,0.6124889) (3.0000000,0.6098061) (3.0750000,0.6072582) (3.1500000,0.6048399) (3.2250000,0.6025461) (3.3000000,0.6003714) (3.3750000,0.5983105) (3.4500000,0.5963581) (3.5250000,0.5945092) (3.6000000,0.5927587) (3.6750000,0.5911017) (3.7500000,0.5895337) (3.8250000,0.5880500) (3.9000000,0.5866463) (3.9750000,0.5853186) (4.0500000,0.5840628) (4.1250000,0.5828751) (4.2000000,0.5817520) (4.2750000,0.5806900) (4.3500000,0.5796858) (4.4250000,0.5787364) (4.5000000,0.5778389) (4.5750000,0.5769903) (4.6500000,0.5761881) (4.7250000,0.5754297) (4.8000000,0.5747128) (4.8750000,0.5740351) (4.9500000,0.5733946) (5.0250000,0.5727890) (5.1000000,0.5722166) (5.1750000,0.5716756) (5.2500000,0.5711642) (5.3250000,0.5706807) (5.4000000,0.5702238) (5.4750000,0.5697919) (5.5500000,0.5693836) (5.6250000,0.5689977) (5.7000000,0.5686330) (5.7750000,0.5682882) (5.8500000,0.5679623) (5.9250000,0.5676542) (6.0000000,0.5673631) (6.0750000,0.5670878) (6.1500000,0.5668277) (6.2250000,0.5665818) (6.3000000,0.5663493) (6.3750000,0.5661296) (6.4500000,0.5659219) (6.5250000,0.5657256) (6.6000000,0.5655401) (6.6750000,0.5653647) (6.7500000,0.5651989) (6.8250000,0.5650422) (6.9000000,0.5648940) (6.9750000,0.5647540) (7.0500000,0.5646216) (7.1250000,0.5644965) (7.2000000,0.5643782) (7.2750000,0.5642665) (7.3500000,0.5641608) (7.4250000,0.5640609) (7.5000000,0.5639665) (7.5750000,0.5638772) (7.6500000,0.5637928) (7.7250000,0.5637131) (7.8000000,0.5636377) (7.8750000,0.5635664) (7.9500000,0.5634991) (8.0250000,0.5634354) (8.1000000,0.5633752) (8.1750000,0.5633183) (8.2500000,0.5632645) (8.3250000,0.5632137) (8.4000000,0.5631656) (8.4750000,0.5631202) (8.5500000,0.5630772) (8.6250000,0.5630366) (8.7000000,0.5629983) (8.7750000,0.5629620) (8.8500000,0.5629277) (8.9250000,0.5628953) (9.0000000,0.5628646) (9.0750000,0.5628357) (9.1500000,0.5628083) (9.2250000,0.5627824) (9.3000000,0.5627579) (9.3750000,0.5627348) (9.4500000,0.5627130) (9.5250000,0.5626923) (9.6000000,0.5626727) (9.6750000,0.5626543) (9.7500000,0.5626368) (9.8250000,0.5626203) (9.9000000,0.5626047) (9.9750000,0.5625900) (10.0500000,0.5625760) (10.1250000,0.5625629) (10.2000000,0.5625504) (10.2750000,0.5625386) (10.3500000,0.5625275) (10.4250000,0.5625170) (10.5000000,0.5625070) (10.5750000,0.5624976) (10.6500000,0.5624887) (10.7250000,0.5624803) (10.8000000,0.5624724) (10.8750000,0.5624649) (10.9500000,0.5624578) (11.0250000,0.5624511) (11.1000000,0.5624447) (11.1750000,0.5624387) (11.2500000,0.5624331) (11.3250000,0.5624277) (11.4000000,0.5624227) (11.4750000,0.5624179) (11.5500000,0.5624133) (11.6250000,0.5624091) (11.7000000,0.5624050) (11.7750000,0.5624012) (11.8500000,0.5623976) (11.9250000,0.5623942) (12.0000000,0.5623909)};\addlegendentry{$H(x(t))$}
+\addplot[teal] coordinates {(0.0000000,1.1909438) (0.0750000,1.0677294) (0.1500000,0.9520099) (0.2250000,0.8443332) (0.3000000,0.7450980) (0.3750000,0.6545226) (0.4500000,0.5726296) (0.5250000,0.4992483) (0.6000000,0.4340349) (0.6750000,0.3765057) (0.7500000,0.3260767) (0.8250000,0.2821058) (0.9000000,0.2439290) (0.9750000,0.2108918) (1.0500000,0.1823706) (1.1250000,0.1577879) (1.2000000,0.1366199) (1.2750000,0.1183993) (1.3500000,0.1027148) (1.4250000,0.0892076) (1.5000000,0.0775672) (1.5750000,0.0675263) (1.6500000,0.0588559) (1.7250000,0.0513599) (1.8000000,0.0448711) (1.8750000,0.0392469) (1.9500000,0.0343657) (2.0250000,0.0301236) (2.1000000,0.0264322) (2.1750000,0.0232159) (2.2500000,0.0204101) (2.3250000,0.0179593) (2.4000000,0.0158162) (2.4750000,0.0139400) (2.5500000,0.0122958) (2.6250000,0.0108533) (2.7000000,0.0095866) (2.7750000,0.0084732) (2.8500000,0.0074937) (2.9250000,0.0066313) (3.0000000,0.0058713) (3.0750000,0.0052011) (3.1500000,0.0046096) (3.2250000,0.0040873) (3.3000000,0.0036257) (3.3750000,0.0032176) (3.4500000,0.0028565) (3.5250000,0.0025369) (3.6000000,0.0022538) (3.6750000,0.0020029) (3.7500000,0.0017805) (3.8250000,0.0015833) (3.9000000,0.0014083) (3.9750000,0.0012529) (4.0500000,0.0011150) (4.1250000,0.0009925) (4.2000000,0.0008836) (4.2750000,0.0007869) (4.3500000,0.0007008) (4.4250000,0.0006243) (4.5000000,0.0005563) (4.5750000,0.0004957) (4.6500000,0.0004418) (4.7250000,0.0003938) (4.8000000,0.0003511) (4.8750000,0.0003130) (4.9500000,0.0002791) (5.0250000,0.0002489) (5.1000000,0.0002220) (5.1750000,0.0001981) (5.2500000,0.0001767) (5.3250000,0.0001577) (5.4000000,0.0001407) (5.4750000,0.0001255) (5.5500000,0.0001120) (5.6250000,0.0001000) (5.7000000,0.0000892) (5.7750000,0.0000796) (5.8500000,0.0000711) (5.9250000,0.0000635) (6.0000000,0.0000567) (6.0750000,0.0000506) (6.1500000,0.0000452) (6.2250000,0.0000403) (6.3000000,0.0000360) (6.3750000,0.0000322) (6.4500000,0.0000287) (6.5250000,0.0000256) (6.6000000,0.0000229) (6.6750000,0.0000205) (6.7500000,0.0000183) (6.8250000,0.0000163) (6.9000000,0.0000146) (6.9750000,0.0000130) (7.0500000,0.0000116) (7.1250000,0.0000104) (7.2000000,0.0000093) (7.2750000,0.0000083) (7.3500000,0.0000074) (7.4250000,0.0000066) (7.5000000,0.0000059) (7.5750000,0.0000053) (7.6500000,0.0000047) (7.7250000,0.0000042) (7.8000000,0.0000038) (7.8750000,0.0000034) (7.9500000,0.0000030) (8.0250000,0.0000027) (8.1000000,0.0000024) (8.1750000,0.0000021) (8.2500000,0.0000019) (8.3250000,0.0000017) (8.4000000,0.0000015) (8.4750000,0.0000014) (8.5500000,0.0000012) (8.6250000,0.0000011) (8.7000000,0.0000010) (8.7750000,0.0000009) (8.8500000,0.0000008) (8.9250000,0.0000007) (9.0000000,0.0000006) (9.0750000,0.0000006) (9.1500000,0.0000005) (9.2250000,0.0000004) (9.3000000,0.0000004) (9.3750000,0.0000004) (9.4500000,0.0000003) (9.5250000,0.0000003) (9.6000000,0.0000003) (9.6750000,0.0000002) (9.7500000,0.0000002) (9.8250000,0.0000002) (9.9000000,0.0000002) (9.9750000,0.0000001) (10.0500000,0.0000001) (10.1250000,0.0000001) (10.2000000,0.0000001) (10.2750000,0.0000001) (10.3500000,0.0000001) (10.4250000,0.0000001) (10.5000000,0.0000001) (10.5750000,0.0000001) (10.6500000,0.0000001) (10.7250000,0.0000000) (10.8000000,0.0000000) (10.8750000,0.0000000) (10.9500000,0.0000000) (11.0250000,0.0000000) (11.1000000,0.0000000) (11.1750000,0.0000000) (11.2500000,0.0000000) (11.3250000,0.0000000) (11.4000000,0.0000000) (11.4750000,0.0000000) (11.5500000,0.0000000) (11.6250000,0.0000000) (11.7000000,0.0000000) (11.7750000,0.0000000) (11.8500000,0.0000000) (11.9250000,0.0000000) (12.0000000,0.0000000)};\addlegendentry{$D(3/4\|x(t))$}
+\end{axis}\end{tikzpicture}\caption{State, entropy, and relative entropy along the coexistence trajectory from $x_0=0.1$. The KL function decreases throughout the approach to equilibrium.}\end{figure}
+
+\section{The multi-strategy derivative}
+For a fixed positive reference $\q$ and an interior replicator solution,
+\begin{align}
+\frac{d}{dt}D(\q\|\p(t))
+&=-\sum_iq_i\frac{p_i'}{p_i}\notag\\
+&=-\sum_iq_i(f_i-\bar f)
+=\bar f-\sum_iq_if_i.\label{eq:multiklderivative}
+\end{align}
+The sign depends on the fitness field and reference. The derivative is nonpositive precisely when the reference-weighted fitness is at least the current mean fitness.
+
+\begin{example}[Relative entropy in the cyclic family]
+Take $\q=(1/3,1/3,1/3)$ and the cyclic matrix $M_s$ from Chapter 3.
+\begin{solution}
+The divergence can be written using the product $P=p_Ap_Bp_C$:
+\[
+D(\q\|\p)=-\frac13\ln(27P).
+\]
+Consequently
+\[
+\frac{d}{dt}D(\q\|\p)=-\frac{1-s}{3}(1-3Q),
+\]
+where $Q=p_Ap_B+p_Bp_C+p_Cp_A$. For $s<1$, this is a strict Lyapunov function for the center. For $s=1$, it is conserved along the closed orbits. For $s>1$, it increases along every noncentral interior trajectory.
+\end{solution}
+\end{example}
+
+This calculation reinterprets the earlier product criterion in information-theoretic terms. The same divergence supports both decay and conservation when paired with different dynamics.
+
+\section{The local quadratic approximation}\index{KL divergence!quadratic expansion}
+Relative entropy has so far measured the difference between distributions at finite separation. Near a fixed reference law, the comparison is governed by the first nonzero term of its Taylor expansion. That term will supply an inner product on the tangent plane of the simplex. It is the precise point at which a statistical comparison begins to produce geometry.
+Fix a positive reference vector $\q$ and write a nearby law as $\q+h$, where $\sum_i h_i=0$. Expand each logarithm:
+\begin{align*}
+D(\q\|\q+h)
+&=-\sum_iq_i\ln\left(1+\frac{h_i}{q_i}\right)\\
+&=-\sum_i h_i+\frac12\sum_i\frac{h_i^2}{q_i}+O(\|h\|^3).
+\end{align*}
+The linear term vanishes by normalization, giving
+\begin{equation}\label{eq:klquadratic}
+\boxed{D(\q\|\q+h)=\frac12\sum_i\frac{h_i^2}{q_i}+O(\|h\|^3).}
+\end{equation}
+The estimate is local around a fixed positive law. In particular, the allowed displacements must be small compared with the probabilities that approach zero near the boundary.
+
+For a two-outcome displacement $(h,-h)$, the expression reduces to
+\begin{equation}\label{eq:binaryklquadratic}
+D(q\|q+h)=\frac{h^2}{2q(1-q)}+O(|h|^3).
+\end{equation}
+Reversing the arguments gives the same leading quadratic term. Directional differences first enter at higher order. The symmetric positive quadratic expression is the object from which Fisher geometry is constructed.
+
+\begin{example}[Equal coordinate changes at different states]
+Use the quadratic approximation for $h=0.02$ at $q=0.2$ and $q=0.5$.
+\begin{solution}
+The approximations, in nats, are
+\begin{align*}
+q=0.2:&\quad \frac{0.02^2}{2(0.2)(0.8)}=0.00125,\\
+q=0.5:&\quad \frac{0.02^2}{2(0.5)(0.5)}=0.0008.
+\end{align*}
+The same small probability displacement has a larger leading information cost at the first reference state.
+\end{solution}
+\end{example}
+
+There is also an exact connection with entropy. Let $F(P)=-H(P)=\sum_i p_i\ln p_i$. Then
+\begin{equation}\label{eq:bregman}
+D(Q\|P)=F(Q)-F(P)-\sum_i(\ln p_i+1)(q_i-p_i).
+\end{equation}
+The divergence is the difference between the value of the convex function $F$ and its tangent-plane approximation at $P$. Its Hessian in probability coordinates is $\diag(1/p_i)$, the same quadratic form seen in \eqref{eq:klquadratic}.
+
+\FloatBarrier
+\section{Exercises}
+\begin{exercises}
+\item For $Q=(3/4,1/4)$ and $P=(1/2,1/2)$, compute both directed divergences to six decimal places.
+\item Prove $\ln u\leq u-1$ using calculus and characterize equality.
+\item Determine which directed divergences are finite between $(1/2,1/2,0)$ and $(1/3,1/3,1/3)$. Compute the finite value.
+\item Prove the strict convexity of $P\mapsto D(Q\|P)$ for positive $Q$.
+\item For $q=2/5$, derive $V'(x)$ when $V(x)=D(q\|x)$. Apply it to $x'=x(1-x)(2-5x)$.
+\item Give a complete Lyapunov argument for convergence in the preceding problem, including compactness of sublevels.
+\item Show that along the mixture from $P$ to $Q$, the function $D(Q\|M(t))$ decreases strictly unless $P=Q$.
+\item For $Q=(0.5,0.3,0.2)$ and $P=(0.15,0.20,0.65)$, compute cross-entropy and both divergences numerically.
+\item Derive \eqref{eq:multiklderivative}. State the condition that makes its right-hand side nonpositive.
+\item For the balanced cyclic model, express $D((1/3,1/3,1/3)\|\p)$ in terms of $p_Ap_Bp_C$ and explain its conservation.
+\item Expand the binary divergence at $x=q+h$ through quadratic order. Identify the reason its linear term vanishes.
+\item Derive the cubic term in $D(\q\|\q+h)$. Explain why the expansion is not uniform over the entire positive simplex.
+\item For $q=0.2$ and $h=0.02$, compare the exact divergence with its quadratic approximation. Repeat after halving $h$.
+\item Verify the exact entropy identity \eqref{eq:bregman} by expanding all sums.
+\item Show that $D(q\|x)\geq2(x-q)^2$ for interior binary probabilities. Use $V'(x)=(x-q)/[x(1-x)]$ and integrate from $q$ to $x$.
+\item On a compact interval $[\delta,1-\delta]$ containing both $x$ and $q$, prove $D(q\|x)\leq(x-q)^2/[2\delta(1-\delta)]$. Combine this with \eqref{eq:kldecay} to obtain an exponential bound for $V$ along a trapped trajectory.
+\item \emph{Exploration.} For the coexistence model from $x_0=0.1$, graph $x(t)$, $H(x(t))$, and $D(3/4\|x(t))$. Explain each curve using its derivative.
+\item \emph{Exploration.} Fix a positive categorical reference and inspect both directed KL landscapes. Describe their boundary behavior by identifying which coordinates create infinite loss.
+\end{exercises}
+
+\clearpage\backmatter
+\chapter*{Selected Solutions}
+\section*{Chapter 6}
+\begin{answers}
+\item[6.1] The values are $0.130812$ and $0.143841$ nats, respectively.
+\item[6.3] If $A=(1/2,1/2,0)$ and $U=(1/3,1/3,1/3)$, then $D(A\|U)=\ln(3/2)$. The reverse divergence is infinite because the third predictive probability is zero.
+\item[6.5] $V'(x)=(x-2/5)/[x(1-x)]$. The chain rule gives $\dot V=(x-2/5)(2-5x)=-5(x-2/5)^2$.
+\item[6.7] The second derivative along the mixture is $\sum_iq_i(q_i-p_i)^2/M_i(t)^2>0$ for distinct endpoints. Since the first derivative at $t=1$ is zero, it is negative for $t<1$.
+\item[6.9] Differentiation gives $\bar f-\sum_iq_if_i$. It is nonpositive when $\sum_iq_if_i\geq\sum_ip_if_i$ at the current state.
+\item[6.11] The value and first derivative at $h=0$ are zero. The second derivative is $1/[q(1-q)]$, producing $h^2/[2q(1-q)]$. The first derivative cancels because the two displaced probabilities still sum to one.
+\item[6.15] Integrate the displayed derivative. On the segment from $q$ to $x$, $1/[s(1-s)]\geq4$. Accounting for the orientation of the integral on either side of $q$ gives $V(x)\geq2(x-q)^2$.
+\item[6.16] On the compact interval, $1/[s(1-s)]\leq1/[\delta(1-\delta)]$, giving the quadratic upper bound. Hence $(x-q)^2\geq2\delta(1-\delta)V$ and $\dot V\leq-2b\delta(1-\delta)V$. Integration gives $V(t)\leq V(0)e^{-2b\delta(1-\delta)t}$ while the trajectory remains in the interval.
+\end{answers}
+\end{document}

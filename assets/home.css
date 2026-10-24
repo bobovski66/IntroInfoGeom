@@ -1,0 +1,83 @@
+/* Course homepage: a reading-oriented syllabus and resource index. */
+.course-hero{
+  padding:32px 0 30px;
+  border-bottom:1px solid var(--line);
+}
+.course-kicker{
+  color:var(--accent);
+  font-size:.75rem;
+  font-weight:750;
+  letter-spacing:.115em;
+  text-transform:uppercase;
+  margin:0 0 14px;
+}
+.course-hero h1{font-size:clamp(2.5rem,5vw,4.6rem);line-height:1.08;margin:0 0 20px;}
+.course-hero .hero-deck{
+  max-width:26ch;
+  margin:0 0 18px;
+  font:normal clamp(1.3rem,2.3vw,1.9rem)/1.37 Georgia,Cambria,serif;
+  color:var(--ink);
+}
+.course-hero .lead{max-width:76ch;margin:0 0 24px;font-size:1.055rem;line-height:1.75;}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 13px;}
+.hero-actions .btn{text-decoration:none;font-weight:650;}
+.hero-note{font-size:.88rem;color:var(--muted);max-width:76ch;margin:8px 0 0;}
+.course-introduction{
+  display:grid;
+  grid-template-columns:minmax(0,1.6fr) minmax(220px,1fr);
+  gap:clamp(22px,4vw,50px);
+  padding:27px 0;
+  border-bottom:1px solid var(--line);
+}
+.course-introduction h2,.course-sequence h2,.study-note h2{margin:0 0 15px;}
+.course-introduction p{max-width:68ch;margin:0 0 13px;}
+.course-facts{
+  border-left:3px solid var(--accent);
+  padding:2px 0 2px 18px;
+  align-self:start;
+}
+.course-facts>div{margin:0 0 17px;}
+.course-facts span{display:block;color:var(--muted);font-size:.77rem;letter-spacing:.05em;text-transform:uppercase;}
+.course-facts strong{display:block;font-weight:620;font-size:.96rem;line-height:1.43;}
+.course-sequence{padding:27px 0;border-bottom:1px solid var(--line);}
+.course-arc{list-style:none;margin:20px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;}
+.course-arc li{border-top:3px solid var(--line);padding-top:13px;}
+.course-arc li:first-child{border-color:var(--accent);}
+.course-arc li:nth-child(2){border-color:var(--accent2);}
+.course-arc li:last-child{border-color:var(--good);}
+.course-arc li>span{display:block;font-weight:700;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+.course-arc h3{font-family:Georgia,Cambria,serif;font-size:1.18rem;margin:6px 0;}
+.course-arc p{margin:0;color:var(--muted);font-size:.92rem;}
+#weekly-materials{padding-top:26px;scroll-margin-top:20px;}
+.weekly-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;}
+.weekly-heading h2{margin:2px 0 10px;}
+.weekly-heading p:not(.eyebrow){margin:0 0 12px;color:var(--muted);max-width:70ch;}
+.weekly-heading button{flex-shrink:0;}
+.progress-panel{margin:14px 0 24px;padding:17px 20px;border:1px solid var(--line);border-radius:13px;background:var(--panel);}
+.progress-top{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:9px;}
+.progress-top p{margin:4px 0 0;}
+.progress-panel>.small{margin:9px 0 0;}
+.course-module{box-shadow:none;margin:12px 0;padding:20px 22px;}
+.course-module .module-no{border-radius:50%;font-family:Georgia,Cambria,serif;font-size:1.18rem;}
+.course-module .module-head{margin-bottom:15px;}
+.course-module .summary{max-width:79ch;line-height:1.5;}
+.course-module .resources{grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;}
+.course-module .resource{padding:9px 11px;border:1px solid var(--line);background:transparent;border-radius:8px;}
+.course-module .resource a{font-size:.875rem;font-weight:650;text-decoration:none;line-height:1.35;}
+.course-module .resource a:hover{text-decoration:underline;}
+.course-module .resource label{color:var(--muted);margin-top:9px;}
+.course-module .resource input{accent-color:var(--accent);}
+.study-note{border-top:1px solid var(--line);margin-top:30px;padding:27px 0 8px;}
+.study-note p{max-width:80ch;}
+@media(max-width:1060px){.course-module .resources{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media(max-width:830px){.course-introduction{grid-template-columns:1fr;}.course-arc{grid-template-columns:1fr;gap:15px;}.course-arc li{padding-top:9px;}.course-arc li p{max-width:65ch;}}
+@media(max-width:660px){
+  .course-hero{padding-top:17px;}
+  .course-hero h1{font-size:2.8rem;}
+  .weekly-heading{display:block;}
+  .weekly-heading button{margin:0 0 15px;}
+  .progress-top{align-items:start;}
+  .course-module{padding:16px;}
+  .course-module .resources{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:390px){.course-module .resources{grid-template-columns:1fr;}}

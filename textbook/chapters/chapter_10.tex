@@ -1,0 +1,481 @@
+\documentclass[11pt,oneside,openany]{book}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[sc]{mathpazo}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[paperwidth=7.5in,paperheight=10in,inner=.85in,outer=.85in,top=.85in,bottom=.85in,headheight=15pt,headsep=20pt]{geometry}
+\usepackage{microtype}
+\usepackage{xcolor,graphicx,booktabs,array,longtable}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\usepackage{tikz,pgfplots}
+\usetikzlibrary{arrows.meta,calc,patterns,decorations.markings}
+\pgfplotsset{compat=1.18}
+\definecolor{ink}{HTML}{17334B}
+\definecolor{teal}{HTML}{137C83}
+\definecolor{copper}{HTML}{AE5932}
+\definecolor{soft}{HTML}{EEF3F5}
+\pgfplotsset{every axis/.append style={axis line style={black!65},tick style={black!60},tick label style={font=\small},label style={font=\small},legend style={font=\small,draw=none,fill=white},grid style={black!10},major grid style={black!10},line width=.6pt},every axis plot/.append style={line width=1.15pt}}
+\usepackage{enumitem,needspace,etoolbox}
+\setlist[enumerate]{topsep=5pt,itemsep=5pt,parsep=0pt}
+\setlist[itemize]{topsep=4pt,itemsep=3pt,parsep=0pt}
+\usepackage{titlesec,fancyhdr}
+\titleformat{\chapter}[display]{\normalfont\color{ink}}{\large\sffamily\MakeUppercase{Chapter \thechapter}}{12pt}{\huge\bfseries\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000}[\vspace{12pt}\titlerule]
+\titlespacing*{\chapter}{0pt}{-10pt}{24pt}
+\titleformat{\section}{\large\bfseries\color{ink}}{\thesection}{.65em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{ink}}{\thesubsection}{.6em}{}
+\titlespacing*{\section}{0pt}{18pt plus 3pt minus 2pt}{7pt}
+\titlespacing*{\subsection}{0pt}{12pt plus 2pt minus 2pt}{5pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\nouppercase{\leftmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{.3pt}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter\quad #1}{}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+\usepackage[font=small,labelfont=bf,labelsep=period]{caption}
+\usepackage{float,placeins}
+\floatplacement{figure}{htbp}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\renewcommand{\topfraction}{.9}
+\renewcommand{\textfraction}{.08}
+\renewcommand{\floatpagefraction}{.8}
+\usepackage{makeidx}
+\usepackage[columns=3,font=small,indentunit=11pt,columnsep=14pt]{idxlayout}
+\makeindex
+\usepackage[pdfencoding=auto,psdextra,colorlinks=true,linkcolor=ink,citecolor=teal,urlcolor=teal,bookmarksnumbered=true]{hyperref}
+\usepackage{bookmark}
+\hypersetup{pdftitle={The Calculus of Probability Distributions},pdfsubject={An undergraduate introduction to information geometry}}
+\urlstyle{same}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}{Example}[chapter]
+% A worked example may continue naturally across a page break.  Space, rather
+% than a heavy colored box, distinguishes it from the surrounding discussion.
+\BeforeBeginEnvironment{example}{\par\addvspace{9pt}\needspace{4\baselineskip}}
+\AfterEndEnvironment{example}{\par\addvspace{8pt}}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newenvironment{solution}{\par\smallskip\noindent\textit{Solution.}\ }{\par\smallskip}
+\newenvironment{exercises}{\begin{enumerate}[label=\thechapter.\arabic*,ref=\thechapter.\arabic*,leftmargin=2.8em,itemsep=6pt]}{\end{enumerate}}
+\newenvironment{answers}{\begin{description}[leftmargin=2.9em,labelwidth=2.5em,labelsep=.4em,itemsep=8pt,font=\normalfont\bfseries]}{\end{description}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\KL}[2]{D\!\left(#1\,\middle\|\,#2\right)}
+\newcommand{\grad}{\operatorname{grad}}
+\newcommand{\arcosh}{\operatorname{arcosh}}
+\newcommand{\sech}{\operatorname{sech}}
+\newcommand{\softmax}{\operatorname{softmax}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\ip}[2]{\left\langle #1,#2\right\rangle}
+\newcommand{\p}{\mathbf{p}}
+\newcommand{\q}{\mathbf{q}}
+\newcommand{\f}{\mathbf{f}}
+\newcommand{\uvec}{\mathbf{u}}
+\newcommand{\vvec}{\mathbf{v}}
+\newcommand{\ones}{\mathbf{1}}
+\newcommand{\simp}{\Delta^{n-1}}
+\newcommand{\simpi}{\Delta^{n-1}_{\!\circ}}
+\numberwithin{equation}{chapter}
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0pt}
+\linespread{1.115}
+\setlength{\emergencystretch}{2em}
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+\raggedbottom
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{2}
+% Leave enough room for the four-character subsection numbers in Chapter 10.
+\makeatletter
+\renewcommand*\l@section{\@dottedtocline{1}{1.5em}{3.35em}}
+\makeatother
+
+
+\hypersetup{pdftitle={Chapter 10: Gaussian Families and Hyperbolic Geometry}}
+\begin{document}
+\mainmatter
+\setcounter{chapter}{9}
+\chapter{Gaussian Families and Hyperbolic Geometry}
+\label{ch:gaussian}
+
+A finite-dimensional statistical family can describe observations on a continuous outcome space. The normal distributions form a two-parameter example: a point specifies a mean and a standard deviation, and therefore an entire density curve. Its Fisher metric turns this parameter half-plane into a model of hyperbolic geometry.
+
+Changing the mean moves a Gaussian bell curve horizontally; changing its standard deviation alters its width and height. A path in the parameter half-plane therefore represents a continuous deformation of density curves. The Fisher metric measures the statistical length of that deformation. We will find that geodesics can become wider on their way between two distributions with the same standard deviation, a distinctive feature of this geometry.
+
+\section{Continuous probability densities}\index{probability density}\index{Gaussian family}
+A probability density $\rho(x)$ on $\R$ is nonnegative and satisfies $\int_{\R}\rho(x)dx=1$. Probabilities are areas:
+\[
+\Pr(a\leq X\leq b)=\int_a^b\rho(x)\dd x.
+\]
+The density's value is probability per unit of the observation coordinate. A single point has probability zero under a continuous density, while intervals can have positive probability. A density can exceed 1 on a short interval while its total area remains 1.
+
+Expectation is defined by replacing a probability-weighted sum with an integral:
+\[
+\E[g(X)]=\int_{\R}g(x)\rho(x)\dd x,
+\]
+whenever the integral exists. The definitions of mean, variance, and score products then take the same form as in the finite case.
+
+The normal, or Gaussian, law $N(\mu,\sigma^2)$ has density
+\begin{equation}\label{eq:gaussiandensity}
+\rho(x;\mu,\sigma)=\frac1{\sigma\sqrt{2\pi}}
+\exp\left[-\frac{(x-\mu)^2}{2\sigma^2}\right],\qquad \sigma>0.
+\end{equation}
+The substitution $z=(x-\mu)/\sigma$ reduces its normalization to the Gaussian integral $\int_{\R}e^{-z^2/2}dz=\sqrt{2\pi}$. Its mean is $\mu$ and standard deviation is $\sigma$. The parameter $\sigma^2$ in the distribution's name is its variance; the coordinate used initially in this chapter is $\sigma$.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=.9\textwidth,height=5.3cm,xmin=-6,xmax=6,ymin=0,ymax=.46,xlabel={observed value $x$},ylabel={density},grid=major,legend pos=north west]
+\addplot[teal,domain=-6:6,samples=160]{exp(-x^2/2)/sqrt(2*pi)};\addlegendentry{$N(0,1)$}
+\addplot[copper,domain=-6:6,samples=160]{exp(-(x-2)^2/2)/sqrt(2*pi)};\addlegendentry{$N(2,1)$}
+\addplot[ink,dashed,domain=-6:6,samples=160]{exp(-x^2/8)/(2*sqrt(2*pi))};\addlegendentry{$N(0,4)$}
+\end{axis}
+\end{tikzpicture}
+\caption{Three density curves represented by points in the Gaussian parameter family. Each curve has total area one.}
+\end{figure}
+
+\section{Gaussian moments needed for information}
+Let $Z=(X-\mu)/\sigma$ be standard normal, with density $\phi(z)=e^{-z^2/2}/\sqrt{2\pi}$. Symmetry gives zero for odd moments. Since $\phi'(z)=-z\phi(z)$, integration by parts gives, for $k\geq2$,
+\[
+\int_{\R}z^k\phi(z)\dd z
+=-\int_{\R}z^{k-1}\phi'(z)\dd z
+=(k-1)\int_{\R}z^{k-2}\phi(z)\dd z.
+\]
+The boundary term vanishes because the Gaussian exponential decays faster than any polynomial. Starting from $\E[1]=1$, the formula gives $\E[Z^2]=1$ and $\E[Z^4]=3$. Therefore, with $Y=X-\mu$,
+\begin{equation}\label{eq:gaussianmoments}
+\E[Y]=0,\quad\E[Y^2]=\sigma^2,\quad
+\E[Y^3]=0,\quad\E[Y^4]=3\sigma^4.
+\end{equation}
+These moments are sufficient for every Fisher matrix entry below.
+
+\section{Scores and the Gaussian Fisher matrix}\index{Fisher information matrix!Gaussian}
+The log density is
+\[
+\ell(x;\mu,\sigma)=-\ln\sigma-\frac12\ln(2\pi)
+-\frac{(x-\mu)^2}{2\sigma^2}.
+\]
+Its score components are
+\begin{equation}\label{eq:gaussianscores}
+S_\mu=\frac{x-\mu}{\sigma^2},\qquad
+S_\sigma=-\frac1\sigma+\frac{(x-\mu)^2}{\sigma^3}.
+\end{equation}
+Equivalently, $S_\mu=Z/\sigma$ and $S_\sigma=(Z^2-1)/\sigma$. Their means vanish by the moment identities. Their expected products give
+\begin{align*}
+G_{\mu\mu}&=\frac{\E[Z^2]}{\sigma^2}=\frac1{\sigma^2},\\
+G_{\mu\sigma}&=\frac{\E[Z^3-Z]}{\sigma^2}=0,\\
+G_{\sigma\sigma}&=\frac{\E[Z^4-2Z^2+1]}{\sigma^2}=\frac2{\sigma^2}.
+\end{align*}
+Hence
+\begin{equation}\label{eq:gaussianmatrix}
+\boxed{G(\mu,\sigma)=\begin{pmatrix}\sigma^{-2}&0\\0&2\sigma^{-2}\end{pmatrix},
+\qquad ds_F^2=\frac{d\mu^2+2d\sigma^2}{\sigma^2}.}
+\end{equation}
+The off-diagonal entry vanishes because an odd score is orthogonal, in the expectation inner product, to an even score. A small mean change and a small scale change therefore give Fisher-orthogonal directions in these coordinates.
+
+\begin{example}[Local costs at a Gaussian law]
+At $N(0,4)$, compare small changes $(d\mu,d\sigma)=(h,0)$ and $(0,h)$.
+\begin{solution}
+Here $\sigma=2$. The squared lengths are $h^2/4$ and $h^2/2$. Their lengths are $|h|/2$ and $|h|/\sqrt2$. The scale direction is $\sqrt2$ times as long for equal numerical increments. Both costs grow if the base Gaussian becomes narrower.
+\end{solution}
+\end{example}
+
+\begin{example}[Using variance as a coordinate]
+Rewrite the metric using $v=\sigma^2$.
+\begin{solution}
+Since $d\sigma=dv/(2\sqrt v)$,
+\[
+ds_F^2=\frac{d\mu^2}{v}+\frac{dv^2}{2v^2}.
+\]
+Thus the Fisher matrix in $(\mu,v)$ coordinates is $\diag(1/v,1/(2v^2))$. The different matrix expresses the same metric under the coordinate transformation.
+\end{solution}
+\end{example}
+
+\section{The hyperbolic half-plane}\index{hyperbolic geometry}
+Set
+\[
+u=\frac{\mu}{\sqrt2},\qquad v=\sigma>0.
+\]
+Then $d\mu^2=2du^2$, giving
+\begin{equation}\label{eq:hyperbolicmetric}
+\boxed{ds_F^2=2\frac{du^2+dv^2}{v^2}.}
+\end{equation}
+The metric $(du^2+dv^2)/v^2$ is the Poincar\'e upper-half-plane metric. The Gaussian Fisher metric is twice that metric, so lengths are $\sqrt2$ times the corresponding hyperbolic lengths.
+
+At height $v$, the metric multiplies ordinary Euclidean lengths by $\sqrt2/v$. This factor changes with height and is the same in every tangent direction at a point. Thus the half-plane drawing preserves angles, and horizontal motion has lower length cost at larger $v$.
+
+The half-plane has useful isometries. The transformation
+\[
+(u,v)\longmapsto(au+b,av),\qquad a>0,
+\]
+multiplies both numerator differentials and denominator height by $a$, leaving the metric unchanged. In Gaussian coordinates these include common translations of the means and common positive rescaling of both means and standard deviations.
+
+\section{Vertical and circular geodesics}\index{geodesic!Gaussian}
+The half-plane metric makes movement less costly, per unit of Euclidean displacement, at greater height. A path between two means can therefore reduce its total Fisher length by rising to a larger standard deviation before coming back down. Vertical paths and circular arcs describe exactly how shortest routes balance this effect.
+When two states have the same mean, a vertical path connects them. Every path obeys the lower bound
+\[
+L_F=\sqrt2\int\frac{\sqrt{u'^2+v'^2}}v\dd t
+\geq\sqrt2\left|\int\frac{v'}v\dd t\right|
+=\sqrt2\left|\ln\frac{v_2}{v_1}\right|.
+\]
+A monotone vertical path attains it. Therefore
+\begin{equation}\label{eq:verticaldistance}
+d_F((\mu,\sigma_1),(\mu,\sigma_2))
+=\sqrt2\left|\ln\frac{\sigma_2}{\sigma_1}\right|.
+\end{equation}
+Constant-speed vertical travel has $v(t)=v_1\exp[t\ln(v_2/v_1)]$ on $[0,1]$.
+
+For nonvertical geodesics, one can use the Euler--Lagrange equations for energy. Omitting a constant factor that does not affect the equations, the energy integrand is $(u'^2+v'^2)/(2v^2)$. Its equations are
+\begin{equation}\label{eq:hyperbolicgeoeq}
+u''-\frac{2u'v'}v=0,\qquad
+v''+\frac{u'^2-v'^2}v=0.
+\end{equation}
+The first gives $u'/v^2=C$. On a nonvertical geodesic $C\ne0$. Constant metric speed also gives $(u'^2+v'^2)/v^2=k^2$. These identities yield
+\[
+\frac{du}{dv}=\frac{Cv}{\pm\sqrt{k^2-C^2v^2}},
+\]
+whose integral is a circle $(u-c)^2+v^2=R^2$. The center lies on $v=0$. Thus the geodesics are vertical lines and semicircles orthogonal to the boundary.
+
+For endpoints with $u_1\ne u_2$, the circle center and radius are
+\begin{equation}\label{eq:circlecenter}
+c=\frac{u_2^2+v_2^2-u_1^2-v_1^2}{2(u_2-u_1)},\qquad
+R=\sqrt{(u_1-c)^2+v_1^2}.
+\end{equation}
+Write $u=c+R\cos\varphi$, $v=R\sin\varphi$, with $0<\varphi<\pi$. Its length element is $\sqrt2\,|d\varphi|/\sin\varphi$. Since $\int d\varphi/\sin\varphi=\ln\tan(\varphi/2)$, the parameter $w=\ln\tan(\varphi/2)$ is an arc coordinate up to the factor $\sqrt2$. Linear interpolation of $w$ gives constant Fisher speed along the arc.
+
+The circular arcs have the same global minimizing property as vertical lines. One way to verify it is to apply a half-plane isometry that maps the circle to a vertical line, where the preceding lower bound applies. In complex notation $z=u+iv$, real translations and $z\mapsto-1/z$ preserve $|dz|/\operatorname{Im}z$. Translating one boundary endpoint of the circle to zero and applying this inversion sends the circle to a vertical line. This also establishes uniqueness of the connecting minimizing arc.
+
+\section{Exact Gaussian distance}\index{Fisher distance!Gaussian}
+Once the shape of a minimizing path is known, its length can be expressed entirely in terms of its endpoints. This removes the need to construct the particular circle for every distance calculation. The result is a closed formula involving the differences of means and standard deviations, together with their scales.
+Integrating along the connecting semicircle gives
+\[
+\frac{d_F}{\sqrt2}
+=\left|\ln\frac{\tan(\varphi_2/2)}{\tan(\varphi_1/2)}\right|.
+\]
+Using the half-angle identities together with $u_j=c+R\cos\varphi_j$ and $v_j=R\sin\varphi_j$ simplifies this to
+\[
+\cosh\left(\frac{d_F}{\sqrt2}\right)
+=1+\frac{(u_1-u_2)^2+(v_1-v_2)^2}{2v_1v_2}.
+\]
+The same expression holds for a vertical pair by \eqref{eq:verticaldistance}. Returning to Gaussian coordinates gives
+\begin{equation}\label{eq:gaussiandistance}
+\boxed{d_F=\sqrt2\,\arcosh\left(1+
+\frac{(\mu_1-\mu_2)^2+2(\sigma_1-\sigma_2)^2}{4\sigma_1\sigma_2}\right).}
+\end{equation}
+For $z\geq1$, $\arcosh z=\ln(z+\sqrt{z^2-1})$, making the formula directly computable with logarithms and square roots.
+
+\begin{example}[Equal distance for equal scale ratios]
+Compare the distances from $N(0,1)$ to $N(0,4)$ and from $N(0,4)$ to $N(0,16)$.
+\begin{solution}
+The standard deviations are $1,2,4$. Each pair has ratio 2, so each distance is $\sqrt2\ln2\approx0.980258$. Along a fixed-mean geodesic, a scale ratio determines distance.
+\end{solution}
+\end{example}
+
+\begin{example}[A geodesic that broadens the distribution]
+Connect $N(-2,1)$ to $N(2,1)$ in the full Gaussian family.
+\begin{solution}
+The half-plane endpoints are $(-\sqrt2,1)$ and $(\sqrt2,1)$. Their connecting circle has center 0 and radius $\sqrt3$. The midpoint reaches standard deviation $\sqrt3$. The distance is
+\[
+d_F=\sqrt2\,\arcosh5\approx3.242.
+\]
+The horizontal path keeping $\sigma=1$ has length 4. Moving through broader intermediate laws reduces the total intrinsic length.
+\end{solution}
+\end{example}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=.9\textwidth,height=6cm,axis equal image,xmin=-2,xmax=2,ymin=0,ymax=2.15,xlabel={$u=\mu/\sqrt2$},ylabel={$v=\sigma$},grid=major,legend pos=north east]
+\addplot[teal,domain=35.2643897:144.7356103,samples=100] ({sqrt(3)*cos(x)},{sqrt(3)*sin(x)});\addlegendentry{Fisher geodesic}
+\addplot[copper,dashed] coordinates {(-1.41421356,1)(1.41421356,1)};\addlegendentry{fixed-scale path}
+\addplot[only marks,ink] coordinates {(-1.41421356,1)(1.41421356,1)(0,1.73205081)};
+\end{axis}
+\end{tikzpicture}
+\caption{The connecting Gaussian geodesic rises to a larger standard deviation. Equal scales on the two drawing axes make the orthogonal-circle geometry visible.}
+\end{figure}
+
+For a general straight parameter interpolation, the Fisher length can also be written explicitly. Let $A=\sqrt{(\mu_2-\mu_1)^2+2(\sigma_2-\sigma_1)^2}$. Its length is
+\begin{equation}\label{eq:gaussianstraightlength}
+L_{\mathrm{straight}}=
+\begin{cases}
+\displaystyle A\,\frac{\ln(\sigma_2/\sigma_1)}{\sigma_2-\sigma_1},&\sigma_2\ne\sigma_1,\\[7pt]
+\displaystyle\frac{|\mu_2-\mu_1|}{\sigma_1},&\sigma_2=\sigma_1.
+\end{cases}
+\end{equation}
+The logarithm and scale difference have the same sign. The expression follows by integrating $A/[(1-t)\sigma_1+t\sigma_2]$. It is at least the full-family geodesic distance, with equality for fixed-mean vertical travel.
+
+\section{Following a Gaussian geodesic in time}
+For the equal-scale endpoints $N(-2,1)$ and $N(2,1)$, the circular arc admits a particularly explicit parameterization. Set $a=\arcosh\sqrt3$ and $w=a(2t-1)$ for $0\leq t\leq1$. Define
+\begin{equation}\label{eq:gaussianexplicitpath}
+\mu(t)=\sqrt6\tanh w,\qquad
+\sigma(t)=\sqrt3\sech w,
+\end{equation}
+where $\sech w=1/\cosh w$. The identity $\tanh^2w+\sech^2w=1$ shows that $(u,v)=(\mu/\sqrt2,\sigma)$ lies on the circle of radius $\sqrt3$ centered at zero.
+
+At $t=0$, $\cosh a=\sqrt3$ and $\tanh a=\sqrt{2/3}$, so the parameters are $(-2,1)$. At $t=1$ they are $(2,1)$. At $t=1/2$, they are $(0,\sqrt3)$, giving the midpoint law $N(0,3)$.
+
+These three points of the half-plane correspond to three visibly different density curves. At the endpoints the distributions have the same spread and different centers. At the midpoint the mean lies halfway between those centers, and the increased standard deviation produces a lower, broader bell curve. The change of width is an essential part of the shortest statistical route.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=.9\textwidth,height=5.8cm,
+  xmin=-5.5,xmax=5.5,ymin=0,ymax=.50,
+  xlabel={observed value $x$},ylabel={probability density},
+  grid=major
+]
+\addplot[teal,domain=-5.5:5.5,samples=150]{exp(-((x+2)^2)/2)/sqrt(2*pi)};
+\addplot[ink,densely dashed,domain=-5.5:5.5,samples=150]{exp(-(x^2)/6)/sqrt(6*pi)};
+\addplot[copper,domain=-5.5:5.5,samples=150]{exp(-((x-2)^2)/2)/sqrt(2*pi)};
+\node[font=\scriptsize,text=teal,anchor=south] at (axis cs:-2,.412){$N(-2,1)$};
+\node[font=\scriptsize,text=ink,anchor=south] at (axis cs:0,.24){$N(0,3)$};
+\node[font=\scriptsize,text=copper,anchor=south] at (axis cs:2,.412){$N(2,1)$};
+\end{axis}
+\end{tikzpicture}
+\caption{Densities along the Gaussian Fisher geodesic pictured in the preceding half-plane diagram. The geometric midpoint is a broader single Gaussian, rather than the arithmetic mixture of the endpoint densities.}
+\end{figure}
+
+Differentiating the two parameter functions and substituting into the Fisher speed gives
+\[
+\frac{\mu'^2+2\sigma'^2}{\sigma^2}=8a^2.
+\]
+The speed is the constant $2\sqrt2a$. Its length over $[0,1]$ is the same constant. Since $\cosh(2a)=2\cosh^2a-1=5$, this agrees with $\sqrt2\arcosh5$ from the endpoint distance formula.
+
+The interpolation parameter is a choice of clock along the geometric path. A physical or learning process can follow a different time law, and an objective-driven natural-gradient process can follow a different route. Specifying the family, the metric, and the rule of motion determines which of these descriptions is being used.
+
+\begin{example}[Two intermediate probability laws]
+Find the mean and variance of the equal mixture of $N(-2,1)$ and $N(2,1)$, and compare it with the Gaussian geodesic midpoint.
+\begin{solution}
+The mixture first selects either Gaussian with probability $1/2$ and then draws an observation from that selected law. Its mean is zero. Averaging component variances contributes 1, and the separation of the component means contributes 4, so its variance is 5. Its density is the arithmetic average of the two endpoint densities.
+
+The Fisher geodesic midpoint within the Gaussian family is instead the single Gaussian $N(0,3)$, with variance 3. Each construction specifies a legitimate intermediate law. The mixture construction is linear in densities, while the Gaussian geodesic is shortest among paths constrained to remain Gaussian.
+\end{solution}
+\end{example}
+
+The mixture variance identity from Chapter 4 applies here by the same expansion of first and second moments. It is the distribution family, rather than the continuous or discrete nature of the outcome space, that determines which interpolations remain inside the model. This provides a concrete reason to state the allowed family whenever a statistical distance or connecting curve is calculated.
+
+\section{Gaussian relative entropy}\index{KL divergence!Gaussian}
+For densities, relative entropy is
+\[
+D(P\|R)=\int_{\R}\rho_P(x)\ln\frac{\rho_P(x)}{\rho_R(x)}\dd x.
+\]
+For $P=N(\mu_1,\sigma_1^2)$ and $R=N(\mu_2,\sigma_2^2)$, the log ratio is
+\[
+\ln\frac{\sigma_2}{\sigma_1}
+-\frac{(x-\mu_1)^2}{2\sigma_1^2}
++\frac{(x-\mu_2)^2}{2\sigma_2^2}.
+\]
+Under $P$, the two squared expectations are $\sigma_1^2$ and $\sigma_1^2+(\mu_1-\mu_2)^2$. Therefore
+\begin{equation}\label{eq:gaussiankl}
+\boxed{D(P\|R)=\ln\frac{\sigma_2}{\sigma_1}
++\frac{\sigma_1^2+(\mu_1-\mu_2)^2}{2\sigma_2^2}-\frac12.}
+\end{equation}
+
+\begin{example}[Directed comparison and intrinsic length]
+Compare $P=N(0,1)$ and $R=N(1,4)$.
+\begin{solution}
+The directed divergences are
+\[
+D(P\|R)=\ln2-\frac14,\qquad
+D(R\|P)=2-\ln2.
+\]
+The Fisher distance is $\sqrt2\,\arcosh(11/8)$ and is unchanged upon reversing the endpoints. The divergence and distance agree locally through their second-order relationship, while the displayed formulas describe distinct global comparisons.
+\end{solution}
+\end{example}
+
+Expanding \eqref{eq:gaussiankl} for $\mu_2=\mu+d\mu$ and $\sigma_2=\sigma+d\sigma$ yields
+\[
+D(P\|R)=\frac{d\mu^2+2d\sigma^2}{2\sigma^2}
++O(\|(d\mu,d\sigma)\|^3),
+\]
+recovering the Gaussian Fisher matrix independently from relative entropy.
+
+\section{Curvature, boundary, and completeness}\index{curvature!negative}\index{completeness}
+The standard hyperbolic half-plane has curvature $-1$. Scaling a metric by a positive constant $c$ scales lengths by $\sqrt c$ and curvature by $1/c$. Equation \eqref{eq:hyperbolicmetric} therefore gives Gaussian Fisher curvature $-1/2$.
+
+An explicit calculation is available from the curvature formula for a conformal planar metric $ds^2=e^{2\omega}(du^2+dv^2)$:
+\[
+K=-e^{-2\omega}(\omega_{uu}+\omega_{vv}).
+\]
+Here $\omega=\tfrac12\ln2-\ln v$, so $\omega_{uu}=0$, $\omega_{vv}=1/v^2$, and $K=-1/2$. The sign describes the intrinsic surface geometry; the half-plane's Euclidean drawing is a coordinate model of that geometry.
+
+The length bound used for vertical geodesics implies that every path approaching $\sigma=0$ or $\sigma=\infty$ has infinite length from a fixed positive scale. The lower boundary is therefore infinitely far away. This differs from the finite-distance categorical boundary.
+
+The Gaussian family is metrically complete. To see this directly, fix a base point and a distance bound. Formula \eqref{eq:gaussiandistance} bounds $\sigma$ above and away from zero, and then bounds $\mu$. The closed metric ball is consequently a closed bounded parameter set contained in $\sigma>0$, hence compact. Every Cauchy sequence stays in such a ball and has an interior limit. Degenerate zero-variance laws are not added by completion of this metric.
+
+\section{The chosen family determines the available paths}
+Distance is always measured using curves allowed in the statistical family. For the subfamily with a fixed scale $\sigma_0$, the only coordinate is $\mu$ and the intrinsic distance is $|\mu_2-\mu_1|/\sigma_0$. In the full Gaussian family a shorter curve can change scale along the way, as the broadening example demonstrates.
+
+The square-root idea also extends to densities. The map $\rho\mapsto2\sqrt\rho$ has squared norm $\int4\rho=4$ in the function inner product $\ip{f}{g}=\int fg$. Its differential again produces the Fisher metric. All densities together therefore have a spherical square-root representation. The Gaussian laws occupy a particular two-dimensional surface inside that much larger sphere. A shortest path among all densities will generally leave the Gaussian surface, so its distance need not equal the intrinsic Gaussian distance.
+
+For example, the square-root overlap of two Gaussians is
+\[
+B(P,R)=\sqrt{\frac{2\sigma_1\sigma_2}{\sigma_1^2+\sigma_2^2}}
+\exp\left[-\frac{(\mu_1-\mu_2)^2}{4(\sigma_1^2+\sigma_2^2)}\right].
+\]
+The full-density spherical distance is $2\arccos B$, bounded by $\pi$. The intrinsic Gaussian distance can be arbitrarily large. The metric is induced from the same local Fisher construction; the allowed connecting curves determine the global distance.
+
+\begin{center}
+\begin{tabular}{@{}L{.26\textwidth}L{.36\textwidth}L{.27\textwidth}@{}}
+\toprule
+Family & Fisher geometry & Boundary and curvature\\\midrule
+Bernoulli interior & Radius-2 quarter-circle arc & Finite-distance ends; one-dimensional\\[5pt]
+Three-outcome categorical interior & Positive octant of $S^2(2)$ & Finite-distance faces; $K=1/4$\\[5pt]
+Full Gaussian family & Scaled hyperbolic half-plane & Complete; $K=-1/2$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The common construction begins with a probability model, compares nearby predictions by relative entropy, and extracts an inner product from the leading quadratic term. The resulting metric supports both geometric questions about paths and dynamical questions about gradients. Population proportions, statistical observations, and classical geometries are linked by these explicit calculations.
+
+\FloatBarrier
+\section{Exercises}
+\begin{exercises}
+\item Using $\phi'=-z\phi$, derive the second and fourth standard-normal moments. Explain why the first and third vanish.
+\item Derive both Gaussian score components and verify their expectations are zero.
+\item Compute every entry of the Gaussian Fisher matrix using the standardized score expressions.
+\item Use the coordinate transformation law to obtain the Fisher matrix in $(\mu,\sigma^2)$ coordinates.
+\item At $\sigma=3$, calculate the Fisher norms of parameter velocities $(1,0)$, $(0,1)$, and $(1,1)$.
+\item Verify directly that $(u,v)\mapsto(au+b,av)$ preserves the Gaussian half-plane metric for $a>0$.
+\item Find the Fisher distance from $N(2,9)$ to $N(2,36)$ and give a constant-speed connecting path over $[0,1]$.
+\item Derive the two Euler--Lagrange equations \eqref{eq:hyperbolicgeoeq} from the energy integrand.
+\item For endpoints $(-\sqrt2,1)$ and $(\sqrt2,1)$ in the half-plane, compute the circle center, radius, Fisher distance, and maximum height.
+\item Verify the Gaussian distance formula for equal means and reduce it to the logarithmic scale-ratio formula.
+\item Compute both directed divergences between $N(0,1)$ and $N(1,4)$ numerically, together with their Fisher distance.
+\item Derive the straight-interpolation length \eqref{eq:gaussianstraightlength}, treating equal endpoint scales separately.
+\item Use $w=\ln\tan(\varphi/2)$ to give an explicit constant-speed circle-arc interpolation between two nonvertical half-plane endpoints.
+\item Expand Gaussian KL through quadratic order at equal endpoints and recover the Fisher line element.
+\item Prove that every curve tending to $\sigma=0$ has infinite Fisher length, allowing its mean to vary along the curve.
+\item Explain why the full Gaussian intrinsic distance can exceed the full-density spherical distance while the Gaussian metric is induced by the same square-root construction.
+\item \emph{Exploration.} In the Gaussian demonstration, compare geodesics and straight parameter paths for several endpoint pairs. Relate broader intermediate densities to the half-plane length factor.
+\item Derive the Gaussian overlap coefficient $B(P,R)$ by completing the square in $\int\sqrt{\rho_P\rho_R}dx$. Apply it to $N(-2,1)$ and $N(2,1)$, and compare the full-density spherical distance with the intrinsic Gaussian distance.
+\end{exercises}
+
+\clearpage\backmatter
+\chapter*{Selected Solutions}
+\section*{Chapter 10}
+\begin{answers}
+\item[10.1] The recursion is $\E[Z^k]=(k-1)\E[Z^{k-2}]$ for $k\geq2$. Hence the even moments needed are 1 and 3. Odd moments vanish because their integrands are odd and integrable on $\R$.
+\item[10.3] $G_{\mu\mu}=\E[Z^2]/\sigma^2=1/\sigma^2$, $G_{\mu\sigma}=\E[Z^3-Z]/\sigma^2=0$, and $G_{\sigma\sigma}=\E[(Z^2-1)^2]/\sigma^2=2/\sigma^2$.
+\item[10.5] The norms are $1/3$, $\sqrt2/3$, and $1/\sqrt3$, respectively.
+\item[10.7] The standard deviations are 3 and 6, so the distance is $\sqrt2\ln2$. A constant-speed path is $\mu(t)=2$, $\sigma(t)=3\cdot2^t$.
+\item[10.9] The center is 0, radius is $\sqrt3$, distance is $\sqrt2\arcosh5$, and maximum height is $\sqrt3$. The height is the intermediate standard deviation.
+\item[10.11] The directed values are $\ln2-1/4\approx0.443147$ and $2-\ln2\approx1.306853$. The Fisher distance is $\sqrt2\arcosh(11/8)\approx1.189381$.
+\item[10.13] Compute $c,R$ from \eqref{eq:circlecenter} and endpoint angles $\varphi_j\in(0,\pi)$. Let $w_j=\ln\tan(\varphi_j/2)$ and $w(t)=(1-t)w_1+tw_2$. Then $\varphi(t)=2\arctan(e^{w(t)})$, $u=c+R\cos\varphi(t)$, $v=R\sin\varphi(t)$. Its speed is $\sqrt2|w_2-w_1|$.
+\item[10.15] For every truncated portion of the curve, $L_F\geq\sqrt2|\ln(\sigma(t)/\sigma(0))|$. The right-hand side diverges as $\sigma(t)\to0$, regardless of mean motion.
+\item[10.18] Completing the square gives the displayed overlap formula. For the stated pair it is $e^{-2}$, so the full-density spherical distance is $2\arccos(e^{-2})$, whereas the intrinsic Gaussian distance is $\sqrt2\arcosh5$. The latter is larger because it restricts the connecting path to Gaussian laws.
+\end{answers}
+
+
+\renewcommand{\bibname}{References and Further Reading}
+\end{document}

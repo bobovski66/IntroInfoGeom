@@ -1,0 +1,415 @@
+\documentclass[11pt,oneside,openany]{book}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[sc]{mathpazo}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[paperwidth=7.5in,paperheight=10in,inner=.85in,outer=.85in,top=.85in,bottom=.85in,headheight=15pt,headsep=20pt]{geometry}
+\usepackage{microtype}
+\usepackage{xcolor,graphicx,booktabs,array,longtable}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\usepackage{tikz,pgfplots}
+\usetikzlibrary{arrows.meta,calc,patterns,decorations.markings}
+\pgfplotsset{compat=1.18}
+\definecolor{ink}{HTML}{17334B}
+\definecolor{teal}{HTML}{137C83}
+\definecolor{copper}{HTML}{AE5932}
+\definecolor{soft}{HTML}{EEF3F5}
+\pgfplotsset{every axis/.append style={axis line style={black!65},tick style={black!60},tick label style={font=\small},label style={font=\small},legend style={font=\small,draw=none,fill=white},grid style={black!10},major grid style={black!10},line width=.6pt},every axis plot/.append style={line width=1.15pt}}
+\usepackage{enumitem,needspace,etoolbox}
+\setlist[enumerate]{topsep=5pt,itemsep=5pt,parsep=0pt}
+\setlist[itemize]{topsep=4pt,itemsep=3pt,parsep=0pt}
+\usepackage{titlesec,fancyhdr}
+\titleformat{\chapter}[display]{\normalfont\color{ink}}{\large\sffamily\MakeUppercase{Chapter \thechapter}}{12pt}{\huge\bfseries\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000}[\vspace{12pt}\titlerule]
+\titlespacing*{\chapter}{0pt}{-10pt}{24pt}
+\titleformat{\section}{\large\bfseries\color{ink}}{\thesection}{.65em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{ink}}{\thesubsection}{.6em}{}
+\titlespacing*{\section}{0pt}{18pt plus 3pt minus 2pt}{7pt}
+\titlespacing*{\subsection}{0pt}{12pt plus 2pt minus 2pt}{5pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\nouppercase{\leftmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{.3pt}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter\quad #1}{}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+\usepackage[font=small,labelfont=bf,labelsep=period]{caption}
+\usepackage{float,placeins}
+\floatplacement{figure}{htbp}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\renewcommand{\topfraction}{.9}
+\renewcommand{\textfraction}{.08}
+\renewcommand{\floatpagefraction}{.8}
+\usepackage{makeidx}
+\usepackage[columns=3,font=small,indentunit=11pt,columnsep=14pt]{idxlayout}
+\makeindex
+\usepackage[pdfencoding=auto,psdextra,colorlinks=true,linkcolor=ink,citecolor=teal,urlcolor=teal,bookmarksnumbered=true]{hyperref}
+\usepackage{bookmark}
+\hypersetup{pdftitle={The Calculus of Probability Distributions},pdfsubject={An undergraduate introduction to information geometry}}
+\urlstyle{same}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}{Example}[chapter]
+% A worked example may continue naturally across a page break.  Space, rather
+% than a heavy colored box, distinguishes it from the surrounding discussion.
+\BeforeBeginEnvironment{example}{\par\addvspace{9pt}\needspace{4\baselineskip}}
+\AfterEndEnvironment{example}{\par\addvspace{8pt}}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newenvironment{solution}{\par\smallskip\noindent\textit{Solution.}\ }{\par\smallskip}
+\newenvironment{exercises}{\begin{enumerate}[label=\thechapter.\arabic*,ref=\thechapter.\arabic*,leftmargin=2.8em,itemsep=6pt]}{\end{enumerate}}
+\newenvironment{answers}{\begin{description}[leftmargin=2.9em,labelwidth=2.5em,labelsep=.4em,itemsep=8pt,font=\normalfont\bfseries]}{\end{description}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\KL}[2]{D\!\left(#1\,\middle\|\,#2\right)}
+\newcommand{\grad}{\operatorname{grad}}
+\newcommand{\arcosh}{\operatorname{arcosh}}
+\newcommand{\sech}{\operatorname{sech}}
+\newcommand{\softmax}{\operatorname{softmax}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\ip}[2]{\left\langle #1,#2\right\rangle}
+\newcommand{\p}{\mathbf{p}}
+\newcommand{\q}{\mathbf{q}}
+\newcommand{\f}{\mathbf{f}}
+\newcommand{\uvec}{\mathbf{u}}
+\newcommand{\vvec}{\mathbf{v}}
+\newcommand{\ones}{\mathbf{1}}
+\newcommand{\simp}{\Delta^{n-1}}
+\newcommand{\simpi}{\Delta^{n-1}_{\!\circ}}
+\numberwithin{equation}{chapter}
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0pt}
+\linespread{1.115}
+\setlength{\emergencystretch}{2em}
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+\raggedbottom
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{2}
+% Leave enough room for the four-character subsection numbers in Chapter 10.
+\makeatletter
+\renewcommand*\l@section{\@dottedtocline{1}{1.5em}{3.35em}}
+\makeatother
+
+
+\hypersetup{pdftitle={Chapter 5: Entropy, Log-Odds, and Exponential Updating}}
+\begin{document}
+\mainmatter
+\setcounter{chapter}{4}
+\chapter{Entropy, Log-Odds, and Exponential Updating}
+\label{ch:entropy}
+
+Logarithms translate products of probabilities into sums. This property supports a measure of information carried by observations, and it also simplifies the relative growth of competing types. Shannon entropy and logarithmic probability ratios bring these two uses of the logarithm into the same setting.
+
+Consider two related tasks: measuring the information provided by an observation and comparing how rapidly two population types change in proportion. The first involves the logarithm of an event probability; the second involves the logarithm of a ratio of probabilities. The logarithm makes both calculations additive, even when the underlying probabilities or abundances evolve multiplicatively.
+
+\section{Surprisal and information units}\index{nat}\index{bit}
+For an event of probability $p>0$, its \emph{surprisal}\index{surprisal} is
+\begin{equation}\label{eq:surprisal}
+I(p)=-\ln p.
+\end{equation}
+A certain event has zero surprisal. Less probable events have larger surprisal, and $I(p)\to\infty$ as $p\to0^+$. The value is determined by the probability assigned before the observation.
+
+If events E and F are independent, $\Pr(E\cap F)=\Pr(E)\Pr(F)$. Therefore
+\[
+I(E\cap F)=I(E)+I(F).
+\]
+Independent observations accumulate information additively. With continuity and monotonicity, this additivity under multiplication characterizes a positive multiple of the negative logarithm. The multiplicative constant selects the information unit.
+
+Natural logarithms give \emph{nats}. Base-2 logarithms give \emph{bits}. Since $\log_2p=\ln p/\ln2$, a quantity in nats is converted to bits by dividing by $\ln2$.
+
+\begin{example}[Information from joint events]
+An event has probability $1/2$ and an independent event has probability $1/5$. Find their joint surprisal.
+\begin{solution}
+The joint probability is $1/10$. Its surprisal is $\ln10\approx2.3026$ nats, or $\log_2 10\approx3.3219$ bits. It is also $\ln2+\ln5$, the sum of the individual surprisals.
+\end{solution}
+\end{example}
+
+For dependent observations the joint probability instead factors into a first probability and a conditional probability. The same logarithmic algebra then adds the information of the first event to the information of the second given the first. Independence is the condition that allows the unconditional probabilities to be used in both terms.
+
+\section{Shannon entropy as expected surprisal}
+For a law $P=(p_i)$, average the surprisal of each possible observation using that same law:
+\begin{equation}\label{eq:entropy}
+\boxed{H(P)=-\sum_i p_i\ln p_i.}
+\end{equation}
+This is \emph{Shannon entropy}\index{entropy!Shannon}. The convention $0\ln0=0$ follows from $\lim_{p\to0^+}p\ln p=0$, making $H$ continuous on the closed simplex.
+
+Entropy quantifies the expected information of the next observation under the specified law. A deterministic law has entropy zero. For a uniform law on $n$ outcomes, every observation has surprisal $\ln n$, so the entropy is $\ln n$ nats.
+
+\begin{example}[Three-outcome entropy]
+Calculate the entropy of $P=(1/2,1/3,1/6)$.
+\begin{solution}
+The expected surprisal is
+\[
+H(P)=\frac12\ln2+\frac13\ln3+\frac16\ln6
+\approx1.0114\text{ nats}.
+\]
+Dividing by $\ln2$ gives approximately $1.4591$ bits. The entropy of the uniform three-outcome law is $\ln3\approx1.0986$ nats.
+\end{solution}
+\end{example}
+
+Entropy depends on the category probabilities. Recoding category labels as numerical readings leaves this value unchanged. Means and variances depend on the readings as well as the probabilities, so they answer a different statistical question.
+
+For two independent finite random variables with laws $(p_i)$ and $(r_j)$, the joint law is $(p_ir_j)$. Expanding its entropy gives
+\begin{align*}
+H(X,Y)&=-\sum_{i,j}p_ir_j\ln(p_ir_j)\\
+&=-\sum_i p_i\ln p_i\sum_jr_j-\sum_jr_j\ln r_j\sum_ip_i\\
+&=H(X)+H(Y).
+\end{align*}
+This is the expected-information counterpart of surprisal additivity.
+
+\section{Binary entropy and the uniform maximum}\index{maximum entropy}\index{concavity}
+For a two-outcome law,
+\[
+H(p)=-p\ln p-(1-p)\ln(1-p).
+\]
+Differentiating in the interior gives
+\begin{equation}\label{eq:binaryentropyderivatives}
+H'(p)=\ln\frac{1-p}{p},\qquad
+H''(p)=-\frac1{p(1-p)}.
+\end{equation}
+The second derivative is negative, so the graph is strictly concave. Its unique interior critical point is $p=1/2$, where the entropy is $\ln2$. Symmetry under $p\mapsto1-p$ corresponds to interchanging the labels of the two outcomes.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=.88\textwidth,height=5cm,xmin=0,xmax=1,ymin=0,ymax=.77,xlabel={probability $p$},ylabel={$H(p)$ in nats},xtick={0,.25,.5,.75,1},grid=major]
+\addplot[teal,domain=.0001:.9999,samples=150]{-x*ln(x)-(1-x)*ln(1-x)};
+\addplot[only marks,ink] coordinates {(0,0)(1,0)(.5,.69314718)};
+\end{axis}
+\end{tikzpicture}
+\caption{Binary entropy. Its maximum is $\ln2$ at equal probabilities, and its continuous extension vanishes at the certain outcomes.}
+\end{figure}
+
+The corresponding multivariable calculation is equally explicit. On positive probabilities, the ambient Hessian of $H$ is $-\diag(1/p_i)$. For every nonzero tangent vector $v$,
+\[
+v^T(\operatorname{Hess}H)v=-\sum_i\frac{v_i^2}{p_i}<0.
+\]
+Thus entropy is strictly concave on the positive simplex. A constrained critical point satisfies $-(\ln p_i+1)=\lambda$ for all $i$, forcing $p_i=1/n$.
+
+\begin{proposition}[Maximum entropy on a finite outcome space]
+For $P\in\Delta^{n-1}$,
+\[
+0\leq H(P)\leq\ln n.
+\]
+The upper bound is attained only at the uniform law. The lower bound is attained exactly at pure laws.
+\end{proposition}
+\begin{proof}
+Each summand $-p_i\ln p_i$ is nonnegative and is positive for $0<p_i<1$, giving the lower statement. Continuity on the compact simplex guarantees a maximum. At a maximizer, let $k$ be the number of positive coordinates. Lagrange multipliers within that support force each to equal $1/k$, giving entropy $\ln k\leq\ln n$. The uniform $n$-outcome law reaches $\ln n$, with equality requiring $k=n$ and equal coordinates.
+\end{proof}
+
+Entropy can also be maximized subject to a prescribed expectation. Such constraints retain information about the numerical readings. They lead to exponential weights, as developed after the dynamical derivation below.
+
+\section{Odds and log-odds coordinates}
+For an interior two-type state $x$, the odds of A relative to B are $x/(1-x)$. Define the \emph{log-odds}\index{log-odds} coordinate
+\[
+L=\ln\frac{x}{1-x}.
+\]
+It maps $(0,1)$ bijectively to $\R$, with inverse
+\[
+x=\frac{e^L}{1+e^L}=\frac1{1+e^{-L}}.
+\]
+The midpoint $x=1/2$ corresponds to $L=0$; probabilities approaching 0 or 1 correspond to $L\to-\infty$ or $L\to+\infty$.
+
+Along a replicator solution,
+\begin{equation}\label{eq:logoddsevolution}
+L'=\left(\frac1x+\frac1{1-x}\right)x'
+=\frac{x'}{x(1-x)}=f_A-f_B.
+\end{equation}
+The derivative of the log-odds is exactly the fitness advantage. A constant advantage gives $L(t)=L(0)+kt$, and applying the inverse transformation recovers the logistic solution.
+
+\begin{example}[A nonlinear curve in a new coordinate]
+For $x'=2x(1-x)$ with $x(0)=1/4$, determine $L(t)$ and the time when $x=3/4$.
+\begin{solution}
+Initially $L(0)=-\ln3$, so $L(t)=-\ln3+2t$. The target has log-odds $\ln3$. Thus $2t=2\ln3$ and the target time is $t=\ln3$.
+\end{solution}
+\end{example}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=.46\textwidth,height=4.6cm,xmin=0,xmax=3,ymin=0,ymax=1,xlabel={$t$},ylabel={$x(t)$},grid=major]
+\addplot[teal,domain=0:3,samples=70]{1/(1+3*exp(-2*x))};
+\end{axis}
+\begin{axis}[at={(.51\textwidth,0)},anchor=south west,width=.46\textwidth,height=4.6cm,xmin=0,xmax=3,ymin=-1.2,ymax=5,xlabel={$t$},ylabel={$L(t)$},grid=major]
+\addplot[copper,domain=0:3]{-ln(3)+2*x};
+\end{axis}
+\end{tikzpicture}
+\caption{The same constant-advantage solution in proportion and log-odds coordinates. The linear log-odds curve gives an exact solution method.}
+\end{figure}
+
+For general state-dependent fitnesses, the identity $L'=\Delta(x(t))$ still holds. Its right-hand side then varies along the solution, so the coordinate change produces a useful equation without necessarily giving a straight time graph.
+
+\section{Exponential normalization for constant fitness}\index{exponential normalization}
+Suppose $n$ types have constant fitnesses $c_i$. Their absolute growth weights are
+\[
+w_i(t)=p_i(0)e^{c_it}.
+\]
+Normalize by $Z(t)=\sum_jw_j(t)$ to obtain
+\begin{equation}\label{eq:expnormalization}
+\boxed{p_i(t)=\frac{p_i(0)e^{c_it}}{\sum_jp_j(0)e^{c_jt}}.}
+\end{equation}
+Differentiation verifies the equation:
+\[
+p_i'=p_i\left(c_i-\frac{Z'}Z\right),\qquad
+\frac{Z'}Z=\sum_jp_jc_j=\bar c.
+\]
+Thus these normalized weights solve the constant-fitness replicator system exactly.
+
+\begin{example}[An exact three-type update]
+Let $\p(0)=(1/5,3/10,1/2)$ and $c=(1,0,-1)$. Find the state at $t=\ln2$.
+\begin{solution}
+The weights are $(2/5,3/10,1/4)$, with sum $19/20$. After normalization,
+\[
+\p(\ln2)=\left(\frac8{19},\frac6{19},\frac5{19}\right).
+\]
+The first type gains share; the third loses share. The middle type has unchanged unnormalized weight, but its normalized proportion also changes.
+\end{solution}
+\end{example}
+
+Taking ratios eliminates the normalizing sum:
+\[
+\ln\frac{p_i(t)}{p_j(t)}=\ln\frac{p_i(0)}{p_j(0)}+(c_i-c_j)t.
+\]
+Adding the same constant to all fitnesses multiplies all weights by the same exponential factor and leaves the normalized state unchanged.
+
+The \emph{softmax}\index{softmax} of a score vector $s$ is the normalized vector $e^{s_i}/\sum_je^{s_j}$. For positive initial probabilities, \eqref{eq:expnormalization} is the softmax of $s_i=\ln p_i(0)+c_it$. To compute it reliably for large scores, subtract $m=\max_i s_i$ before exponentiating. The common factor $e^{-m}$ cancels, while every exponent $s_i-m$ is nonpositive.
+
+If the maximal fitness occurs only at type $k$ and $p_k(0)>0$, dividing the formula by $e^{c_kt}$ shows $p_k(t)\to1$. If several initially present types tie for maximal fitness, their final proportions retain their initial ratios after the other types vanish asymptotically.
+
+\section{The log-normalizer and constrained entropy}\index{log-normalizer}
+The denominator of an exponential probability update looks at first like a bookkeeping device: it keeps all the probabilities summing to one. Its logarithm has a more substantial role. Its first derivative records mean fitness, while its second derivative records the variability of fitness. This connects the changing distribution to the convexity of a scalar function.
+For constant fitnesses define $\psi(t)=\ln Z(t)$. Differentiating the normalizer gives
+\begin{equation}\label{eq:logpartition}
+\psi'(t)=\bar c(t),\qquad
+\psi''(t)=\Var_{\p(t)}(c)\geq0.
+\end{equation}
+To verify the second identity, differentiate $\sum_i p_ic_i$ and substitute $p_i'=p_i(c_i-\bar c)$. The result is $\sum_i p_ic_i^2-\bar c^2$. Thus the log-normalizer is convex, and mean fitness increases under constant-fitness selection.
+
+Exponential normalization also appears when maximizing entropy subject to a prescribed mean $\sum_i p_i z_i=m$. At an interior constrained critical point, Lagrange multipliers give
+\[
+-(\ln p_i+1)+\lambda z_i+\eta=0.
+\]
+Solving and normalizing produces
+\begin{equation}\label{eq:maxent}
+p_i(\lambda)=\frac{e^{\lambda z_i}}{\sum_je^{\lambda z_j}}.
+\end{equation}
+The mean constraint determines $\lambda$. Strict concavity of entropy makes any such feasible interior critical point the unique maximum. If the readings are not all equal, differentiation shows $dm/d\lambda=\Var_{p(\lambda)}(Z)>0$, so the mean varies strictly with $\lambda$.
+
+\begin{example}[Maximum entropy with a mean constraint]
+For readings $(0,1,2)$, find the maximum-entropy law with mean $10/7$.
+\begin{solution}
+Take $\lambda=\ln2$. Equation \eqref{eq:maxent} gives weights $(1,2,4)$ and law $(1/7,2/7,4/7)$. Its mean is $2/7+8/7=10/7$, so it satisfies the constraint and is the unique entropy maximum.
+\end{solution}
+\end{example}
+
+\section{Reading an exponentially normalized trajectory}
+The exact solution lets each coordinate's behavior be understood through its relation to the changing mean fitness. A fixed fitness value does not require a monotone proportion. The population mean itself moves as the weights of the other types change.
+
+\begin{example}[A middle type that first gains and then loses share]
+Take constant fitnesses $(1,0,-1)$ and initial law $(0.2,0.3,0.5)$. Determine when the second type's proportion is largest.
+\begin{solution}
+The normalizer and second coordinate are
+\[
+Z(t)=0.2e^t+0.3+0.5e^{-t},\qquad p_B(t)=\frac{0.3}{Z(t)}.
+\]
+The denominator decreases while $Z'<0$ and increases while $Z'>0$. Its only stationary point satisfies $0.2e^t=0.5e^{-t}$, giving
+\[
+t_* =\frac12\ln\frac52.
+\]
+At that time the A and C weights are both $\sqrt{0.1}$, and
+\[
+p_B(t_*)=\frac{0.3}{0.3+2\sqrt{0.1}}\approx0.3217.
+\]
+Initially the mean fitness is $-0.3$, below B's fitness 0, so B gains share. At $t_*$ the mean reaches zero. Thereafter the mean is positive and B loses share. Its final proportion is zero as the uniquely fittest A type dominates.
+\end{solution}
+\end{example}
+
+The convexity of $\ln Z$ supplies another explanation of the unique turning point. The mean fitness $\psi'$ increases, and in this example it crosses B's fixed fitness once. More generally, a constant-fitness type gains share exactly while its fitness is above the current mean. Logarithmic ratios between any two types still have constant derivatives throughout this change in a single coordinate's direction.
+
+The transformation to log-odds also clarifies binary entropy near equal probabilities. Since $H'(p)=-L(p)$, an infinitesimal transfer toward the less probable outcome increases entropy. At $p=1/2$ the first derivative vanishes; the leading effect of a small imbalance is quadratic. Taylor expansion gives
+\[
+H\left(\frac12+h\right)=\ln2-2h^2+O(h^4).
+\]
+The cubic term vanishes by symmetry. For instance, a displacement $h=0.05$ gives the approximation $H(0.55)\approx\ln2-0.005$. Entropy has a horizontal tangent at its maximum, so the information change is smaller than first order in this small probability displacement.
+
+For $n$ outcomes, write a perturbation of uniformity as $p_i=1/n+h_i$ with $\sum_i h_i=0$. The constant gradient components cancel against normalization, and the entropy Hessian gives
+\[
+H(U+h)=\ln n-\frac n2\sum_i h_i^2+O(\|h\|^3).
+\]
+This measures the entropy deficit near uniformity. Away from uniformity, the reciprocal-probability coefficients vary with the reference state, a dependence developed explicitly through relative entropy in the next chapter.
+
+\section{Entropy along a dynamical trajectory}
+Entropy is a function on the simplex, so a population trajectory produces a time-dependent entropy simply by evaluating that function along the path. The direction of motion alone does not determine whether entropy increases: its rate also depends on how the current probability weights are distributed. Differentiation makes this dependence explicit.
+For an interior probability curve, differentiation of entropy gives
+\[
+\dot H=-\sum_i(\ln p_i+1)p_i'=-\sum_i\ln p_i\,p_i',
+\]
+since $\sum_i p_i'=0$. Under replicator dynamics,
+\begin{equation}\label{eq:entropyrate}
+\dot H=-\Cov_\p(\ln p,f).
+\end{equation}
+Its sign depends on the current law and fitness field. In a two-type model the formula is
+\[
+\dot H=\ln\frac{1-x}{x}\,x(1-x)\Delta(x).
+\]
+
+\begin{example}[Entropy during stable coexistence]
+Follow $x'=x(1-x)(3-4x)$ from $x_0=0.1$.
+\begin{solution}
+The state increases toward $3/4$. Until it reaches $1/2$, both $x'$ and $H'(x)$ are positive, so entropy increases. At $1/2$, entropy reaches $\ln2$. For the rest of the trajectory, $x'>0$ and $H'(x)<0$, so entropy decreases toward $H(3/4)$. The dynamics approach a stable equilibrium throughout this change of entropy behavior.
+\end{solution}
+\end{example}
+
+Entropy measures the uncertainty of observations at the current state. To measure mismatch with a specified equilibrium or predictive model, the next chapter introduces a function of two distributions.
+
+\FloatBarrier
+\section{Exercises}
+\begin{exercises}
+\item Compute surprisals for probabilities $1/2,1/4,1/10$ in nats and bits.
+\item Prove entropy additivity for two independent finite laws by expanding the joint sum.
+\item Calculate $H(1/2,1/4,1/4)$ in nats and bits. Compare with the uniform three-outcome entropy.
+\item Derive both formulas in \eqref{eq:binaryentropyderivatives}. Explain the endpoint values by continuity.
+\item Show that a uniform law on $k$ of $n$ available outcomes has entropy $\ln k$. Identify all minimum-entropy laws.
+\item Prove strict concavity of entropy along every nonconstant straight segment of positive distributions.
+\item For $x'=1.2x(1-x)$ and $x_0=1/4$, find $L(t)$ and the first time $x=1/2$.
+\item If $x'=x(1-x)(3-4x)$, express the log-odds equation entirely in terms of $L$ using $x=(1+e^{-L})^{-1}$.
+\item For $c=(1,0,-1)$ and $\p(0)=(0.2,0.3,0.5)$, calculate the state at $t=1$ to four decimal places.
+\item Prove the softmax is unchanged by adding the same constant to every score. Use this to compute the softmax of $(1000,1001,999)$.
+\item Derive both identities in \eqref{eq:logpartition} and explain why mean constant fitness is nondecreasing.
+\item Suppose $c=(2,2,0)$ and $\p(0)=(0.2,0.3,0.5)$. Find the limiting distribution.
+\item For readings $(0,1,2)$, derive the exponential form of a positive entropy maximizer subject to a mean constraint.
+\item Prove that $m'(\lambda)=\Var(Z)$ for the law in \eqref{eq:maxent}. What happens when all readings agree?
+\item For constant advantage $k>0$ and an initial state below $1/2$, determine where entropy increases and where it decreases. Find its long-term limit.
+\item Derive \eqref{eq:entropyrate} for general replicator fitnesses. State precisely which normalization identity removes the extra term.
+\item \emph{Exploration.} Plot a constant-fitness three-type trajectory and its entropy. Choose an initial law whose entropy first rises and later falls. Use the limiting law to explain the eventual behavior.
+\item \emph{Exploration.} Compare proportion and log-odds time graphs for a constant advantage and a frequency-dependent advantage. Identify which features are consequences of the coordinate identity and which require constant fitness.
+\end{exercises}
+
+\clearpage\backmatter
+\chapter*{Selected Solutions}
+\section*{Chapter 5}
+\begin{answers}
+\item[5.1] The values in nats are $\ln2,\ln4,\ln10$; in bits they are $1,2,\log_210\approx3.3219$.
+\item[5.3] The entropy is $(3/2)\ln2\approx1.0397$ nats, or $1.5$ bits, below $\ln3$ nats.
+\item[5.5] The nonzero terms contribute $-k(1/k)\ln(1/k)=\ln k$. Exactly the pure laws have entropy zero.
+\item[5.7] $L(t)=-\ln3+1.2t$. The target $x=1/2$ corresponds to $L=0$, so $t=\ln3/1.2$.
+\item[5.9] Normalize the weights $(0.2e,0.3,0.5e^{-1})$. To four decimal places the state is
+\[
+(0.5291,0.2919,0.1790).
+\]
+\item[5.11] $Z'/Z=\sum_i p_ic_i$. Differentiating again gives $\sum_i p_ic_i^2-(\sum_i p_ic_i)^2$. This is a nonnegative variance.
+\item[5.15] The state increases to 1. Entropy increases until $x=1/2$, then decreases, tending to zero.
+\item[5.17] For example, start from $(0.05,0.05,0.90)$ with constant fitnesses $(1,0,-1)$. Initially selection transfers weight away from the dominant third type, increasing entropy; eventually the uniquely fittest first type dominates and entropy tends to zero. The derivative formula can verify the initial sign.
+\end{answers}
+\end{document}

@@ -4,11 +4,11 @@
 <script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'}};</script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script></head><body><div class="layout"><aside class="sidebar"><div class="eyebrow">The Calculus of</div><h2>Probability Distributions</h2><p class="small">Introduction to Information Geometry</p><nav><a href="../index.html">Course home</a><a href="week05.html">Week 5 reading</a><a class="active" href="week06.html">Week 6 reading</a><a href="../demos/week06.html">Week 6 demo</a><a href="../labs/week06.html">Week 6 lab</a><a href="../quizzes/week06.html">Week 6 quiz</a><a href="week07.html">Week 7 reading</a></nav></aside><main class="main"><div class="main-inner">
 <header class="w6-hero"><div class="eyebrow">Week 6 · Reading</div><h1>Relative Entropy, Stability, and the Geometry Ahead</h1>
-<p class="lead">Shannon entropy measures uncertainty in one distribution. But how do we measure the information lost when we use the wrong distribution? Relative entropy answers that question—and supplies a remarkably precise Lyapunov function for the replicator equation we have studied since Week 1.</p>
-<div class="toolbar"><button id="theme">Toggle theme</button><a class="btn" href="../demos/week06.html">KL and dynamics explorer</a><a class="btn" href="../labs/week06.html">Guided lab</a><a class="btn" href="../quizzes/week06.html">Weekly quiz</a></div>
+<p class="lead">Shannon entropy describes uncertainty within one distribution. Relative entropy compares two distributions through the extra expected log loss of using one model when observations follow another. In replicator dynamics, this comparison can also provide a Lyapunov function.</p>
+<div class="toolbar"><button id="theme">Toggle theme</button><a class="btn" href="../pdf/chapter_06.pdf">Chapter PDF</a><a class="btn" href="../demos/week06.html">KL and dynamics explorer</a><a class="btn" href="../labs/week06.html">Guided lab</a><a class="btn" href="../quizzes/week06.html">Weekly quiz</a></div>
 <div class="panel"><strong>Learning goals</strong><p>Compute and interpret Kullback–Leibler divergence; recognize its directionality and behavior at zero probabilities; derive its nonnegativity; use it as a Lyapunov function for stable two-strategy replicator equations; interpret it as excess expected log loss; and find the local quadratic approximation that motivates the Fisher metric.</p></div></header>
 <article class="w6-content">
-<section><h2>1. Uncertainty is not the same as mismatch</h2>
+<section><h2>1. Uncertainty and comparison</h2>
 <p>Last week, we met Shannon entropy \(H(P)=-\sum_i p_i\ln p_i\), the expected surprisal when observations come from P. Entropy does not require a second distribution. It measures uncertainty about an outcome drawn from P.</p>
 <p>Suppose instead that observations really follow a distribution Q, but we predict them with another distribution P. If we assign probability \(p_i\) to outcome i, then the surprisal under our model is \(-\ln p_i\). The <em>expected log loss</em> when Q generates the outcomes is</p>
 <div class="math-box">\[\operatorname{CE}(Q,P)=-\sum_i q_i\ln p_i.\]</div>
@@ -40,7 +40,7 @@
 <section><h2>4. Return to our stable coexistence equation</h2>
 <p>Our familiar replicator model is</p>
 <div class="math-box">\[x'=x(1-x)(3-4x),\qquad x^*=\frac34.\]</div>
-<p>We already know that all interior trajectories approach the stable equilibrium \(x^*=3/4\). But Shannon entropy need not decrease or increase monotonically as the solution approaches that equilibrium. Let's instead measure the divergence from the <em>equilibrium distribution</em> to the current distribution:</p>
+<p>We already know that all interior trajectories approach the stable equilibrium \(x^*=3/4\). But Shannon entropy need not decrease or increase monotonically as the solution approaches that equilibrium. To measure approach to equilibrium, consider the divergence from the equilibrium distribution to the current distribution:</p>
 <div class="math-box">\[\boxed{V(x)=D(x^*\|x)=\frac34\ln\frac{3/4}{x}+\frac14\ln\frac{1/4}{1-x}.}\]</div>
 <p>Differentiate with respect to the current proportion x:</p>
 <div class="math-box">\[\begin{aligned}V'(x)&=-\frac{x^*}{x}+\frac{1-x^*}{1-x}\\&=\frac{x-x^*}{x(1-x)}.\end{aligned}\]</div>
@@ -91,14 +91,14 @@
 <p>The coefficient depends on the location q. A small change near a boundary has a larger quadratic divergence than the same-sized change near \(q=1/2\). Probability space is therefore not measured uniformly by this local notion of distinguishability.</p>
 <p>More generally, for a positive categorical reference \(\mathbf q\) and small tangent displacement \(\mathbf h\) satisfying \(\sum_ih_i=0\),</p>
 <div class="math-box">\[D(\mathbf q\|\mathbf q+\mathbf h)=\frac12\sum_i\frac{h_i^2}{q_i}+O(\|\mathbf h\|^3).\]</div>
-<p>Here is the transition we've been working toward: the quadratic term supplies a positive-definite form on the tangent plane. In Week 7 we will recognize it as the <em>Fisher information metric</em> and begin studying lengths, angles, and geometry on statistical manifolds.</p></section>
+<p>The quadratic term supplies a positive-definite form on the tangent plane. In Week 7 we will recognize it as the <em>Fisher information metric</em> and begin studying lengths, angles, and geometry on statistical manifolds.</p></section>
 <section><h2>8. Four notions of a distribution's behavior</h2>
 <table><thead><tr><th>Mathematical quantity</th><th>What it measures</th></tr></thead><tbody>
 <tr><td>\(H(P)\)</td><td>Uncertainty about an outcome drawn from P</td></tr>
 <tr><td>\(D(Q\|P)\)</td><td>Information mismatch between Q and P</td></tr>
 <tr><td>\(\frac{d}{dt}D(Q\|P(t))\)</td><td>Change of mismatch along a chosen trajectory</td></tr>
 <tr><td>\(\frac12\sum_i h_i^2/q_i\)</td><td>Leading local quadratic cost of a displacement from Q</td></tr></tbody></table>
-<p>We began with phase lines and population fractions, and we've arrived at a local quadratic form on a space of probability distributions. Every step used tools from calculus, probability, and undergraduate differential equations. The next step is to make the resulting geometry explicit.</p></section>
+<p>The second-order behavior of relative entropy assigns a quadratic form to tangent displacements of a distribution. In the next chapter, that form becomes the Fisher information metric and provides a way to measure lengths and angles.</p></section>
 <div class="toolbar"><a class="btn primary" href="../demos/week06.html">Explore KL and stability →</a><a class="btn" href="../labs/week06.html">Complete the lab →</a><a class="btn" href="../quizzes/week06.html">Take the quiz →</a></div></article>
 <div class="nav-pager"><a href="week05.html">← Week 5 reading</a><a href="week07.html">Week 7: Fisher geometry →</a></div><footer class="site-footer">Introduction to Information Geometry · Week 6 reading</footer></div></main></div>
 <script>(function(){const key='intro-info-geom-v1:theme';let theme='light';try{theme=JSON.parse(localStorage.getItem(key))||'light'}catch{}document.documentElement.dataset.theme=theme;document.getElementById('theme').onclick=()=>{theme=theme==='dark'?'light':'dark';document.documentElement.dataset.theme=theme;try{localStorage.setItem(key,JSON.stringify(theme))}catch{}};const d=(q,p)=>q*Math.log(q/p)+(1-q)*Math.log((1-q)/(1-p));const h=p=>p>0&&p<1?-p*Math.log(p)-(1-p)*Math.log(1-p):0;function path(id,fn,domain,xmin,xmax,ymin,ymax,rect){const a=[];for(let j=0;j<=500;j++){const t=domain[0]+(domain[1]-domain[0])*j/500,y=fn(t);if(!Number.isFinite(y))continue;const xpx=rect[0]+(t-xmin)/(xmax-xmin)*rect[2],ypx=rect[1]+rect[3]-(y-ymin)/(ymax-ymin)*rect[3];a.push(xpx.toFixed(2)+','+ypx.toFixed(2))}document.getElementById(id).setAttribute('d','M'+a.join('L'))}

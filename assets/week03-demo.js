@@ -85,7 +85,7 @@ host.innerHTML=[
 '<div class="panel" style="padding:12px"><canvas id="w3-productGraph" width="940" height="245" role="img" aria-label="Time series of the product of the three population proportions" style="width:100%;height:auto"></canvas><p class="small muted">At s=1, the product is constant. At s&lt;1 it increases toward 1/27; at s&gt;1 it decreases toward zero.</p></div>',
 '<style>.w3-sharebar{display:flex;overflow:hidden;border-radius:10px;width:100%;height:36px}.w3-sharebar div{display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700;white-space:nowrap}.w3-sharebar #w3-shareA{background:#0e8295}.w3-sharebar #w3-shareB{background:#cf7b43}.w3-sharebar #w3-shareC{background:#258767}.demo-controls input[type=number]{background:var(--panel);color:var(--ink);padding:6px 8px;border:1px solid var(--line);border-radius:8px;max-width:100%}@media(max-width:640px){#w3-triangle{min-height:235px}}</style>'
 ].join('');
-const el=id=>host.querySelector('#w3-'+id);
+const el=id=>document.getElementById('w3-'+id);
 const s={s:1,initial:[.55,.25,.2],time:0,view:'barycentric',showGrid:true,showField:true,compare:false,running:false,speed:3,path:[],comparisonPaths:null,comparisonS:null,frameTime:0};
 function pause(){s.running=false;el('play').textContent='Play'}
 function recompute(){s.path=integrate(s.initial,s.s);if(s.compare&&s.comparisonS!==s.s){s.comparisonPaths=[[.63,.22,.15],[.2,.6,.2],[.18,.2,.62]].map(p=>integrate(p,s.s));s.comparisonS=s.s}}

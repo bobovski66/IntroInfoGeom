@@ -8,6 +8,24 @@ const store='intro-info-geom-v1';
 const path=(p)=>base+p;
 const key=(w,k)=>'w'+w+'_'+k;
 const esc=(s)=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const lectureTitles = [
+  ['Population Proportions and Replicator Dynamics', 'Frequency-Dependent Fitness and Stability'],
+  ['Payoff Matrices and Expected Fitness', 'Stability, Parameters, and Inference'],
+  ['Three Strategies and the Simplex', 'Cyclic Motion and Invasion'],
+  ['Probability Laws, Means, and Variances', 'Curves of Distributions and Sampling'],
+  ['Surprisal and Shannon Entropy', 'Log-Odds and Exponential Updating'],
+  ['Relative Entropy and Prediction', 'Relative Entropy as a Lyapunov Function'],
+  ['Fisher Information and Scores', 'Fisher Length and Replicator Speed'],
+  ['Square-Root Coordinates and the Sphere', 'Geodesics and Statistical Midpoints'],
+  ['Natural Gradients and Replicator Flows', 'Potentials, Stability, and KL Flows'],
+  ['Gaussian Scores and the Hyperbolic Metric', 'Gaussian Geodesics and Statistical Distance']
+];
+// Add an ID here when its continuous MP4 is published under videos/.
+const availableVideos = new Set(['week01_lecture01']);
+const lectureId=(w,n)=>'week'+String(w).padStart(2,'0')+'_lecture0'+n;
+const lecturePdf=(w,n)=>'lectures/'+lectureId(w,n)+'.pdf';
+const videoLink=(w,n)=>availableVideos.has(lectureId(w,n))
+  ? '<a href="'+path('watch.html?lecture='+lectureId(w,n))+'">Watch ↗</a>' : '';
 // Protect comparison signs inside TeX before inserting into HTML.
 const mathHtml=(s)=>String(s).replace(/\\\([\s\S]*?\\\)|\\\[[\s\S]*?\\\]/g,f=>f.replace(/</g,'&lt;').replace(/>/g,'&gt;'));
 const read=(k,d)=>{try{return JSON.parse(localStorage.getItem(store+':'+k))??d}catch{return d}};
@@ -17,24 +35,11 @@ function heading(w,kind){return '<h1>'+esc(w.title)+'</h1><p class="lead">'+esc(
 function pager(){return '<div class="nav-pager"><span>'+(week>1?'<a href="'+path('readings/week'+String(week-1).padStart(2,'0')+'.html')+'">← Previous reading</a>':'')+'</span><span>'+(week<10?'<a href="'+path('readings/week'+String(week+1).padStart(2,'0')+'.html')+'">Next reading →</a>':'')+'</span></div>'}
 function renderIndex(target) {
   const chapterPdf = n => 'pdf/chapter_' + String(n).padStart(2, '0') + '.pdf';
-  const lectureFile = (n, lecture, ext) => 'lectures/week' + String(n).padStart(2, '0') + '_lecture0' + lecture + '.' + ext;
-  const lectureTitles = [
-    ['Population Proportions and Replicator Dynamics', 'Frequency-Dependent Fitness and Stability'],
-    ['Payoff Matrices and Expected Fitness', 'Stability, Parameters, and Inference'],
-    ['Three Strategies and the Simplex', 'Cyclic Motion and Invasion'],
-    ['Probability Laws, Means, and Variances', 'Curves of Distributions and Sampling'],
-    ['Surprisal and Shannon Entropy', 'Log-Odds and Exponential Updating'],
-    ['Relative Entropy and Prediction', 'Relative Entropy as a Lyapunov Function'],
-    ['Fisher Information and Scores', 'Fisher Length and Replicator Speed'],
-    ['Square-Root Coordinates and the Sphere', 'Geodesics and Statistical Midpoints'],
-    ['Natural Gradients and Replicator Flows', 'Potentials, Stability, and KL Flows'],
-    ['Gaussian Scores and the Hyperbolic Metric', 'Gaussian Geodesics and Statistical Distance']
-  ];
   const lectureLinks = w => `<section class="lecture-section" aria-label="Week ${w.week} lecture slides">
     <p class="lecture-label">Lecture presentations</p>
     <div class="lecture-grid">${[1,2].map(n => `<div class="lecture-item">
       <div><span>Lecture ${n}</span><strong>${esc(lectureTitles[w.week-1][n-1])}</strong></div>
-      <div class="lecture-files"><a href="${path(lectureFile(w.week,n,'pdf'))}">PDF ↗</a></div>
+      <div class="lecture-files">${videoLink(w.week,n)}<a href="${path(lecturePdf(w.week,n))}">PDF ↗</a></div>
     </div>`).join('')}</div></section>`;
   target.innerHTML = `
     <header class="course-hero">
@@ -124,6 +129,37 @@ function renderReading(target,w){target.innerHTML=heading(w,'reading')+'<div cla
 function renderLab(target,w){const saved=read('lab:'+week+((week>=1&&week<=10)?':v2':''),Array(w.lab.length).fill(''));target.innerHTML=heading(w,'lab')+'<div class="panel"><h2>Guided investigation</h2><p>Write mathematical reasoning, calculations, and explanations. Use the reading and demo as references. Your responses save automatically in this browser; the Download HTML button creates a copy with your answers.</p><div class="toolbar"><button class="primary" id="download-lab">Download answered HTML</button><button id="print-lab">Print</button><span class="small muted" id="save-status" aria-live="polite">Autosave is on</span></div></div>'+w.lab.map((q,i)=>'<div class="lab-question"><label for="answer'+i+'">Problem '+(i+1)+'</label><p>'+mathHtml(q)+'</p><textarea id="answer'+i+'" data-answer="'+i+'" placeholder="Work and explanation…"></textarea></div>').join('')+pager();const inputs=[...target.querySelectorAll('[data-answer]')];inputs.forEach((el,i)=>{el.value=saved[i]||'';el.addEventListener('input',()=>{save('lab:'+week+((week>=1&&week<=10)?':v2':''),inputs.map(a=>a.value));target.querySelector('#save-status').textContent='Saved locally'})});target.querySelector('#print-lab').onclick=()=>window.print();target.querySelector('#download-lab').onclick=()=>{const css='body{font:16px/1.6 Georgia,serif;max-width:800px;margin:2em auto;padding:1em;color:#222}section{margin:1.6em 0;break-inside:avoid}.answer{white-space:pre-wrap;padding:12px;border:1px solid #aaa;min-height:40px}h1,h2{font-family:system-ui,sans-serif}';const answers=inputs.map((inp,i)=>'<section><h2>Problem '+(i+1)+'</h2><p>'+mathHtml(w.lab[i])+'</p><div class="answer">'+esc(inp.value)+'</div></section>').join('');const out='<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Week '+week+' Answered Lab</title><style>'+css+'</style><script>window.MathJax={tex:{inlineMath:[[\"\\\\(\",\"\\\\)\"],[\"$\",\"$\"]]},svg:{fontCache:\"global\"}};<\/script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"><\/script></head><body><h1>Week '+week+': '+esc(w.title)+'</h1><p>Guided Lab · Answered copy</p>'+answers+'</body></html>';const blob=new Blob([out],{type:'text/html;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='InfoGeom_Week_'+String(week).padStart(2,'0')+'_Lab_Answered.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}}
 function renderQuiz(target,w){const prev=read('quiz:'+week+((week>=1&&week<=10)?':v2':''),{});target.innerHTML=heading(w,'quiz')+'<div class="panel"><h2>Weekly quiz</h2><p>'+w.quiz.length+' checkable questions. Select one answer per question, then check your response. You may try again; this page is self-assessed and stores your attempts in this browser only.</p><strong id="quiz-score"></strong></div>'+w.quiz.map(([q,choices],i)=>'<div class="question" data-q="'+i+'"><fieldset><legend>Question '+(i+1)+'. '+mathHtml(q)+'</legend>'+choices.map((c,j)=>'<label class="choice"><input type="radio" name="q'+i+'" value="'+j+'"> <span>'+mathHtml(c)+'</span></label>').join('')+'</fieldset><button data-check="'+i+'">Check answer</button><p class="feedback" id="feedback'+i+'" aria-live="polite" hidden></p></div>').join('')+'<div class="toolbar"><button id="reset-quiz">Reset quiz</button></div>'+pager();let result={...prev};function updateScore(){let done=Object.keys(result).filter(k=>result[k]&&result[k].checked);let correct=done.filter(k=>result[k].correct).length;target.querySelector('#quiz-score').textContent='Checked: '+done.length+'/'+w.quiz.length+' · Correct: '+correct+'/'+done.length}w.quiz.forEach(([q,choices,answer,explanation],i)=>{const card=target.querySelector('[data-q="'+i+'"]');const feedback=card.querySelector('.feedback');function show(sel){const good=Number(sel)===answer;feedback.hidden=false;feedback.className='feedback '+(good?'correct':'incorrect');feedback.innerHTML='<strong>'+(good?'Correct.':'Not quite.')+'</strong> '+mathHtml(explanation);result[i]={checked:true,correct:good,choice:Number(sel)};save('quiz:'+week+((week>=1&&week<=10)?':v2':''),result);updateScore()}const old=prev[i];if(old){const c=card.querySelector('input[value="'+old.choice+'"]');if(c)c.checked=true;if(old.checked)show(old.choice)}card.querySelector('button').onclick=()=>{const chosen=card.querySelector('input:checked');if(!chosen){feedback.hidden=false;feedback.className='feedback';feedback.textContent='Select an answer first.';return}show(chosen.value)}});updateScore();target.querySelector('#reset-quiz').onclick=()=>{result={};save('quiz:'+week+((week>=1&&week<=10)?':v2':''),result);target.querySelectorAll('input[type=radio]').forEach(el=>el.checked=false);target.querySelectorAll('.feedback').forEach(el=>el.hidden=true);updateScore()}}
 function renderDemo(target,w){target.innerHTML=heading(w,'demo')+'<div class="panel"><h2>Interactive explorer</h2><p>Change parameters and initial conditions to investigate this week’s model. The visualization and numerical readouts update immediately.</p></div><div id="demo-host"></div>'+pager();if(typeof window.mountInfoDemo==='function')window.mountInfoDemo(week,document.getElementById('demo-host'))}
-const el=shell();if(kind==='index')renderIndex(el);else {const w=course[week-1];if(!w){el.textContent='No such week.';return}if(kind==='reading')renderReading(el,w);if(kind==='lab')renderLab(el,w);if(kind==='quiz')renderQuiz(el,w);if(kind==='demo')renderDemo(el,w)}
+function renderWatch(target) {
+  const requested = new URLSearchParams(window.location.search).get('lecture') || '';
+  const match = /^week(0[1-9]|10)_lecture0([12])$/.exec(requested);
+  if (!match || !availableVideos.has(requested)) {
+    target.innerHTML = '<h1>Lecture video unavailable</h1><p class="lead">This lecture has not been published as a video yet.</p><p><a class="btn" href="'+path('index.html#weekly-materials')+'">Return to lecture listings</a></p>';
+    return;
+  }
+  const w = Number(match[1]);
+  const n = Number(match[2]);
+  const title = lectureTitles[w-1][n-1];
+  const video = path('videos/'+requested+'_continuous.mp4');
+  const pdf = path(lecturePdf(w,n));
+  document.title = title+' | Introduction to Information Geometry';
+  target.innerHTML = `<section class="watch-page" aria-label="Narrated lecture">
+    <p class="eyebrow">Week ${w} · Lecture ${n}</p>
+    <h1>${esc(title)}</h1>
+    <p class="lead">Narrated slide presentation</p>
+    <div class="lecture-player">
+      <video controls preload="metadata" playsinline aria-label="${esc(title)}">
+        <source src="${video}" type="video/mp4">
+        Your browser cannot play this video. <a href="${video}">Open the MP4 directly.</a>
+      </video>
+    </div>
+    <p class="watch-hint">Use the playback controls to pause, rewind, adjust speed, or enter fullscreen.</p>
+    <div class="toolbar watch-actions">
+      <a class="btn" href="${pdf}">Lecture PDF ↗</a>
+      <a class="btn" href="${video}" download>Download MP4</a>
+      <a class="btn" href="${path('index.html#weekly-materials')}">All lectures</a>
+    </div>
+  </section>`;
+}
+const el=shell();if(kind==='index')renderIndex(el);else if(kind==='watch')renderWatch(el);else {const w=course[week-1];if(!w){el.textContent='No such week.';return}if(kind==='reading')renderReading(el,w);if(kind==='lab')renderLab(el,w);if(kind==='quiz')renderQuiz(el,w);if(kind==='demo')renderDemo(el,w)}
 const theme=read('theme','light');document.documentElement.dataset.theme=theme;const btn=document.getElementById('theme');if(btn)btn.onclick=()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;save('theme',next)};
 })();

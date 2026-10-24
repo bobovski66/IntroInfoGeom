@@ -30,7 +30,7 @@ const videoLink=(w,n)=>availableVideos.has(lectureId(w,n))
 const mathHtml=(s)=>String(s).replace(/\\\([\s\S]*?\\\)|\\\[[\s\S]*?\\\]/g,f=>f.replace(/</g,'&lt;').replace(/>/g,'&gt;'));
 const read=(k,d)=>{try{return JSON.parse(localStorage.getItem(store+':'+k))??d}catch{return d}};
 const save=(k,v)=>{try{localStorage.setItem(store+':'+k,JSON.stringify(v))}catch{}};
-function shell(){const n=document.getElementById('root');const sub=week?'Week '+week+' / '+kind.toUpperCase():'10-WEEK COURSE';n.innerHTML='<div class="layout"><aside class="sidebar"><div class="eyebrow">The Calculus of</div><h2>Probability Distributions</h2><p class="small">Introduction to Information Geometry</p><nav><a href="'+path('index.html')+'">Course home</a>'+[1,2,3,4,5,6,7,8,9,10].map(w=>'<a href="'+path(course[w-1].reading)+'">Week '+w+'</a>').join('')+'</nav><p class="small">Differential equations → Probability → Information → Geometry</p></aside><main class="main"><div class="main-inner"><div class="eyebrow">'+sub+'</div><div id="content"></div><footer class="site-footer">Introduction to Information Geometry · Original undergraduate course materials</footer></div></main></div>';return document.getElementById('content')}
+function shell(){const n=document.getElementById('root');const sub=week?'Week '+week+' / '+kind.toUpperCase():(kind==='watch'?'LECTURE VIDEO':'');n.innerHTML='<div class="layout"><aside class="sidebar"><div class="eyebrow">The Calculus of</div><h2>Probability Distributions</h2><p class="small">Introduction to Information Geometry</p><nav><a href="'+path('index.html')+'">Course home</a>'+[1,2,3,4,5,6,7,8,9,10].map(w=>'<a href="'+path(course[w-1].reading)+'">Week '+w+'</a>').join('')+'</nav><p class="small">Differential equations → Probability → Information → Geometry</p></aside><main class="main"><div class="main-inner">'+(sub?'<div class="eyebrow">'+sub+'</div>':'')+'<div id="content"></div><footer class="site-footer">Introduction to Information Geometry · Original undergraduate course materials</footer></div></main></div>';return document.getElementById('content')}
 function heading(w,kind){return '<h1>'+esc(w.title)+'</h1><p class="lead">'+esc(w.subtitle)+' · '+esc(w.summary)+'</p><div class="toolbar"><button id="theme">Toggle theme</button><a class="btn" href="'+path('index.html')+'">All weeks</a><a class="btn" href="'+path(w.readingPath)+'">Reading</a><a class="btn" href="'+path('pdf/chapter_'+String(w.week).padStart(2,'0')+'.pdf')+'">Chapter PDF</a><a class="btn" href="'+path(w.demoPath)+'">Demo</a><a class="btn" href="'+path(w.labPath)+'">Lab</a><a class="btn" href="'+path(w.quizPath)+'">Quiz</a></div>'}
 function pager(){return '<div class="nav-pager"><span>'+(week>1?'<a href="'+path('readings/week'+String(week-1).padStart(2,'0')+'.html')+'">← Previous reading</a>':'')+'</span><span>'+(week<10?'<a href="'+path('readings/week'+String(week+1).padStart(2,'0')+'.html')+'">Next reading →</a>':'')+'</span></div>'}
 function renderIndex(target) {
@@ -43,7 +43,6 @@ function renderIndex(target) {
     </div>`).join('')}</div></section>`;
   target.innerHTML = `
     <header class="course-hero">
-      <p class="course-kicker">Undergraduate mathematics · Ten-week course</p>
       <h1>Introduction to<br>Information Geometry</h1>
       <p class="hero-deck">How does a probability distribution move, and what geometry describes its motion?</p>
       <p class="lead">We begin with replicator equations and the dynamics of competing strategies. Along the way, probability distributions become states, entropy and relative entropy become ways to compare them, and Fisher information provides a metric for their space. The final weeks connect that geometry to natural-gradient flows and the hyperbolic geometry of Gaussian distributions.</p>
@@ -52,7 +51,6 @@ function renderIndex(target) {
         <a class="btn" href="${path('lectures/InformationGeometry_All20Lectures_Beamer_PDF.zip')}">Download all 20 lecture decks (ZIP) ↗</a>
         <a class="btn" href="#weekly-materials">Explore the ten weeks ↓</a>
       </div>
-      <p class="hero-note">Each week has two narrated lectures with slide PDFs, an illustrated online reading, a downloadable textbook chapter, an interactive demonstration, a guided lab, and a self-check quiz.</p>
     </header>
     <section class="course-introduction" aria-labelledby="about-course">
       <div>
@@ -76,13 +74,9 @@ function renderIndex(target) {
       </ol>
     </section>
     <section id="weekly-materials" aria-labelledby="weekly-heading">
-      <div class="weekly-heading"><div><p class="eyebrow">Course materials</p><h2 id="weekly-heading">Week-by-week lectures and activities</h2><p>Each week has two narrated lectures and their slide PDFs, a web reading, and a PDF textbook chapter. Demos, labs, and quizzes accompany the mathematical material.</p></div><button id="theme">Toggle theme</button></div>
+      <div class="weekly-heading"><div><p class="eyebrow">Course materials</p><h2 id="weekly-heading">Working through a week</h2><p>The two narrated lectures introduce each topic and alternate mathematical explanations with calculations suitable for working on a separate whiteboard. A following slide reveals each completed result. The slide PDFs are available beside the videos. The web reading develops the definitions with diagrams and examples; the PDF chapter provides a continuous textbook treatment and exercises. Use the demo to test parameters, then complete the lab and quiz.</p></div><button id="theme">Toggle theme</button></div>
       <div class="progress-panel"><div class="progress-top"><div><strong>Personal checklist</strong><p class="small muted" id="progress-label"></p></div><button id="clear-progress">Reset checklist</button></div><div class="track" aria-hidden="true"><span id="progress-fill"></span></div><p class="small muted">Checkmarks are saved in this browser only; they are not submitted as grades.</p></div>
       <div id="weeks" class="week-list"></div>
-    </section>
-    <section class="study-note" aria-labelledby="study-heading">
-      <h2 id="study-heading">Working through a week</h2>
-      <p>The two narrated lectures introduce each topic and alternate mathematical explanations with calculations suitable for working on a separate whiteboard. A following slide reveals each completed result. The slide PDFs are available beside the videos. The web reading develops the definitions with diagrams and examples; the PDF chapter provides a continuous textbook treatment and exercises. Use the demo to test parameters, then complete the lab and quiz.</p>
     </section>`;
   const list = target.querySelector('#weeks');
   const resources = w => [

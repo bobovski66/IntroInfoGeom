@@ -1,0 +1,38 @@
+/* Week 1 prototype: controls stay beside the synchronized plots. */
+body[data-kind="demo"][data-week="1"] .layout{grid-template-columns:300px minmax(0,1fr);}
+body[data-kind="demo"][data-week="1"] .sidebar{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:18px;}
+body[data-kind="demo"][data-week="1"] .sidebar nav{margin-top:14px;}
+body[data-kind="demo"][data-week="1"] .sidebar nav a{padding:6px 9px;}
+body[data-kind="demo"][data-week="1"] .main{padding:24px clamp(18px,3vw,48px) 64px;}
+body[data-kind="demo"][data-week="1"] #content>h1{margin:0 0 8px;}
+body[data-kind="demo"][data-week="1"] #content>.lead{margin:0 0 17px;}
+#demo-control-slot{margin-top:16px;}
+.w1-control-rail{background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:15px;box-shadow:var(--shadow);}
+.w1-control-rail h2{font:700 1.05rem/1.3 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:0;margin:0 0 12px;}
+.w1-control-rail h3{font:.75rem/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:750;margin:0 0 9px;}
+.w1-rail-group{border-top:1px solid var(--line);padding:12px 0;}
+.w1-rail-group label{display:block;font-size:.86rem;font-weight:650;line-height:1.4;}
+.w1-rail-group select{width:100%;margin-top:6px;padding:8px;border:1px solid var(--line);border-radius:7px;color:var(--ink);background:var(--panel);font-size:.85rem;}
+.w1-rail-group .control{margin:0 0 11px;}
+.w1-rail-group .control:last-child{margin-bottom:0;}
+.w1-rail-group input[type="range"]{width:100%;margin:5px 0 0;accent-color:var(--accent);cursor:pointer;}
+.w1-rail-group strong{font-variant-numeric:tabular-nums;}
+.w1-button-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
+.w1-button-row button{padding:7px 8px;font-size:.86rem;}
+.w1-rail-group .w1-check{display:flex;align-items:flex-start;gap:7px;cursor:pointer;}
+.w1-check input{margin:3px 0 0;accent-color:var(--accent);}
+.w1-rail-tip{font-size:.78rem;line-height:1.45;color:var(--muted);margin:2px 0 0;}
+.w1-control-rail :is(select,input,button):focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.w1-phase-panel{padding:11px;margin:0 0 14px;}
+.w1-chart-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+.w1-plot-panel{min-width:0;padding:11px;margin:0;}
+.w1-plot-panel p{margin:8px 3px 2px;line-height:1.45;}
+@media(max-width:1100px){.w1-chart-pair{grid-template-columns:1fr;}}
+@media(max-width:780px){
+  body[data-kind="demo"][data-week="1"] .layout{display:block;}
+  body[data-kind="demo"][data-week="1"] .sidebar{position:static;height:auto;overflow:visible;}
+  .w1-control-rail{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:18px;}
+  .w1-control-rail h2,.w1-rail-tip{grid-column:1/-1;}
+  .w1-rail-group{min-width:0;}
+}
+@media(max-width:560px){.w1-control-rail{display:block;}.w1-rail-group{padding:10px 0;}}

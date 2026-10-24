@@ -20,9 +20,9 @@ const lectureTitles = [
   ['Natural Gradients and Replicator Flows', 'Potentials, Stability, and KL Flows'],
   ['Gaussian Scores and the Hyperbolic Metric', 'Gaussian Geodesics and Statistical Distance']
 ];
-// Add an ID here when its continuous MP4 is published under videos/.
-const availableVideos = new Set(['week01_lecture01']);
 const lectureId=(w,n)=>'week'+String(w).padStart(2,'0')+'_lecture0'+n;
+// All twenty continuous MP4s are published under videos/.
+const availableVideos = new Set(Array.from({length:10},(_,i)=>[1,2].map(n=>lectureId(i+1,n))).flat());
 const lecturePdf=(w,n)=>'lectures/'+lectureId(w,n)+'.pdf';
 const videoLink=(w,n)=>availableVideos.has(lectureId(w,n))
   ? '<a href="'+path('watch.html?lecture='+lectureId(w,n))+'">Watch ↗</a>' : '';
@@ -35,8 +35,8 @@ function heading(w,kind){return '<h1>'+esc(w.title)+'</h1><p class="lead">'+esc(
 function pager(){return '<div class="nav-pager"><span>'+(week>1?'<a href="'+path('readings/week'+String(week-1).padStart(2,'0')+'.html')+'">← Previous reading</a>':'')+'</span><span>'+(week<10?'<a href="'+path('readings/week'+String(week+1).padStart(2,'0')+'.html')+'">Next reading →</a>':'')+'</span></div>'}
 function renderIndex(target) {
   const chapterPdf = n => 'pdf/chapter_' + String(n).padStart(2, '0') + '.pdf';
-  const lectureLinks = w => `<section class="lecture-section" aria-label="Week ${w.week} lecture slides">
-    <p class="lecture-label">Lecture presentations</p>
+  const lectureLinks = w => `<section class="lecture-section" aria-label="Week ${w.week} lectures">
+    <p class="lecture-label">Narrated lectures</p>
     <div class="lecture-grid">${[1,2].map(n => `<div class="lecture-item">
       <div><span>Lecture ${n}</span><strong>${esc(lectureTitles[w.week-1][n-1])}</strong></div>
       <div class="lecture-files">${videoLink(w.week,n)}<a href="${path(lecturePdf(w.week,n))}">PDF ↗</a></div>
@@ -52,7 +52,7 @@ function renderIndex(target) {
         <a class="btn" href="${path('lectures/InformationGeometry_All20Lectures_Beamer_PDF.zip')}">Download all 20 lecture decks (ZIP) ↗</a>
         <a class="btn" href="#weekly-materials">Explore the ten weeks ↓</a>
       </div>
-      <p class="hero-note">Each week has two lecture presentations in PDF, an illustrated online reading, a downloadable textbook chapter, an interactive demonstration, a guided lab, and a self-check quiz.</p>
+      <p class="hero-note">Each week has two narrated lectures with slide PDFs, an illustrated online reading, a downloadable textbook chapter, an interactive demonstration, a guided lab, and a self-check quiz.</p>
     </header>
     <section class="course-introduction" aria-labelledby="about-course">
       <div>
@@ -76,13 +76,13 @@ function renderIndex(target) {
       </ol>
     </section>
     <section id="weekly-materials" aria-labelledby="weekly-heading">
-      <div class="weekly-heading"><div><p class="eyebrow">Course materials</p><h2 id="weekly-heading">Week-by-week lectures and activities</h2><p>Each week has two lecture PDFs, a web reading, and a PDF textbook chapter. Demos, labs, and quizzes accompany the mathematical material.</p></div><button id="theme">Toggle theme</button></div>
+      <div class="weekly-heading"><div><p class="eyebrow">Course materials</p><h2 id="weekly-heading">Week-by-week lectures and activities</h2><p>Each week has two narrated lectures and their slide PDFs, a web reading, and a PDF textbook chapter. Demos, labs, and quizzes accompany the mathematical material.</p></div><button id="theme">Toggle theme</button></div>
       <div class="progress-panel"><div class="progress-top"><div><strong>Personal checklist</strong><p class="small muted" id="progress-label"></p></div><button id="clear-progress">Reset checklist</button></div><div class="track" aria-hidden="true"><span id="progress-fill"></span></div><p class="small muted">Checkmarks are saved in this browser only; they are not submitted as grades.</p></div>
       <div id="weeks" class="week-list"></div>
     </section>
     <section class="study-note" aria-labelledby="study-heading">
       <h2 id="study-heading">Working through a week</h2>
-      <p>The two lecture presentations introduce each topic and alternate mathematical explanations with calculations suitable for working on a separate whiteboard. The following slide reveals the completed result. The web reading develops the definitions with diagrams and examples; the PDF chapter provides a continuous textbook treatment and exercises. Use the demo to test parameters, then complete the lab and quiz.</p>
+      <p>The two narrated lectures introduce each topic and alternate mathematical explanations with calculations suitable for working on a separate whiteboard. A following slide reveals each completed result. The slide PDFs are available beside the videos. The web reading develops the definitions with diagrams and examples; the PDF chapter provides a continuous textbook treatment and exercises. Use the demo to test parameters, then complete the lab and quiz.</p>
     </section>`;
   const list = target.querySelector('#weeks');
   const resources = w => [
@@ -141,6 +141,13 @@ function renderWatch(target) {
   const title = lectureTitles[w-1][n-1];
   const video = path('videos/'+requested+'_continuous.mp4');
   const pdf = path(lecturePdf(w,n));
+  const position = (w-1)*2+n;
+  const neighborLink = offset => {
+    const other = position+offset;
+    if (other<1 || other>20) return '';
+    const otherId = lectureId(Math.ceil(other/2),other%2===0?2:1);
+    return '<a class="btn" href="'+path('watch.html?lecture='+otherId)+'">'+(offset<0?'← Previous lecture':'Next lecture →')+'</a>';
+  };
   document.title = title+' | Introduction to Information Geometry';
   target.innerHTML = `<section class="watch-page" aria-label="Narrated lecture">
     <p class="eyebrow">Week ${w} · Lecture ${n}</p>
@@ -158,6 +165,7 @@ function renderWatch(target) {
       <a class="btn" href="${video}" download>Download MP4</a>
       <a class="btn" href="${path('index.html#weekly-materials')}">All lectures</a>
     </div>
+    <nav class="watch-nav" aria-label="Lecture sequence">${neighborLink(-1)}${neighborLink(1)}</nav>
   </section>`;
 }
 const el=shell();if(kind==='index')renderIndex(el);else if(kind==='watch')renderWatch(el);else {const w=course[week-1];if(!w){el.textContent='No such week.';return}if(kind==='reading')renderReading(el,w);if(kind==='lab')renderLab(el,w);if(kind==='quiz')renderQuiz(el,w);if(kind==='demo')renderDemo(el,w)}

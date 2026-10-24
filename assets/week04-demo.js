@@ -69,7 +69,7 @@ host.innerHTML=[
 '<div class="panel"><h3>Draw samples from the current distribution</h3><p>The model bars are exact; the sample bars show random observed frequencies. Each draw produces a realized category. Repeating an experiment gives different results.</p><div class="toolbar"><button id="w4-one" class="primary">Draw 1</button><button id="w4-ten">Draw 10</button><button id="w4-hundred">Draw 100</button><button id="w4-thousand">Draw 1,000</button><button id="w4-reset2">Clear sample</button></div><canvas id="w4-bars" width="900" height="325" role="img" aria-label="Side by side bars of theoretical probabilities and observed sample frequencies" style="width:100%;height:auto;margin-top:15px"></canvas><p class="small" id="w4-samples" aria-live="polite"></p></div>',
 '<style>.w4-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}.w4-stats div{background:var(--soft);border-radius:10px;padding:10px;min-width:0}.w4-stats span{display:block;font-size:.8rem;color:var(--muted)}.w4-stats strong{font-variant-numeric:tabular-nums;font-size:1.25rem}.w4-plot-grid{display:grid;grid-template-columns:minmax(0,1fr)}.w4-plot-grid .panel{min-width:0;padding:13px}@media(max-width:670px){.w4-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}</style>'
 ].join('');
-const el=id=>host.querySelector('#w4-'+id);
+const el=id=>document.getElementById('w4-'+id);
 const P0=[.6,.3,.1],P1=[.2,.3,.5];
 const st={mode:'categorical',p:[.5,1/3,1/6],P0,P1,pathMode:false,t:0,playing:false,n:0,counts:[0,0,0],recent:[],last:0};
 function resetSamples(){st.n=0;st.counts=Array(st.p.length).fill(0);st.recent=[]}

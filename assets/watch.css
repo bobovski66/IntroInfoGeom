@@ -4,4 +4,6 @@
 .lecture-player video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#101820;}
 .watch-hint{font-size:.87rem;color:var(--muted);margin:12px 0 20px;}
 .watch-actions .btn{text-decoration:none;font-weight:650;}
+.watch-nav{display:flex;justify-content:space-between;gap:10px;margin-top:24px;}
+.watch-nav .btn{text-decoration:none;font-weight:650;}
 @media(max-width:660px){.watch-page .lead{margin-bottom:16px;}.lecture-player{border-radius:8px;}}

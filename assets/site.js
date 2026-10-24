@@ -34,7 +34,7 @@ function renderIndex(target) {
     <p class="lecture-label">Lecture presentations</p>
     <div class="lecture-grid">${[1,2].map(n => `<div class="lecture-item">
       <div><span>Lecture ${n}</span><strong>${esc(lectureTitles[w.week-1][n-1])}</strong></div>
-      <div class="lecture-files"><a href="${path(lectureFile(w.week,n,'pdf'))}">PDF ↗</a><a href="${path(lectureFile(w.week,n,'tex'))}">LaTeX source ↗</a></div>
+      <div class="lecture-files"><a href="${path(lectureFile(w.week,n,'pdf'))}">PDF ↗</a></div>
     </div>`).join('')}</div></section>`;
   target.innerHTML = `
     <header class="course-hero">
@@ -47,7 +47,7 @@ function renderIndex(target) {
         <a class="btn" href="${path('lectures/InformationGeometry_All20Lectures_Beamer_PDF.zip')}">Download all 20 lecture decks (ZIP) ↗</a>
         <a class="btn" href="#weekly-materials">Explore the ten weeks ↓</a>
       </div>
-      <p class="hero-note">Each week has two lecture presentations in PDF and editable LaTeX, an illustrated online reading, a downloadable textbook chapter, an interactive demonstration, a guided lab, and a self-check quiz.</p>
+      <p class="hero-note">Each week has two lecture presentations in PDF, an illustrated online reading, a downloadable textbook chapter, an interactive demonstration, a guided lab, and a self-check quiz.</p>
     </header>
     <section class="course-introduction" aria-labelledby="about-course">
       <div>
@@ -71,14 +71,13 @@ function renderIndex(target) {
       </ol>
     </section>
     <section id="weekly-materials" aria-labelledby="weekly-heading">
-      <div class="weekly-heading"><div><p class="eyebrow">Course materials</p><h2 id="weekly-heading">Week-by-week lectures and activities</h2><p>Each week has two lecture PDFs with editable Beamer sources, a web reading, and a PDF textbook chapter. Demos, labs, and quizzes accompany the mathematical material.</p></div><button id="theme">Toggle theme</button></div>
+      <div class="weekly-heading"><div><p class="eyebrow">Course materials</p><h2 id="weekly-heading">Week-by-week lectures and activities</h2><p>Each week has two lecture PDFs, a web reading, and a PDF textbook chapter. Demos, labs, and quizzes accompany the mathematical material.</p></div><button id="theme">Toggle theme</button></div>
       <div class="progress-panel"><div class="progress-top"><div><strong>Personal checklist</strong><p class="small muted" id="progress-label"></p></div><button id="clear-progress">Reset checklist</button></div><div class="track" aria-hidden="true"><span id="progress-fill"></span></div><p class="small muted">Checkmarks are saved in this browser only; they are not submitted as grades.</p></div>
       <div id="weeks" class="week-list"></div>
     </section>
     <section class="study-note" aria-labelledby="study-heading">
       <h2 id="study-heading">Working through a week</h2>
       <p>The two lecture presentations introduce each topic and alternate mathematical explanations with calculations suitable for working on a separate whiteboard. The following slide reveals the completed result. The web reading develops the definitions with diagrams and examples; the PDF chapter provides a continuous textbook treatment and exercises. Use the demo to test parameters, then complete the lab and quiz.</p>
-      <p class="small muted">Textbook LaTeX: <a href="${path('textbook/information_geometry.tex')}">complete source</a> · <a href="https://github.com/bobovski66/IntroInfoGeom/tree/main/textbook/chapters">individual chapter sources</a> · <a href="${path('textbook/README.md')}">compilation notes</a>. Lecture slides: <a href="${path('lectures/README.md')}">source notes</a> · <a href="https://github.com/bobovski66/IntroInfoGeom/tree/main/lectures">all source files</a>.</p>
     </section>`;
   const list = target.querySelector('#weeks');
   const resources = w => [
